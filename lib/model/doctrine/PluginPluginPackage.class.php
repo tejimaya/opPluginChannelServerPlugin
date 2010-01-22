@@ -12,5 +12,53 @@
  */
 abstract class PluginPluginPackage extends BasePluginPackage
 {
+  public function getImageFilename()
+  {
+    return (string)$this->getImage();
+  }
 
+  public function getLeadMemberIds()
+  {
+    return array(1);
+  }
+
+  public function getMembers($limit = null, $isRandom = false)
+  {
+    $q = Doctrine::getTable('PluginMember')->createQuery()
+      ->where('package_id = ?', $this->id);
+
+    if (!is_null($limit))
+    {
+      $q->limit($limit);
+    }
+
+    if ($isRandom)
+    {
+      $expr = new Doctrine_Expression('RANDOM()');
+      $q->orderBy($expr);
+    }
+
+    $communityMembers = $q->execute();
+
+    $q = Doctrine::getTable('Member')->createQuery()
+      ->whereIn('id', array_values($communityMembers->toKeyValueArray('id', 'member_id')));
+
+    return $q->execute();
+  }
+
+  public function countMembers()
+  {
+    return Doctrine::getTable('PluginMember')
+      ->createQuery()
+      ->where('package_id = ?', array($this->id))
+      ->count();
+  }
+
+  public function countUsers()
+  {
+    return Doctrine::getTable('PluginUser')
+      ->createQuery()
+      ->where('package_id = ?', array($this->id))
+      ->count();
+  }
 }

@@ -1,0 +1,6 @@
+package_home:
+  url:  /package/:name
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: home }
+  sf_method: [get]
