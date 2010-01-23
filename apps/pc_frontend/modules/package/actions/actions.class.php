@@ -35,7 +35,7 @@ class packageActions extends sfActions
 
   public function executeHome(sfWebRequest $request)
   {
-    if (sfContext::getInstance()->getUser()->getMemberId())
+    if ($this->getUser()->getMemberId())
     {
       $this->security['home'] = array('is_secure' => true);
     }
@@ -53,5 +53,23 @@ class packageActions extends sfActions
       'package_home', $this->form->getObject());
 
     $this->setTemplate('new');
+  }
+
+  public function executeToggleUsing(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->getRequest()->isXmlHttpRequest());
+    $this->getResponse()->setContentType('application/json');
+
+    try {
+      $request->checkCSRFProtection();
+    } catch (sfValidatorErrorSchema $e) {
+      $this->forward404();
+    }
+
+    $memberId = $this->getUser()->getMemberId();
+    $isUse = $this->package->isUser($memberId);
+    $this->package->toggleUsing($memberId);
+
+    return $this->renderText(json_encode(array($this->package->countUsers(), !$isUse)));
   }
 }

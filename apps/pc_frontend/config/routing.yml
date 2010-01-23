@@ -2,17 +2,39 @@ package_new:
   url:  /package/new
   class: sfRequestRoute
   param: { module: package, action: new }
-  sf_method: [get]
+  requirements:
+    sf_method: [get]
 
 package_create:
   url:  /package/create
   class: sfRequestRoute
   param: { module: package, action: create }
-  sf_method: [post]
+  requirements:
+    sf_method: [post]
+
+package_use:
+  url:  /package/use/:name
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: toggleUsing }
+  requirements:
+    name: op.+Plugin
+    sf_method: [post]
+
+package_unuse:
+  url:  /package/unuse/:name
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: toggleUsing }
+  requirements:
+    name: op.+Plugin
+    sf_method: [post]
 
 package_home:
   url:  /package/:name
   class: sfDoctrineRoute
   options: { model: PluginPackage, type: object }
   param: { module: package, action: home }
-  sf_method: [get]
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]

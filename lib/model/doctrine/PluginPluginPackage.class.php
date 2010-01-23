@@ -65,4 +65,31 @@ abstract class PluginPluginPackage extends BasePluginPackage
       ->where('package_id = ?', array($this->id))
       ->count();
   }
+
+  public function isUser($id)
+  {
+    return (bool)$this->getUser($id);
+  }
+
+  public function getUser($id)
+  {
+    return Doctrine::getTable('PluginUser')
+      ->createQuery()
+      ->where('package_id = ?', array($this->id))
+      ->where('member_id = ?', array($id))
+      ->fetchOne();
+  }
+
+  public function toggleUsing($id)
+  {
+    if ($user = $this->getUser($id))
+    {
+      $user->delete();
+    }
+    else
+    {
+      $this->PluginUser[]->member_id = $id;
+      $this->save();
+    }
+  }
 }
