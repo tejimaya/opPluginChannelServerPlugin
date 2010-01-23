@@ -5,12 +5,12 @@ actAs: [Timestampable]
 PluginPackage:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    description: { type: string }
+    name: { type: string(64), notnull: true }
+    description: { type: string, notnull: true }
     repository: { type: string }
     bts: { type: string }
     file_id: { type: integer(4) }
-    category_id: { type: integer(4) }
+    category_id: { type: integer(4), default: 1, notnull: true }
     user_count: { type: integer(4), default: 0 }
   indexes:
     name_UNIQUE:

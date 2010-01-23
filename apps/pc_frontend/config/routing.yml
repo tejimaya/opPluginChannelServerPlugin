@@ -1,3 +1,15 @@
+package_new:
+  url:  /package/new
+  class: sfRequestRoute
+  param: { module: package, action: new }
+  sf_method: [get]
+
+package_create:
+  url:  /package/create
+  class: sfRequestRoute
+  param: { module: package, action: create }
+  sf_method: [post]
+
 package_home:
   url:  /package/:name
   class: sfDoctrineRoute

@@ -38,10 +38,14 @@ abstract class PluginPluginPackage extends BasePluginPackage
       $q->orderBy($expr);
     }
 
-    $communityMembers = $q->execute();
+    $members = $q->execute();
+    if (!$members->count())
+    {
+      return false;
+    }
 
     $q = Doctrine::getTable('Member')->createQuery()
-      ->whereIn('id', array_values($communityMembers->toKeyValueArray('id', 'member_id')));
+      ->whereIn('id', array_values($members->toKeyValueArray('id', 'member_id')));
 
     return $q->execute();
   }

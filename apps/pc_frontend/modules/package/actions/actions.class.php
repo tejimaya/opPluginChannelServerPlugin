@@ -21,17 +21,37 @@
  *
  * @package    opPluginChannelServerPlugin
  * @subpackage package
- * @author     Kousuke Ebihara
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class packageActions extends sfActions
 {
+  public function preExecute()
+  {
+    if ($this->getRoute() instanceof sfDoctrineRoute)
+    {
+      $this->package = $this->getRoute()->getObject();
+    }
+  }
+
   public function executeHome(sfWebRequest $request)
   {
-    $this->package = $this->getRoute()->getObject();
-
     if (sfContext::getInstance()->getUser()->getMemberId())
     {
       $this->security['home'] = array('is_secure' => true);
     }
+  }
+
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->form = new PluginPackageForm();
+  }
+
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->form = new PluginPackageForm();
+    $this->redirectIf($this->form->bindAndSave($request['plugin_package'], $request->getFiles('plugin_package')),
+      'package_home', $this->form->getObject());
+
+    $this->setTemplate('new');
   }
 }
