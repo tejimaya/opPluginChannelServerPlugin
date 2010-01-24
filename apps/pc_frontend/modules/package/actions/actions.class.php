@@ -55,6 +55,23 @@ class packageActions extends sfActions
     $this->setTemplate('new');
   }
 
+  public function executeAddRelease(sfWebRequest $request)
+  {
+    $this->form = new opPluginPackageReleaseForm();
+    $this->form->setPluginPackage($this->package);
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request['plugin_release'], $request->getFiles('plugin_release'));
+      if ($this->form->isValid())
+      {
+        $this->form->uploadPackage();
+
+        $this->getUser()->setFlash('notice', 'Released plugin package');
+        $this->redirect('package_home', $this->package);
+      }
+    }
+  }
+
   public function executeToggleUsing(sfWebRequest $request)
   {
     $this->forward404Unless($this->getRequest()->isXmlHttpRequest());

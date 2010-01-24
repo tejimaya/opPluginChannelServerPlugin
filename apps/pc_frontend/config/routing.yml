@@ -1,3 +1,10 @@
+plugin_rest:
+  url:  /pluginRest/
+  class: sfRequestRoute
+  param: { module: package, action: new }
+  requirements:
+    sf_method: [get]
+
 package_new:
   url:  /package/new
   class: sfRequestRoute
@@ -29,6 +36,15 @@ package_unuse:
   requirements:
     name: op.+Plugin
     sf_method: [post]
+
+package_add_release:
+  url:  /package/:name/release/add
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: addRelease }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get, post]
 
 package_home:
   url:  /package/:name

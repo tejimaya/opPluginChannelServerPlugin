@@ -84,3 +84,26 @@ $options = array(
 
 op_include_parts('listBox', 'packageInformation', $options);
 ?>
+
+<div id="releaseList" class="dparts homeRecentList"><div class="parts">
+<div class="partsHeading"><h3><?php echo __('Releases of this plugin') ?></h3></div>
+<div class="block">
+<ul class="articleList">
+<?php foreach ($package->getPluginRelease() as $v): ?>
+<li><span class="date"><?php echo op_format_date($v->created_at, 'XShortDateJa') ?></span>
+<?php echo $v->version ?>
+</li>
+<?php endforeach; ?>
+</ul>
+<div class="moreInfo">
+<ul class="moreInfo">
+<?php if (in_array($sf_user->getMemberId(), $package->getLeadMemberIds()->getRawValue())): ?>
+<li>
+<?php echo link_to(__('Release Packages'), 'package_add_release', $package) ?>
+</li>
+<?php endif; ?>
+</ul>
+</div>
+</div>
+</div></div>
+

@@ -6,3 +6,6 @@ create:
 
 toggleUsing:
   is_secure: true
+
+addRelease:
+  is_secure: true
