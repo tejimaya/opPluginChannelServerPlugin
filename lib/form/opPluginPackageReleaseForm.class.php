@@ -87,10 +87,22 @@ class opPluginPackageReleaseForm extends BaseForm
 
     if ($tgz)
     {
+      require_once 'Archive/Tar.php';
+
       $info = $pear->infoFromTgzFile($tgz->getTempName());
       if ($info instanceof PEAR_Error)
       {
         throw new RuntimeException($info->message());
+      }
+
+      $tar = new Archive_Tar($tgz->getTempName());
+      $xml = '';
+      foreach ($tar->listContent() as $file)
+      {
+        if ('package.xml' === $file['filename'])
+        {
+          $xml = $tar->extractInString($file['filename']);
+        }
       }
 
       $file = new File();
@@ -100,6 +112,7 @@ class opPluginPackageReleaseForm extends BaseForm
         'version'   => $info['version'],
         'stability' => $info['stability']['release'],
         'file_id'   => $file->id,
+        'package_definition' => $xml,
       ));
       $this->package->PluginRelease[] = $release;
       $this->package->save();
@@ -145,6 +158,7 @@ class opPluginPackageReleaseForm extends BaseForm
         'version'   => $info['version'],
         'stability' => $info['stability']['release'],
         'file_id'   => $file->id,
+        'package_definition' => file_get_contents($dir.'/package.xml'),
       ));
       $this->package->PluginRelease[] = $release;
       $this->package->save();
@@ -155,6 +169,57 @@ class opPluginPackageReleaseForm extends BaseForm
     }
     elseif ($gitUrl && $gitCommit)
     {
+      $filesystem = new sfFilesystem();
+
+      require_once 'VersionControl/Git.php';
+
+      $dir = sfConfig::get('sf_cache_dir').'/git-'.md5($gitUrl.$gitCommit);
+      $filesystem->mkdirs($dir);
+
+      $git = new VersionControl_Git(sfConfig::get('sf_cache_dir'));
+      $git->createClone($gitUrl, false, $dir);
+      $filesystem->chmod($dir, 0777);
+      $git = new VersionControl_Git($dir);
+      $git->checkout($gitCommit);
+
+      $info = $pear->infoFromDescriptionFile($dir.'/package.xml');
+      if ($info instanceof PEAR_Error)
+      {
+        throw new RuntimeException($info->message());
+      }
+
+      require_once 'Archive/Tar.php';
+
+      $filename = sprintf('%s-%s.tgz', $info['name'], $info['version']);
+
+      $tar = new Archive_Tar(sfConfig::get('sf_cache_dir').'/'.$filename, true);
+      foreach ($info['filelist'] as $file => $data)
+      {
+        $tar->addString($info['name'].'-'.$info['version'].'/'.$file, file_get_contents($dir.'/'.$file));
+      }
+      $tar->addString('package.xml', file_get_contents($dir.'/package.xml'));
+
+      $file = new File();
+      $file->setType('application/x-gzip');
+      $file->setOriginalFilename($filename);
+      $file->setName(strtr($filename, '.', '_'));
+
+      $bin = new FileBin();
+      $bin->setBin(file_get_contents(sfConfig::get('sf_cache_dir').'/'.$filename));
+      $file->setFileBin($bin);
+      $file->save();
+
+      $release = Doctrine::getTable('PluginRelease')->create(array(
+        'version'   => $info['version'],
+        'stability' => $info['stability']['release'],
+        'file_id'   => $file->id,
+        'package_definition' => file_get_contents($dir.'/package.xml'),
+      ));
+      $this->package->PluginRelease[] = $release;
+      $this->package->save();
+
+      sfToolkit::clearDirectory($dir);
+      $filesystem->remove($dir);
     }
   }
 }
