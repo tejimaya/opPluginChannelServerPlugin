@@ -62,31 +62,31 @@ class opPluginPackageReleaseForm extends BaseForm
     $gitUrl = $this->getValue('git_url');
     $gitCommit = $this->getValue('git_commit');
 
+    require_once 'PEAR.php';
+    require_once 'PEAR/Common.php';
+    require_once 'PEAR/ChannelFile.php';
+
+    $channel = new PEAR_ChannelFile();
+    $channel->fromXmlFile(sfConfig::get('sf_web_dir').'/channel.xml');
+    $channel->setName('plugins.openpne.jp');
+    $registry = new PEAR_Registry(sfConfig::get('sf_cache_dir'), $channel);
+
+    $pear = new PEAR_Common();
+
+    $pearConfig = $pear->config;
+    $pearConfig->setRegistry($registry);
+
+    if (!$registry->channelExists($channel->getName()))
+    {
+      $registry->addChannel($channel);
+    }
+    else
+    {
+      $registry->updateChannel($channel);
+    }
+
     if ($tgz)
     {
-      require_once 'PEAR.php';
-      require_once 'PEAR/Common.php';
-      require_once 'PEAR/ChannelFile.php';
-
-      $channel = new PEAR_ChannelFile();
-      $channel->fromXmlFile(sfConfig::get('sf_web_dir').'/channel.xml');
-      $channel->setName('plugins.openpne.jp');
-      $registry = new PEAR_Registry(sfConfig::get('sf_cache_dir'), $channel);
-
-      $pear = new PEAR_Common();
-
-      $pearConfig = $pear->config;
-      $pearConfig->setRegistry($registry);
-
-      if (!$registry->channelExists($channel->getName()))
-      {
-        $registry->addChannel($channel);
-      }
-      else
-      {
-        $registry->updateChannel($channel);
-      }
-
       $info = $pear->infoFromTgzFile($tgz->getTempName());
       if ($info instanceof PEAR_Error)
       {
@@ -106,6 +106,52 @@ class opPluginPackageReleaseForm extends BaseForm
     }
     elseif ($svn)
     {
+      require_once 'VersionControl/SVN.php';
+
+      $dir = sfConfig::get('sf_cache_dir').'/svn-'.md5($svn);
+
+      $result = VersionControl_SVN::factory('export', array(
+        'svn_path' => 'svn', // FIXME: It should be configurable
+      ))->run(array($svn, $dir));
+
+      $info = $pear->infoFromDescriptionFile($dir.'/package.xml');
+      if ($info instanceof PEAR_Error)
+      {
+        throw new RuntimeException($info->message());
+      }
+
+      require_once 'Archive/Tar.php';
+
+      $filename = sprintf('%s-%s.tgz', $info['name'], $info['version']);
+
+      $tar = new Archive_Tar(sfConfig::get('sf_cache_dir').'/'.$filename, true);
+      foreach ($info['filelist'] as $file => $data)
+      {
+        $tar->addString($info['name'].'-'.$info['version'].'/'.$file, file_get_contents($dir.'/'.$file));
+      }
+      $tar->addString('package.xml', file_get_contents($dir.'/package.xml'));
+
+      $file = new File();
+      $file->setType('application/x-gzip');
+      $file->setOriginalFilename($filename);
+      $file->setName(strtr($filename, '.', '_'));
+
+      $bin = new FileBin();
+      $bin->setBin(file_get_contents(sfConfig::get('sf_cache_dir').'/'.$filename));
+      $file->setFileBin($bin);
+      $file->save();
+
+      $release = Doctrine::getTable('PluginRelease')->create(array(
+        'version'   => $info['version'],
+        'stability' => $info['stability']['release'],
+        'file_id'   => $file->id,
+      ));
+      $this->package->PluginRelease[] = $release;
+      $this->package->save();
+
+      sfToolkit::clearDirectory($dir);
+      $filesystem = new sfFilesystem();
+      $filesystem->remove($dir);
     }
     elseif ($gitUrl && $gitCommit)
     {

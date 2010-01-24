@@ -18,16 +18,6 @@
 </div>
 </form>
 
-<?php
-/*
-echo op_include_form('PackageAddReleaseForm', $form, array(
-  'url'         => ,
-  'title'       => 'Add Release',
-  'isMultipart' => true,
-))
-*/
-?>
-
 </div>
 </div>
 
@@ -36,21 +26,20 @@ echo op_include_form('PackageAddReleaseForm', $form, array(
 
 <div class="partsHeading"><h3><?php echo __('Add release by Subversion repository') ?></h3></div>
 
+<form action="<?php echo url_for('package_add_release', $package) ?>" method="post">
 <table>
-<tr>
-  <th>File</th><td></td>
-</tr>
+<?php $form->renderGlobalErrors(); ?>
+<?php echo $form['svn_url']->renderRow() ?>
 </table>
-
-<?php
-/*
-echo op_include_form('PackageAddReleaseForm', $form, array(
-  'url'         => url_for('package_add_release', $package),
-  'title'       => 'Add Release',
-  'isMultipart' => true,
-))
-*/
-?>
+<div class="operation">
+<ul class="moreInfo button">
+<li>
+<?php echo $form->renderHiddenFields(); ?>
+<input type="submit" value="<?php echo __('Send') ?>" class="input_submit" />
+</li>
+</ul>
+</div>
+</form>
 
 </div>
 </div>
