@@ -27,6 +27,8 @@ class packageActions extends sfActions
 {
   public function preExecute()
   {
+    error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
+
     if ($this->getRoute() instanceof sfDoctrineRoute)
     {
       $this->package = $this->getRoute()->getObject();
@@ -67,6 +69,29 @@ class packageActions extends sfActions
         $this->form->uploadPackage();
 
         $this->getUser()->setFlash('notice', 'Released plugin package');
+        $this->redirect('package_home', $this->package);
+      }
+    }
+  }
+
+  public function executeJoin(sfWebRequest $request)
+  {
+    $this->form = new opPluginPackageJoinForm();
+    $this->form->setPluginPackage($this->package);
+
+    if (opPlugin::getInstance('opMessagePlugin')->getIsActive())
+    {
+      $this->form->injectMessageField();
+    }
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request['plugin_join']);
+      if ($this->form->isValid())
+      {
+        $this->form->send();
+
+        $this->getUser()->setFlash('notice', 'Sent join request');
         $this->redirect('package_home', $this->package);
       }
     }

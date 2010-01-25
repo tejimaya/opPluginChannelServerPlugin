@@ -80,6 +80,9 @@ $list = array(
 $options = array(
   'title' => __('Detail of this plugin'),
   'list' => $list,
+  'moreInfo' => array(
+    link_to(__('Join this plugin developer team'), 'package_join', $package),
+  ),
 );
 
 op_include_parts('listBox', 'packageInformation', $options);

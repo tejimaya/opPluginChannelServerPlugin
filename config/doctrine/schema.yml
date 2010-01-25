@@ -36,6 +36,7 @@ PluginCategory:
       type: unique
 
 PluginMember:
+  actAs: [Timestampable, opActivateBehavior]
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     position: { type: enum, values: [lead, developer, contributor], default: "lead" }

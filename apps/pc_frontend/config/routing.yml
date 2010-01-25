@@ -46,6 +46,15 @@ package_add_release:
     name: op.+Plugin
     sf_method: [get, post]
 
+package_join:
+  url:  /package/:name/join
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: join }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get, post]
+
 package_home:
   url:  /package/:name
   class: sfDoctrineRoute

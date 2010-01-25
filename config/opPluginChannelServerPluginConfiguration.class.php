@@ -31,5 +31,79 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
   public function initialize()
   {
     sfToolkit::addIncludePath(array(sfConfig::get('sf_plugins_dir').'/opPluginChannelServerPlugin/lib/vendor/PEAR/'));
+
+    $this->dispatcher->connect('op_confirmation.list', array($this, 'listJoinConfirmation'));
+    $this->dispatcher->connect('op_confirmation.decision', array($this, 'processJoinConfirmation'));
+    /*
+    $this->dispatcher->connect('op_action.post_execute_friend_link', array('opMessagePluginObserver', 'listenToPostActionEventSendFriendLinkRequestMessage'));
+    $this->dispatcher->connect('form.post_configure', array('opMessagePluginObserver', 'injectMessageFormField'));
+    */
+  }
+
+  public function listJoinConfirmation($event)
+  {
+    if ('plugin_join' !== $event['category'])
+    {
+      return false;
+    }
+
+    $results = array();
+
+    $list = Doctrine::getTable('PluginMember')
+      ->getJoinRequests(sfContext::getInstance()->getUser()->getMemberId());
+
+    foreach ($list as $v)
+    {
+      $results[] = array(
+        'id'    => $v->id,
+        'image' => array(
+          'url'  => $v->Member->getImageFileName(),
+          'link' => '@member_profile?id='.$v->Member->id,
+        ),
+        'list' => array(
+          '%nickname%' => array(
+            'text' => $v->Member->name,
+            'link' => '@member_profile?id='.$v->Member->id,
+          ),
+          'Plugin' => array(
+            'text' => $v->Package->name,
+            'link' => '@package_home?name='.$v->Package->name,
+          ),
+        ),
+      );
+    }
+
+    $event->setReturnValue($results);
+
+    return true;
+  }
+
+  public function processJoinConfirmation($event)
+  {
+    if ('plugin_join' !== $event['category'])
+    {
+      return false;
+    }
+
+    opActivateBehavior::disable();
+
+    $obj = Doctrine::getTable('PluginMember')->find($event['id']);
+    if ($event['is_accepted'])
+    {
+      $obj->is_active = true;
+      $obj->save();
+
+      $event->setReturnValue('Accepted');
+    }
+    else
+    {
+      $obj->delete();
+
+      $event->setReturnValue('Rejected');
+    }
+
+    opActivateBehavior::enable();
+
+    return true;
   }
 }

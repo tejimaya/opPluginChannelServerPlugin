@@ -75,6 +75,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     {
       $obj->PluginMember[0]->Member = sfContext::getInstance()->getUser()->getMember();
       $obj->PluginMember[0]->position = 'lead';
+      $obj->PluginMember[0]->is_active = true;
     }
 
     if ($image instanceof sfValidatedFile)

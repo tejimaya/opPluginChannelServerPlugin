@@ -9,3 +9,6 @@ toggleUsing:
 
 addRelease:
   is_secure: true
+
+join:
+  is_secure: true
