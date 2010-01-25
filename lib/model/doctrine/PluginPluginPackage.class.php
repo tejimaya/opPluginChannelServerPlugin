@@ -19,7 +19,19 @@ abstract class PluginPluginPackage extends BasePluginPackage
 
   public function getLeadMemberIds()
   {
-    return array(1);
+    $results = array();
+
+    $list = Doctrine::getTable('PluginMember')->createQuery()
+      ->where('package_id = ?', $this->id)
+      ->andWhere('position = ?', 'lead')
+      ->fetchArray();
+
+    foreach ($list as $member)
+    {
+      $results[] = $member['member_id'];
+    }
+
+    return $results;
   }
 
   public function getMembers($limit = null, $isRandom = false)
@@ -78,6 +90,11 @@ abstract class PluginPluginPackage extends BasePluginPackage
       ->where('package_id = ?', array($this->id))
       ->where('member_id = ?', array($id))
       ->fetchOne();
+  }
+
+  public function isLead($id)
+  {
+    return in_array($id, $this->getLeadMemberIds());
   }
 
   public function toggleUsing($id)

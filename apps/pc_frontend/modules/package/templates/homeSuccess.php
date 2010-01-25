@@ -65,6 +65,11 @@ $options = array(
   'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $package->countMembers()), 'package/memberList?id='.$package->id)),
 );
 
+if ($package->isLead($sf_user->getMemberId()))
+{
+  $options['moreInfo'][] = link_to(__('Manage developers'), '@package_manageMember?name='.$package->name);
+}
+
 op_include_parts('nineTable', 'developerList', $options);
 ?>
 <?php end_slot(); ?>
@@ -73,9 +78,16 @@ op_include_parts('nineTable', 'developerList', $options);
 $list = array(
   __('Category')       => $package->Category,
   __('Description')    => nl2br($package->description),
-  __('Repository URL') => link_to($package->repository, $package->repository),
-  __('BTS URL')        => link_to($package->bts, $package->bts),
 );
+
+if ($package->repository)
+{
+  $list['Repository URL'] = link_to($package->repository, $package->repository);
+}
+if ($package->bts)
+{
+  $list['BTS URL'] = link_to($package->bts, $package->bts);
+}
 
 $options = array(
   'title' => __('Detail of this plugin'),
@@ -100,7 +112,7 @@ op_include_parts('listBox', 'packageInformation', $options);
 </ul>
 <div class="moreInfo">
 <ul class="moreInfo">
-<?php if (in_array($sf_user->getMemberId(), $package->getLeadMemberIds()->getRawValue())): ?>
+<?php if ($package->isLead($sf_user->getMemberId())): ?>
 <li>
 <?php echo link_to(__('Release Packages'), 'package_add_release', $package) ?>
 </li>

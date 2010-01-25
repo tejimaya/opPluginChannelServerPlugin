@@ -55,6 +55,15 @@ package_join:
     name: op.+Plugin
     sf_method: [get, post]
 
+package_manageMember:
+  url:  /package/:name/manageMember
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: manageMember }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get, post]
+
 package_home:
   url:  /package/:name
   class: sfDoctrineRoute

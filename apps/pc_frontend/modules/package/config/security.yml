@@ -12,3 +12,6 @@ addRelease:
 
 join:
   is_secure: true
+
+manageMember:
+  is_secure: true

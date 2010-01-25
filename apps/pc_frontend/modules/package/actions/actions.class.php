@@ -114,4 +114,21 @@ class packageActions extends sfActions
 
     return $this->renderText(json_encode(array($this->package->countUsers(), !$isUse)));
   }
+
+  public function executeManageMember(sfWebRequest $request)
+  {
+    $this->pager = Doctrine::getTable('PluginMember')->getPager($this->package->id, $request->getParameter('page', 1));
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $form = new opPluginMemberManageForm();
+      $form->bind($request['plugin_manage']);
+      if ($form->isValid())
+      {
+        $form->save();
+      }
+
+      $this->redirect('package_manageMember', $this->package);
+    }
+  }
 }
