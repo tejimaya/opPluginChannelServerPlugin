@@ -28,6 +28,8 @@
  */
 class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
 {
+  const CONFIG_KEY_PREFIX = 'op_plugin_channel_server_plugin_';
+
   public function initialize()
   {
     sfToolkit::addIncludePath(array(sfConfig::get('sf_plugins_dir').'/opPluginChannelServerPlugin/lib/vendor/PEAR/'));
