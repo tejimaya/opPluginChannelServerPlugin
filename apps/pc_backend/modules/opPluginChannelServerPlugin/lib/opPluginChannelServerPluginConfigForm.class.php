@@ -14,13 +14,13 @@ class opPluginChannelServerPluginConfigForm extends BaseForm
   {
     $this
       ->setWidget('channel_name', new sfWidgetFormInputText())
-      ->setValidator('channel_name', new opValidatorString())
+      ->setValidator('channel_name', new opValidatorString(array('required' => false)))
 
       ->setWidget('summary', new sfWidgetFormInputText())
-      ->setValidator('summary', new opValidatorString())
+      ->setValidator('summary', new opValidatorString(array('required' => false)))
 
       ->setWidget('suggestedalias', new sfWidgetFormInputText())
-      ->setValidator('suggestedalias', new opValidatorString())
+      ->setValidator('suggestedalias', new opValidatorString(array('required' => false)))
     ;
 
     $this->getWidgetSchema()
@@ -45,6 +45,11 @@ class opPluginChannelServerPluginConfigForm extends BaseForm
       }
       $config->setValue($v);
       $config->save();
+
+      if (!$v)
+      {
+        $config->delete();
+      }
     }
   }
 }

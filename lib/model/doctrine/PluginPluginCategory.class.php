@@ -12,5 +12,8 @@
  */
 abstract class PluginPluginCategory extends BasePluginCategory
 {
-
+  public function getForm()
+  {
+    return new PluginCategoryForm($this);
+  }
 }

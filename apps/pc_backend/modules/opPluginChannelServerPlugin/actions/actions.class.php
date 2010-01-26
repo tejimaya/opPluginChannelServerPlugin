@@ -40,4 +40,63 @@ class opPluginChannelServerPluginActions extends sfActions
       }
     }
   }
+
+  public function executeCategory(sfWebRequest $request)
+  {
+    $this->categories = Doctrine::getTable('PluginCategory')->findAll();
+    $this->rootForm = new PluginCategoryForm();
+    $this->deleteForm = new sfForm();
+    $this->categoryForms = array();
+
+    $params = $request->getParameter('plugin_category');
+    if ($request->isMethod(sfRequest::POST))
+    {
+      $targetForm = $this->rootForm;
+      if ($targetForm->bindAndSave($params))
+      {
+        $this->getUser()->setFlash('notice', 'Saved.');
+        $this->redirect('opPluginChannelServerPlugin/category');
+      }
+    }
+  }
+
+  /**
+   * Executes categoryList action
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeCategoryEdit(sfWebRequest $request)
+  {
+    $form = new PluginCategoryForm(Doctrine::getTable('PluginCategory')->find($request['id']));
+    if ($request->isMethod(sfRequest::POST))
+    {
+      if ($form->bindAndSave($request['plugin_category']))
+      {
+        $this->getUser()->setFlash('notice', 'Saved.');
+      }
+      else
+      {
+        $this->getUser()->setFlash('error', $form->getErrorSchema()->getMessage());
+      }
+    }
+    $this->redirect('opPluginChannelServerPlugin/category');
+  }
+
+  /**
+   * Executes categoryDelete action
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeCategoryDelete(sfWebRequest $request)
+  {
+    $request->checkCSRFProtection();
+
+    $category = Doctrine::getTable('PluginCategory')->find($request['id']);
+    $this->forward404Unless($category);
+
+    $category->delete();
+
+    $this->getUser()->setFlash('notice', 'Deleted.');
+    $this->redirect('opPluginChannelServerPlugin/category');
+  }
 }

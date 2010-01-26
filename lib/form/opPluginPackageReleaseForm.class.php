@@ -66,9 +66,14 @@ class opPluginPackageReleaseForm extends BaseForm
     require_once 'PEAR/Common.php';
     require_once 'PEAR/ChannelFile.php';
 
+    $serverName = Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'server_name', sfContext::getInstance()->getRequest()->getHost());
+
+    $browser = new opBrowser($serverName);
+    $browser->get('/channel.xml');
+
     $channel = new PEAR_ChannelFile();
-    $channel->fromXmlFile(sfConfig::get('sf_web_dir').'/channel.xml');
-    $channel->setName('plugins.openpne.jp');
+    $channel->fromXmlString($browser->getResponse()->getContent());
+    $channel->setName($serverName);
     $registry = new PEAR_Registry(sfConfig::get('sf_cache_dir'), $channel);
 
     $pear = new PEAR_Common();
@@ -92,7 +97,7 @@ class opPluginPackageReleaseForm extends BaseForm
       $info = $pear->infoFromTgzFile($tgz->getTempName());
       if ($info instanceof PEAR_Error)
       {
-        throw new RuntimeException($info->message());
+        throw new RuntimeException($info->getMessage());
       }
 
       $tar = new Archive_Tar($tgz->getTempName());
@@ -130,7 +135,7 @@ class opPluginPackageReleaseForm extends BaseForm
       $info = $pear->infoFromDescriptionFile($dir.'/package.xml');
       if ($info instanceof PEAR_Error)
       {
-        throw new RuntimeException($info->message());
+        throw new RuntimeException($info->getMessage());
       }
 
       require_once 'Archive/Tar.php';

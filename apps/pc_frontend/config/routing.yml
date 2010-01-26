@@ -1,10 +1,82 @@
-plugin_rest:
-  url:  /pluginRest/
+# pear channel rest interface
+channel_xml:
+  url:  /channel.xml
   class: sfRequestRoute
-  param: { module: package, action: new }
+  param: { module: pluginRest, action: channel, sf_format: xml }
   requirements:
     sf_method: [get]
 
+plugin_rest:
+  url:  /pluginRest/
+  class: sfRequestRoute
+  param: { module: pluginRest, action: root, sf_format: xml }
+  requirements:
+    sf_method: [get]
+
+#plugin_rest_category_all:
+#  url:  /pluginRest/c/categories.xml
+#
+#plugin_rest_category_info:
+#  url:  /pluginRest/c/:category/info.xml
+#
+#plugin_rest_category_packages:
+#  url:  /pluginRest/c/:category/packages.xml
+#
+#plugin_rest_category_packagesinfo:
+#  url:  /pluginRest/c/:category/packagesinfo.xml
+#
+#plugin_rest_maintainer_all:
+#  url:  /pluginRest/m/allmaintainers.xml
+#
+#plugin_rest_maintainer_info:
+#  url:  /pluginRest/m/:name/info.xml
+#
+#plugin_rest_package_all:
+#  url:  /pluginRest/p/packages.xml
+#
+#plugin_rest_package_info:
+#  url:  /pluginRest/p/:name/info.xml
+#
+#plugin_rest_package_maintainers:
+#  url:  /pluginRest/p/:name/maintainers.xml
+#
+#plugin_rest_package_maintainers2:
+#  url:  /pluginRest/p/:name/maintainers2.xml
+#
+#plugin_rest_release_all:
+#  url:  /pluginRest/r/:name/allreleases.xml
+#
+#plugin_rest_release_all2:
+#  url:  /pluginRest/r/:name/allreleases2.xml
+#
+#plugin_rest_release_latest:
+#  url:  /pluginRest/r/:name/latest.txt
+#
+#plugin_rest_release_stable:
+#  url:  /pluginRest/r/:name/stable.txt
+#
+#plugin_rest_release_beta:
+#  url:  /pluginRest/r/:name/beta.txt
+#
+#plugin_rest_release_alpha:
+#  url:  /pluginRest/r/:name/alpha.txt
+#
+#plugin_rest_release_devel:
+#  url:  /pluginRest/r/:name/devel.txt
+#
+#plugin_rest_release_version:
+#  url:  /pluginRest/r/:name/:version.xml
+#
+#plugin_rest_release_version2:
+#  url:  /pluginRest/r/:name/v2.:version.xml
+#
+#plugin_rest_release_package_xml:
+#  url:  /pluginRest/r/:name/package.:version.xml
+#
+#plugin_rest_release_deps:
+#  url:  /pluginRest/r/:name/deps.:version.txt
+
+# application
 package_new:
   url:  /package/new
   class: sfRequestRoute
