@@ -1,6 +1,7 @@
 <table>
 <tr>
 <th><?php echo $form['name']->renderLabel() ?></th>
+<th><?php echo $form['description']->renderLabel() ?></th>
 <th colspan="2"><?php echo __('操作') ?></th>
 </tr>
 

@@ -13,12 +13,21 @@ plugin_rest:
   requirements:
     sf_method: [get]
 
-#plugin_rest_category_all:
-#  url:  /pluginRest/c/categories.xml
-#
-#plugin_rest_category_info:
-#  url:  /pluginRest/c/:category/info.xml
-#
+plugin_rest_category_all:
+  url:  /pluginRest/c/categories.xml
+  class: sfRequestRoute
+  param: { module: pluginRest, action: categoryAll, sf_format: xml }
+  requirements:
+    sf_method: [get]
+
+plugin_rest_category_info:
+  url:  /pluginRest/c/:name/info.xml
+  class: sfDoctrineRoute
+  options: { model: PluginCategory, type: object }
+  param: { module: pluginRest, action: categoryInfo, sf_format: xml }
+  requirements:
+    sf_method: [get]
+
 #plugin_rest_category_packages:
 #  url:  /pluginRest/c/:category/packages.xml
 #

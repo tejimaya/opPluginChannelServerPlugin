@@ -30,6 +30,7 @@ PluginCategory:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     name: { type: string(64), default: "", notnull: true }
+    description: { type: string }
   indexes:
     name_UNIQUE:
       fields: [name]
