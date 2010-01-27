@@ -45,6 +45,11 @@ class pluginRestActions extends sfActions
     $this->category = $this->getRoute()->getObject();
   }
 
+  public function executeCategoryPackages(sfWebRequest $request)
+  {
+    $this->category = $this->getRoute()->getObject();
+  }
+
   public function executeMaintainerAll(sfWebRequest $request)
   {
     $this->handles = Doctrine::getTable('MemberConfig')->findByName('pear_handle', Doctrine_Core::HYDRATE_ON_DEMAND);
@@ -54,5 +59,25 @@ class pluginRestActions extends sfActions
   {
     $this->config = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue('pear_handle', $request['name']);
     $this->forward404Unless($this->config);
+  }
+
+  public function executePackageAll(sfWebRequest $request)
+  {
+    $this->packages = Doctrine::getTable('PluginPackage')->findAll(Doctrine_Core::HYDRATE_ON_DEMAND);
+  }
+
+  public function executePackageInfo(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+  }
+
+  public function executePackageMaintainers(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+  }
+
+  public function executePackageMaintainers2(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
   }
 }
