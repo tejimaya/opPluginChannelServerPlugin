@@ -44,4 +44,15 @@ class pluginRestActions extends sfActions
   {
     $this->category = $this->getRoute()->getObject();
   }
+
+  public function executeMaintainerAll(sfWebRequest $request)
+  {
+    $this->handles = Doctrine::getTable('MemberConfig')->findByName('pear_handle', Doctrine_Core::HYDRATE_ON_DEMAND);
+  }
+
+  public function executeMaintainerInfo(sfWebRequest $request)
+  {
+    $this->config = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue('pear_handle', $request['name']);
+    $this->forward404Unless($this->config);
+  }
 }

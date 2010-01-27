@@ -34,12 +34,20 @@ plugin_rest_category_info:
 #plugin_rest_category_packagesinfo:
 #  url:  /pluginRest/c/:category/packagesinfo.xml
 #
-#plugin_rest_maintainer_all:
-#  url:  /pluginRest/m/allmaintainers.xml
-#
-#plugin_rest_maintainer_info:
-#  url:  /pluginRest/m/:name/info.xml
-#
+plugin_rest_maintainer_all:
+  url:  /pluginRest/m/allmaintainers.xml
+  class: sfRequestRoute
+  param: { module: pluginRest, action: maintainerAll, sf_format: xml }
+  requirements:
+    sf_method: [get]
+
+plugin_rest_maintainer_info:
+  url:  /pluginRest/m/:name/info.xml
+  class: sfRequestRoute
+  param: { module: pluginRest, action: maintainerInfo, sf_format: xml }
+  requirements:
+    sf_method: [get]
+
 #plugin_rest_package_all:
 #  url:  /pluginRest/p/packages.xml
 #
