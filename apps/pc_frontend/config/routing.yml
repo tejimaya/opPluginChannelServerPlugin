@@ -36,9 +36,14 @@ plugin_rest_category_packages:
   requirements:
     sf_method: [get]
 
-#plugin_rest_category_packagesinfo:
-#  url:  /pluginRest/c/:category/packagesinfo.xml
-#
+plugin_rest_category_packagesinfo:
+  url:  /pluginRest/c/:category/packagesinfo.xml
+  class: sfDoctrineRoute
+  options: { model: PluginCategory, type: object }
+  param: { module: pluginRest, action: categoryPackagesInfo, sf_format: xml }
+  requirements:
+    sf_method: [get]
+
 plugin_rest_maintainer_all:
   url:  /pluginRest/m/allmaintainers.xml
   class: sfRequestRoute
@@ -150,15 +155,15 @@ plugin_rest_release_devel:
     name: op.+Plugin
     sf_method: [get]
 
-#plugin_rest_release_version:
-#  url:  /pluginRest/r/:name/:version.xml
-#
-#plugin_rest_release_version2:
-#  url:  /pluginRest/r/:name/v2.:version.xml
-#
-#plugin_rest_release_package_xml:
-#  url:  /pluginRest/r/:name/package.:version.xml
-#
+plugin_rest_release_version:
+  url:  /pluginRest/r/:name/:version
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object, segment_separators: [/], suffix: .xml }
+  param: { module: pluginRest, action: releaseVersion, sf_format: xml }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
 #plugin_rest_release_deps:
 #  url:  /pluginRest/r/:name/deps.:version.txt
 
