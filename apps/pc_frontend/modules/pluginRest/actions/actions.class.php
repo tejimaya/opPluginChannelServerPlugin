@@ -183,4 +183,18 @@ class pluginRestActions extends sfActions
   {
     $this->category = $this->getRoute()->getObject();
   }
+
+  public function executeDownloadTgz(sfWebRequest $request)
+  {
+    $version = $request['version'];
+
+    $this->package = $this->getRoute()->getObject();
+    $this->release = Doctrine::getTable('PluginRelease')->findOneByPackageIdAndVersion($this->package->id, $version);
+    $this->forward404Unless($this->release);
+
+    header('Content-type: '.$this->release->File->type);
+    echo $this->release->File->FileBin->bin;
+
+    exit;
+  }
 }

@@ -167,6 +167,25 @@ plugin_rest_release_version:
 #plugin_rest_release_deps:
 #  url:  /pluginRest/r/:name/deps.:version.txt
 
+# plugin_download
+plugin_download_tgz:
+  url:  /get/:name-:version
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object, segment_separators: [/, -], suffix: .tgz }
+  param: { module: pluginRest, action: downloadTgz }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
+plugin_download_without_extension:
+  url:  /get/:name-:version
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object, segment_separators: [/, -] }
+  param: { module: pluginRest, action: downloadTgz, sf_format: tgz }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
 # application
 package_new:
   url:  /package/new
