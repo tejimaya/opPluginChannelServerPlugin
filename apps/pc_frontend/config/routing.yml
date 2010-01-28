@@ -87,27 +87,69 @@ plugin_rest_package_maintainers2:
     name: op.+Plugin
     sf_method: [get]
 
-#plugin_rest_release_all:
-#  url:  /pluginRest/r/:name/allreleases.xml
-#
-#plugin_rest_release_all2:
-#  url:  /pluginRest/r/:name/allreleases2.xml
-#
-#plugin_rest_release_latest:
-#  url:  /pluginRest/r/:name/latest.txt
-#
-#plugin_rest_release_stable:
-#  url:  /pluginRest/r/:name/stable.txt
-#
-#plugin_rest_release_beta:
-#  url:  /pluginRest/r/:name/beta.txt
-#
-#plugin_rest_release_alpha:
-#  url:  /pluginRest/r/:name/alpha.txt
-#
-#plugin_rest_release_devel:
-#  url:  /pluginRest/r/:name/devel.txt
-#
+plugin_rest_release_all:
+  url:  /pluginRest/r/:name/allreleases.xml
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: releaseAll, sf_format: xml }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
+plugin_rest_release_all2:
+  url:  /pluginRest/r/:name/allreleases2.xml
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: releaseAll2, sf_format: xml }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
+plugin_rest_release_latest:
+  url:  /pluginRest/r/:name/latest.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: latestRelease, sf_format: txt }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
+plugin_rest_release_stable:
+  url:  /pluginRest/r/:name/stable.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: stableRelease, sf_format: txt }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
+plugin_rest_release_beta:
+  url:  /pluginRest/r/:name/beta.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: betaRelease, sf_format: txt }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
+plugin_rest_release_alpha:
+  url:  /pluginRest/r/:name/alpha.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: alphaRelease, sf_format: txt }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
+plugin_rest_release_devel:
+  url:  /pluginRest/r/:name/devel.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: develRelease, sf_format: txt }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
 #plugin_rest_release_version:
 #  url:  /pluginRest/r/:name/:version.xml
 #

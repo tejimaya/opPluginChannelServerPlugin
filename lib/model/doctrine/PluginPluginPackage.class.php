@@ -109,4 +109,128 @@ abstract class PluginPluginPackage extends BasePluginPackage
       $this->save();
     }
   }
+
+  public function getLatestRelease()
+  {
+    $versions = array();
+    $_versions = Doctrine::getTable('PluginRelease')
+      ->createQuery()
+      ->select('version')
+      ->where('package_id = ?', $this->id)
+      ->fetchArray();
+
+    foreach ($_versions as $v)
+    {
+      $versions[] = $v['version'];
+    }
+
+    if (!$versions)
+    {
+      return false;
+    }
+
+    usort($versions, 'version_compare');
+
+    return array_shift($versions);
+  }
+
+  public function getStableRelease()
+  {
+    $versions = array();
+    $_versions = Doctrine::getTable('PluginRelease')
+      ->createQuery()
+      ->select('version')
+      ->where('package_id = ?', $this->id)
+      ->andWhere('stability = ?', 'stable')
+      ->fetchArray();
+
+    foreach ($_versions as $v)
+    {
+      $versions[] = $v['version'];
+    }
+
+    if (!$versions)
+    {
+      return false;
+    }
+
+    usort($versions, 'version_compare');
+
+    return array_shift($versions);
+  }
+
+  public function getAlphaRelease()
+  {
+    $versions = array();
+    $_versions = Doctrine::getTable('PluginRelease')
+      ->createQuery()
+      ->select('version')
+      ->where('package_id = ?', $this->id)
+      ->andWhere('stability = ?', 'alpha')
+      ->fetchArray();
+
+    foreach ($_versions as $v)
+    {
+      $versions[] = $v['version'];
+    }
+
+    if (!$versions)
+    {
+      return false;
+    }
+
+    usort($versions, 'version_compare');
+
+    return array_shift($versions);
+  }
+
+  public function getBetaRelease()
+  {
+    $versions = array();
+    $_versions = Doctrine::getTable('PluginRelease')
+      ->createQuery()
+      ->select('version')
+      ->where('package_id = ?', $this->id)
+      ->andWhere('stability = ?', 'beta')
+      ->fetchArray();
+
+    foreach ($_versions as $v)
+    {
+      $versions[] = $v['version'];
+    }
+
+    if (!$versions)
+    {
+      return false;
+    }
+
+    usort($versions, 'version_compare');
+
+    return array_shift($versions);
+  }
+
+  public function getDevelRelease()
+  {
+    $versions = array();
+    $_versions = Doctrine::getTable('PluginRelease')
+      ->createQuery()
+      ->select('version')
+      ->where('package_id = ?', $this->id)
+      ->andWhere('stability = ?', 'devel')
+      ->fetchArray();
+
+    foreach ($_versions as $v)
+    {
+      $versions[] = $v['version'];
+    }
+
+    if (!$versions)
+    {
+      return false;
+    }
+
+    usort($versions, 'version_compare');
+
+    return array_shift($versions);
+  }
 }

@@ -80,4 +80,49 @@ class pluginRestActions extends sfActions
   {
     $this->package = $this->getRoute()->getObject();
   }
+
+  public function executeReleaseAll(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+  }
+
+  public function executeReleaseAll2(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+  }
+
+  public function executeLatestRelease(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+    $this->release = $this->package->getLatestRelease();
+    $this->forward404Unless($this->release);
+  }
+
+  public function executeStableRelease(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+    $this->release = $this->package->getStableRelease();
+    $this->forward404Unless($this->release);
+  }
+
+  public function executeBetaRelease(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+    $this->release = $this->package->getBetaRelease();
+    $this->forward404Unless($this->release);
+  }
+
+  public function executeAlphaRelease(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+    $this->release = $this->package->getAlphaRelease();
+    $this->forward404Unless($this->release);
+  }
+
+  public function executeDevelRelease(sfWebRequest $request)
+  {
+    $this->package = $this->getRoute()->getObject();
+    $this->release = $this->package->getDevelRelease();
+    $this->forward404Unless($this->release);
+  }
 }
