@@ -106,7 +106,7 @@ op_include_parts('listBox', 'packageInformation', $options);
 <ul class="articleList">
 <?php foreach ($package->getPluginRelease() as $v): ?>
 <li><span class="date"><?php echo op_format_date($v->created_at, 'XShortDateJa') ?></span>
-<?php echo $v->version ?>
+<?php echo link_to($v->version, 'release_detail', $v) ?>
 </li>
 <?php endforeach; ?>
 </ul>

@@ -254,3 +254,12 @@ package_home:
   requirements:
     name: op.+Plugin
     sf_method: [get]
+
+release_detail:
+  url:  /release/:id
+  class: sfDoctrineRoute
+  options: { model: PluginRelease, type: object }
+  param: { module: package, action: release }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
