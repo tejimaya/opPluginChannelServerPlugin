@@ -273,3 +273,12 @@ package_list_release:
     name: op.+Plugin
     sf_method: [get]
 
+package_list_member:
+  url:  /package/:name/developers
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: memberList }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+

@@ -62,7 +62,7 @@ $options = array(
   'list'  => $package->getMembers(),
   'crownIds' => $package->getLeadMemberIds()->getRawValue(),
   'link_to' => '@member_profile?id=',
-  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $package->countMembers()), 'package/memberList?id='.$package->id)),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $package->countMembers()), '@package_list_member?name='.$package->name)),
 );
 
 if ($package->isLead($sf_user->getMemberId()))

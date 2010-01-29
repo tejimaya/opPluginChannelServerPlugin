@@ -191,4 +191,15 @@ class packageActions extends sfActions
     $this->pager = Doctrine::getTable('PluginRelease')
       ->getPager($this->package->id, $request['page'], 20);
   }
+
+  public function executeMemberList(sfWebRequest $request)
+  {
+    if ($this->getUser()->getMemberId())
+    {
+      $this->security['memberlist'] = array('is_secure' => true);
+    }
+
+    $this->pager = Doctrine::getTable('PluginMember')
+      ->getPager($this->package->id, $request['page'], 20);
+  }
 }
