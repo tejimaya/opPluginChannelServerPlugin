@@ -71,7 +71,7 @@ plugin_rest_package_info:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: packageInfo, sf_format: xml }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_package_maintainers:
@@ -80,7 +80,7 @@ plugin_rest_package_maintainers:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: packageMaintainers, sf_format: xml }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_package_maintainers2:
@@ -89,7 +89,7 @@ plugin_rest_package_maintainers2:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: packageMaintainers2, sf_format: xml }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_release_all:
@@ -98,7 +98,7 @@ plugin_rest_release_all:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: releaseAll, sf_format: xml }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_release_all2:
@@ -107,7 +107,7 @@ plugin_rest_release_all2:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: releaseAll2, sf_format: xml }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_release_latest:
@@ -116,7 +116,7 @@ plugin_rest_release_latest:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: latestRelease, sf_format: txt }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_release_stable:
@@ -125,7 +125,7 @@ plugin_rest_release_stable:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: stableRelease, sf_format: txt }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_release_beta:
@@ -134,7 +134,7 @@ plugin_rest_release_beta:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: betaRelease, sf_format: txt }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_release_alpha:
@@ -143,7 +143,7 @@ plugin_rest_release_alpha:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: alphaRelease, sf_format: txt }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_release_devel:
@@ -152,7 +152,7 @@ plugin_rest_release_devel:
   options: { model: PluginPackage, type: object }
   param: { module: pluginRest, action: develRelease, sf_format: txt }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_rest_release_version:
@@ -161,7 +161,7 @@ plugin_rest_release_version:
   options: { model: PluginPackage, type: object, segment_separators: [/], suffix: .xml }
   param: { module: pluginRest, action: releaseVersion, sf_format: xml }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 #plugin_rest_release_deps:
@@ -174,7 +174,7 @@ plugin_download_tgz:
   options: { model: PluginPackage, type: object, segment_separators: [/, -], suffix: .tgz }
   param: { module: pluginRest, action: downloadTgz }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 plugin_download_without_extension:
@@ -183,7 +183,7 @@ plugin_download_without_extension:
   options: { model: PluginPackage, type: object, segment_separators: [/, -] }
   param: { module: pluginRest, action: downloadTgz, sf_format: tgz }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 # application
@@ -207,7 +207,7 @@ package_use:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: toggleUsing }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [post]
 
 package_unuse:
@@ -216,7 +216,7 @@ package_unuse:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: toggleUsing }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [post]
 
 package_add_release:
@@ -225,7 +225,7 @@ package_add_release:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: addRelease }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get, post]
 
 package_join:
@@ -234,7 +234,7 @@ package_join:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: join }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get, post]
 
 package_manageMember:
@@ -243,7 +243,7 @@ package_manageMember:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: manageMember }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get, post]
 
 package_home:
@@ -252,7 +252,7 @@ package_home:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: home }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 package_home_id:
@@ -261,7 +261,7 @@ package_home_id:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: homeRedirector }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 release_detail:
@@ -270,7 +270,7 @@ release_detail:
   options: { model: PluginRelease, type: object }
   param: { module: package, action: release }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 package_list_release:
@@ -279,7 +279,7 @@ package_list_release:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: releaseList }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 package_list_member:
@@ -288,7 +288,7 @@ package_list_member:
   options: { model: PluginPackage, type: object }
   param: { module: package, action: memberList }
   requirements:
-    name: op.+Plugin
+    name: op.+[pP]lugin
     sf_method: [get]
 
 package_search:
