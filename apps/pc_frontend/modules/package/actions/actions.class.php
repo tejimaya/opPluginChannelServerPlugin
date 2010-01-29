@@ -180,4 +180,15 @@ class packageActions extends sfActions
 
     $this->info = $this->pear->infoFromString($this->release->package_definition);
   }
+
+  public function executeReleaseList(sfWebRequest $request)
+  {
+    if ($this->getUser()->getMemberId())
+    {
+      $this->security['releaselist'] = array('is_secure' => true);
+    }
+
+    $this->pager = Doctrine::getTable('PluginRelease')
+      ->getPager($this->package->id, $request['page'], 20);
+  }
 }

@@ -104,7 +104,7 @@ op_include_parts('listBox', 'packageInformation', $options);
 <div class="partsHeading"><h3><?php echo __('Releases of this plugin') ?></h3></div>
 <div class="block">
 <ul class="articleList">
-<?php foreach ($package->getPluginRelease() as $v): ?>
+<?php foreach ($package->getReleases() as $v): ?>
 <li><span class="date"><?php echo op_format_date($v->created_at, 'XShortDateJa') ?></span>
 <?php echo link_to($v->version, 'release_detail', $v) ?>
 </li>
@@ -117,6 +117,9 @@ op_include_parts('listBox', 'packageInformation', $options);
 <?php echo link_to(__('Release Packages'), 'package_add_release', $package) ?>
 </li>
 <?php endif; ?>
+<li>
+<?php echo link_to(__('More info'), 'package_list_release', $package) ?>
+</li>
 </ul>
 </div>
 </div>

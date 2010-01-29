@@ -233,4 +233,13 @@ abstract class PluginPluginPackage extends BasePluginPackage
 
     return array_shift($versions);
   }
+
+  public function getReleases($limit = 5)
+  {
+    return Doctrine::getTable('PluginRelease')->createQuery()
+      ->where('package_id = ?', $this->id)
+      ->limit($limit)
+      ->orderBy('created_at DESC')
+      ->execute();
+  }
 }
