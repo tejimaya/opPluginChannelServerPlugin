@@ -12,7 +12,7 @@
  <a><?php echo $release->version ?></a>
  <mp>5.2.3</mp>
  <st><?php echo $release->stability ?></st>
- <l>Dictatoric License</l>
+ <l><?php echo $package->license ?></l>
  <m>ebihara</m>
  <s><?php echo $info['summary'] ?></s>
  <d><?php echo $info['description'] ?></d>

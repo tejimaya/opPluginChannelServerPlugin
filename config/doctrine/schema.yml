@@ -6,9 +6,11 @@ PluginPackage:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     name: { type: string(64), notnull: true }
+    summary: { type: string, notnull: true }
     description: { type: string, notnull: true }
     repository: { type: string }
     bts: { type: string }
+    license: { type: string, notnull: true }
     file_id: { type: integer(4) }
     category_id: { type: integer(4), default: 1, notnull: true }
     user_count: { type: integer(4), default: 0 }

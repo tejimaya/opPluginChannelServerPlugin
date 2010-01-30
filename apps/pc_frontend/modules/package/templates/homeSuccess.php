@@ -77,6 +77,8 @@ op_include_parts('nineTable', 'developerList', $options);
 <?php
 $list = array(
   __('Category')       => $package->Category,
+  __('Summary')        => $package->summary,
+  __('License')        => $package->license,
   __('Description')    => nl2br($package->description),
 );
 

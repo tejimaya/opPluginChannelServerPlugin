@@ -9,8 +9,8 @@
  <n><?php echo $package->name ?></n>
  <c><?php echo $channel_name ?></c>
  <ca xlink:href="<?php echo url_for('plugin_rest_category_info', $package->Category) ?>"><?php echo $package->Category->name ?></ca>
- <l>Dictatoric License</l>
- <s>Summary</s>
+ <l><?php echo $package->license ?></l>
+ <s><?php echo $package->summary ?></s>
  <d><?php echo $package->description ?></d>
  <r xlink:href="/rest/r/worlddomination"/>
 </p>

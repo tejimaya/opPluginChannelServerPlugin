@@ -16,13 +16,15 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
 
     unset($this['id']);
     $this->useFields(array(
-      'name', 'description', 'repository',
-      'bts', 'category_id', 'file_id',
+      'name', 'summary', 'description', 'license',
+      'repository', 'bts', 'category_id', 'file_id',
     ));
 
     $this
       ->setWidget('repository', new sfWidgetFormInputText(array('label' => 'Repository URL')))
       ->setWidget('bts', new sfWidgetFormInputText(array('label' => 'BTS URL')))
+      ->setWidget('summary', new sfWidgetFormInputText())
+      ->setWidget('license', new sfWidgetFormInputText())
       ->setWidget('file_id', new sfWidgetFormInputFile(array('label' => 'Image')))
 
       ->setValidator('name', new sfValidatorCallback(array('callback' => array($this, 'validatePluginName'), 'required' => true)))
@@ -34,6 +36,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     $this->widgetSchema
       ->setLabel('name', 'Plugin Name')
       ->setHelp('name', 'Plugin name must start with "op" and end with "Plugin"')
+      ->setHelp('license', 'License should be "MIT", "BSD", "LGPL", "PHP", "Apache" (case-insensitive). If you select other license, plugin installer will output notice.')
     ;
 
     if (sfConfig::get('op_is_use_captcha', false) && $this->isNew())
