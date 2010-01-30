@@ -63,6 +63,7 @@ PluginRelease:
     version: { type: string(64), default: "", notnull: true }
     stability: { type: enum, values: [dev, alpha, beta, stable], default: "stable" }
     file_id: { type: integer(4), notnull: true }
+    member_id: { type: integer(4), notnull: true }
     package_definition: { type: clob, notnull: true }
   indexes:
     package_id_version_UNIQUE:
@@ -76,6 +77,10 @@ PluginRelease:
       onDelete: cascade
     File:
       local: file_id
+      foreign: id
+      onDelete: cascade
+    Member:
+      local: member_id
       foreign: id
       onDelete: cascade
 

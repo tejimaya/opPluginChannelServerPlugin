@@ -117,6 +117,7 @@ class opPluginPackageReleaseForm extends BaseForm
         'version'   => $info['version'],
         'stability' => $info['stability']['release'],
         'file_id'   => $file->id,
+        'member_id' => sfContext::getInstance()->getUser()->getMemberId(),
         'package_definition' => $xml,
       ));
       $this->package->PluginRelease[] = $release;
@@ -163,6 +164,7 @@ class opPluginPackageReleaseForm extends BaseForm
         'version'   => $info['version'],
         'stability' => $info['stability']['release'],
         'file_id'   => $file->id,
+        'member_id' => sfContext::getInstance()->getUser()->getMemberId(),
         'package_definition' => file_get_contents($dir.'/package.xml'),
       ));
       $this->package->PluginRelease[] = $release;
@@ -218,6 +220,7 @@ class opPluginPackageReleaseForm extends BaseForm
         'version'   => $info['version'],
         'stability' => $info['stability']['release'],
         'file_id'   => $file->id,
+        'member_id' => sfContext::getInstance()->getUser()->getMemberId(),
         'package_definition' => file_get_contents($dir.'/package.xml'),
       ));
       $this->package->PluginRelease[] = $release;

@@ -13,7 +13,7 @@
  <mp>5.2.3</mp>
  <st><?php echo $release->stability ?></st>
  <l><?php echo $package->license ?></l>
- <m>ebihara</m>
+ <m><?php echo $release->Member->getConfig('pear_handle') ?></m>
  <s><?php echo $info['summary'] ?></s>
  <d><?php echo $info['description'] ?></d>
  <da><?php echo $info['date'] ?> <?php echo $info['time'] ?></da>
