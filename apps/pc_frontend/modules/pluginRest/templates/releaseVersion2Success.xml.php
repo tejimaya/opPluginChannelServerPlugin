@@ -18,7 +18,7 @@
  <d><?php echo $info['description'] ?></d>
  <da><?php echo $info['date'] ?> <?php echo $info['time'] ?></da>
  <n><?php echo $info['notes'] ?></n>
- <f>19588</f>
- <g>http://pear.example/get/WorldDominator-0.1.2</g>
+ <f><?php echo $release->File->filesize ?></f>
+ <g><?php echo url_for('@plugin_download_without_extension?name='.$package->name.'&version='.$release->version, true) ?></g>
  <x xlink:href="package.<?php echo $release->version ?>.xml"/>
 </r>
