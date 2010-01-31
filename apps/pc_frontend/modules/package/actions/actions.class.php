@@ -131,9 +131,12 @@ class packageActions extends sfActions
     $this->forward404Unless($this->getRequest()->isXmlHttpRequest());
     $this->getResponse()->setContentType('application/json');
 
-    try {
+    try
+    {
       $request->checkCSRFProtection();
-    } catch (sfValidatorErrorSchema $e) {
+    }
+    catch (sfValidatorErrorSchema $e)
+    {
       $this->forward404();
     }
 
@@ -163,44 +166,14 @@ class packageActions extends sfActions
 
   public function executeRelease(sfWebRequest $request)
   {
-    $this->release = $this->getRoute()->getObject();
-
-    error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
-
     foreach (array('channel_name', 'summary', 'suggestedalias') as $v)
     {
-      $this->$v = Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.$v, str_replace(':80', '', $this->getRequest()->getHost()));
+      $this->$v = opPluginChannelServerToolkit::getConfig($v, str_replace(':80', '', $this->getRequest()->getHost()));
     }
-
-    require_once 'PEAR.php';
-    require_once 'PEAR/Common.php';
-    require_once 'PEAR/ChannelFile.php';
 
     $baseUrl = 'http://'.$this->channel_name.'pluginRest/';
-
-    $channel = new PEAR_ChannelFile();
-    $channel->setName($this->channel_name);
-    $channel->setSummary($this->summary);
-    $channel->setAlias($this->suggestedalias);
-    $channel->setBaseURL('REST1.0', $baseUrl);
-    $channel->setBaseURL('REST1.1', $baseUrl);
-    $channel->setBaseURL('REST1.2', $baseUrl);
-    $channel->setBaseURL('REST1.3', $baseUrl);
-
-    $registry = new PEAR_Registry(sfConfig::get('sf_cache_dir'), $channel);
-
-    $this->pear = new PEAR_Common();
-
-    $this->pear->config->setRegistry($registry);
-
-    if (!$registry->channelExists($channel->getName()))
-    {
-      $registry->addChannel($channel);
-    }
-    else
-    {
-      $registry->updateChannel($channel);
-    }
+    $channel = opPluginChannelServerToolkit::generatePearChannelFile($this->channel_name, $this->summary, $this->suggestedalias, $baseUrl);
+    $this->pear = opPluginChannelServerToolkit::registerPearChannel($channel);
 
     $this->info = $this->pear->infoFromString($this->release->package_definition);
 
@@ -245,7 +218,6 @@ class packageActions extends sfActions
   {
     $request->checkCSRFProtection();
 
-    $this->release = $this->getRoute()->getObject();
     $this->release->delete();
 
     $this->getUser()->setFlash('notice', 'The release is removed successfully.');

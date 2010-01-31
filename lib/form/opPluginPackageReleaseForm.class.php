@@ -53,6 +53,21 @@ class opPluginPackageReleaseForm extends BaseForm
     $this->package = $package;
   }
 
+  protected function getChannel()
+  {
+    $host = sfContext::getInstance()->getRequest()->getHost();
+    $serverName = opPluginChannelServerToolkit::getConfig('server_name', str_replace(':80', '', $host));
+
+    $browser = new opBrowser($serverName);
+    $browser->get('/channel.xml');
+
+    $channel = new PEAR_ChannelFile();
+    $channel->fromXmlString($browser->getResponse()->getContent());
+    $channel->setName($serverName);
+
+    return $channel;
+  }
+
   public function uploadPackage()
   {
     error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
@@ -62,33 +77,7 @@ class opPluginPackageReleaseForm extends BaseForm
     $gitUrl = $this->getValue('git_url');
     $gitCommit = $this->getValue('git_commit');
 
-    require_once 'PEAR.php';
-    require_once 'PEAR/Common.php';
-    require_once 'PEAR/ChannelFile.php';
-
-    $serverName = Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'server_name', sfContext::getInstance()->getRequest()->getHost());
-
-    $browser = new opBrowser($serverName);
-    $browser->get('/channel.xml');
-
-    $channel = new PEAR_ChannelFile();
-    $channel->fromXmlString($browser->getResponse()->getContent());
-    $channel->setName($serverName);
-    $registry = new PEAR_Registry(sfConfig::get('sf_cache_dir'), $channel);
-
-    $pear = new PEAR_Common();
-
-    $pearConfig = $pear->config;
-    $pearConfig->setRegistry($registry);
-
-    if (!$registry->channelExists($channel->getName()))
-    {
-      $registry->addChannel($channel);
-    }
-    else
-    {
-      $registry->updateChannel($channel);
-    }
+    $pear = opPluginChannelServerToolkit::registerPearChannel($this->getChannel());
 
     if ($tgz)
     {
