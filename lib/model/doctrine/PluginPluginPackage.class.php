@@ -17,6 +17,11 @@ abstract class PluginPluginPackage extends BasePluginPackage
     return (string)$this->getImage();
   }
 
+  public function getFile()
+  {
+    return $this->getImage();
+  }
+
   public function getLeadMemberIds()
   {
     $results = array();

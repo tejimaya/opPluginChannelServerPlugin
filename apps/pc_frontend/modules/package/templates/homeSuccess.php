@@ -99,6 +99,11 @@ $options = array(
   ),
 );
 
+if ($package->isLead($sf_user->getMemberId()))
+{
+  $options['moreInfo'][] = link_to(__('Edit this plugin information'), 'package_edit', $package);
+}
+
 op_include_parts('listBox', 'packageInformation', $options);
 ?>
 

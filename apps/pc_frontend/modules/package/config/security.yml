@@ -4,6 +4,12 @@ new:
 create:
   is_secure: true
 
+edit:
+  is_secure: true
+
+update:
+  is_secure: true
+
 toggleUsing:
   is_secure: true
 

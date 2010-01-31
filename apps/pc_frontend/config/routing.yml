@@ -201,6 +201,24 @@ package_create:
   requirements:
     sf_method: [post]
 
+package_edit:
+  url:  /package/edit/:name
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: edit }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
+package_update:
+  url:  /package/:name
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: update }
+  requirements:
+    name: op.+Plugin
+    sf_method: [post]
+
 package_use:
   url:  /package/use/:name
   class: sfDoctrineRoute

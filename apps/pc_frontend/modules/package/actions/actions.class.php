@@ -62,6 +62,20 @@ class packageActions extends sfActions
     $this->setTemplate('new');
   }
 
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->form = new PluginPackageForm($this->package);
+  }
+
+  public function executeUpdate(sfWebRequest $request)
+  {
+    $this->form = new PluginPackageForm($this->package);
+    $this->redirectIf($this->form->bindAndSave($request['plugin_package'], $request->getFiles('plugin_package')),
+      'package_home', $this->form->getObject());
+
+    $this->setTemplate('edit');
+  }
+
   public function executeAddRelease(sfWebRequest $request)
   {
     $this->form = new opPluginPackageReleaseForm();

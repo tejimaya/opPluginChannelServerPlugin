@@ -14,7 +14,6 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
   {
     parent::setup();
 
-    unset($this['id']);
     $this->useFields(array(
       'name', 'summary', 'description', 'license',
       'repository', 'bts', 'category_id', 'file_id',
@@ -25,12 +24,13 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
       ->setWidget('bts', new sfWidgetFormInputText(array('label' => 'BTS URL')))
       ->setWidget('summary', new sfWidgetFormInputText())
       ->setWidget('license', new sfWidgetFormInputText())
-      ->setWidget('file_id', new sfWidgetFormInputFile(array('label' => 'Image')))
+      ->addEditableImageFormWidget('file_id', array('label' => 'Image'))
 
       ->setValidator('name', new sfValidatorCallback(array('callback' => array($this, 'validatePluginName'), 'required' => true)))
       ->setValidator('repository', new sfValidatorUrl(array('required' => false)))
       ->setValidator('bts', new sfValidatorUrl(array('required' => false)))
       ->setValidator('file_id', new opValidatorImageFile(array('required' => false)))
+      ->setValidator('id', new opValidatorString(array('required' => false)))
     ;
 
     $this->widgetSchema
@@ -43,6 +43,22 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     {
       $this->embedForm('captcha', new opCaptchaForm());
     }
+
+    if (!$this->isNew())
+    {
+      unset($this['name']);
+    }
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    unset($taintedValues['id']);
+    if (!$this->isNew())
+    {
+      $taintedValues['id'] = $this->getObject()->id;
+    }
+
+    parent::bind($taintedValues, $taintedFiles);
   }
 
   public function validatePluginName($validator, $value, $arguments)
@@ -73,6 +89,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     }
 
     $obj = parent::updateObject($values);
+    $obj->save();
 
     if ($this->isNew())
     {
@@ -83,10 +100,23 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
 
     if ($image instanceof sfValidatedFile)
     {
-      unset($obj->Image);
+      $oldImage = clone $obj->Image;
 
+      $obj->Image = new File();
       $obj->Image->setFromValidatedFile($image);
       $obj->Image->name = 'plugin_'.$obj->getId().'_'.$obj->Image->name;
+      if ($oldImage)
+      {
+        $oldImage->delete();
+      }
+    }
+    elseif ($this->getValue('file_id_delete'))
+    {
+      if ($obj->Image)
+      {
+        $obj->Image->delete();
+        $obj->Image = null;
+      }
     }
 
     $obj->save();
@@ -95,5 +125,31 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
   protected function processUploadedFile($field, $filename = null, $values = null)
   {
     return '';
+  }
+
+  public function addEditableImageFormWidget($name, $options = array())
+  {
+    $options = array_merge(array(
+      'file_src'     => '',
+      'is_image'     => true,
+      'with_delete'  => true,
+      'delete_label' => sfContext::getInstance()->getI18N()->__('Remove the current photo')
+    ), $options);
+
+    if (!$this->isNew() && $this->getObject()->$name)
+    {
+      sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
+      $options['edit_mode'] = true;
+      $options['template'] = get_partial('default/formEditImage', array('image' => $this->getObject()));
+      $this->setValidator('file_id_delete', new sfValidatorBoolean(array('required' => false)));
+    }
+    else
+    {
+      $options['edit_mode'] = false;
+    }
+
+    $this->setWidget($name, new sfWidgetFormInputFileEditable($options, array('size' => 40)));
+
+    return $this;
   }
 }
