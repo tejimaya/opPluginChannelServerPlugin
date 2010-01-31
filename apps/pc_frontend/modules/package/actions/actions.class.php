@@ -31,16 +31,26 @@ class packageActions extends sfActions
 
     if ($this->getRoute() instanceof sfDoctrineRoute)
     {
-      $this->package = $this->getRoute()->getObject();
+      $object = $this->getRoute()->getObject();
+      if ($object instanceof PluginPackage)
+      {
+        $this->package = $object;
+      }
+      elseif ($object instanceof PluginRelease)
+      {
+        $this->release = $object;
+        $this->package = $object->Package;
+      }
+    }
+
+    if ($this->getUser()->hasCredential('SNSMember'))
+    {
+      $this->security[strtolower($this->actionName)] = array('is_secure' => true);
     }
   }
 
   public function executeHome(sfWebRequest $request)
   {
-    if ($this->getUser()->getMemberId())
-    {
-      $this->security['home'] = array('is_secure' => true);
-    }
   }
 
   public function executeHomeRedirector(sfWebRequest $request)
@@ -153,11 +163,6 @@ class packageActions extends sfActions
 
   public function executeRelease(sfWebRequest $request)
   {
-    if ($this->getUser()->getMemberId())
-    {
-      $this->security['release'] = array('is_secure' => true);
-    }
-
     $this->release = $this->getRoute()->getObject();
 
     error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
@@ -204,33 +209,18 @@ class packageActions extends sfActions
 
   public function executeReleaseList(sfWebRequest $request)
   {
-    if ($this->getUser()->getMemberId())
-    {
-      $this->security['releaselist'] = array('is_secure' => true);
-    }
-
     $this->pager = Doctrine::getTable('PluginRelease')
       ->getPager($this->package->id, $request['page'], 20);
   }
 
   public function executeMemberList(sfWebRequest $request)
   {
-    if ($this->getUser()->getMemberId())
-    {
-      $this->security['memberlist'] = array('is_secure' => true);
-    }
-
     $this->pager = Doctrine::getTable('PluginMember')
       ->getPager($this->package->id, $request['page'], 20);
   }
 
   public function executeSearch(sfWebRequest $request)
   {
-    if ($this->getUser()->getMemberId())
-    {
-      $this->security['search'] = array('is_secure' => true);
-    }
-
     $params = $request->getParameter('package', array());
     if (isset($request['search_query']))
     {
