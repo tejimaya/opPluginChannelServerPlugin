@@ -291,6 +291,14 @@ release_detail:
     name: op.+[pP]lugin
     sf_method: [get]
 
+release_delete:
+  url:  /release/:id/delete
+  class: sfDoctrineRoute
+  options: { model: PluginRelease, type: object }
+  param: { module: package, action: releaseDelete }
+  requirements:
+    sf_method: [post]
+
 package_list_release:
   url:  /package/:name/releases
   class: sfDoctrineRoute

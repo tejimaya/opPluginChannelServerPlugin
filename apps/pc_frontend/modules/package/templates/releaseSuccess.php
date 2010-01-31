@@ -12,3 +12,12 @@ op_include_parts('listBox', 'releaseInfoList', array(
       '@plugin_download_tgz?version='.$release->version.'&name='.$release->Package->name),
   ),
 ));
+
+if ($release->Package->isLead($sf_user->getMemberId()))
+{
+  op_include_form('removeRelease', $form, array(
+    'title'  => __('Do you want to delete this release?'),
+    'button' => __('Delete'),
+    'url'    => url_for('@release_delete?id='.$release->id),
+  ));
+}

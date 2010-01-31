@@ -198,6 +198,8 @@ class packageActions extends sfActions
     }
 
     $this->info = $this->pear->infoFromString($this->release->package_definition);
+
+    $this->form = new BaseForm();
   }
 
   public function executeReleaseList(sfWebRequest $request)
@@ -247,5 +249,17 @@ class packageActions extends sfActions
     $this->pager->setQuery($this->filters->getQuery());
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
+  }
+
+  public function executeReleaseDelete(sfWebRequest $request)
+  {
+    $request->checkCSRFProtection();
+
+    $this->release = $this->getRoute()->getObject();
+    $this->release->delete();
+
+    $this->getUser()->setFlash('notice', 'The release is removed successfully.');
+
+    $this->redirect('package_home', $this->release->Package);
   }
 }
