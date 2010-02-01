@@ -15,4 +15,15 @@ class PluginPluginReleaseTable extends Doctrine_Table
 
     return $pager;
   }
+
+  public function createByPackageInfo(array $info, File $file, $memberId, $xml)
+  {
+    return Doctrine::getTable('PluginRelease')->create(array(
+      'version'   => $info['version'],
+      'stability' => $info['stability']['release'],
+      'file_id'   => $file->id,
+      'member_id' => $memberId,
+      'package_definition' => $xml,
+    ));
+  }
 }

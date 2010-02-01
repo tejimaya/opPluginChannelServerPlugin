@@ -75,8 +75,20 @@ class opPluginChannelServerToolkit
     return $channel;
   }
 
-  public function getConfig($name, $default = null)
+  public static function getConfig($name, $default = null)
   {
     return Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.$name, $default);
+  }
+
+  public static function generateTarByPluginDir(array $info, $filename, $input, $output)
+  {
+    require_once 'Archive/Tar.php';
+
+    $tar = new Archive_Tar($output.'/'.$filename, true);
+    foreach ($info['filelist'] as $file => $data)
+    {
+      $tar->addString($info['name'].'-'.$info['version'].'/'.$file, file_get_contents($input.'/'.$file));
+    }
+    $tar->addString('package.xml', file_get_contents($input.'/package.xml'));
   }
 }

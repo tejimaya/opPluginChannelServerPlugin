@@ -70,12 +70,11 @@ class opPluginPackageReleaseForm extends BaseForm
 
   public function uploadPackage()
   {
-    error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
-
     $tgz = $this->getValue('tgz_file');
     $svn = $this->getValue('svn_url');
     $gitUrl = $this->getValue('git_url');
     $gitCommit = $this->getValue('git_commit');
+    $memberId = sfContext::getInstance()->getUser()->getMemberId();
 
     $pear = opPluginChannelServerToolkit::registerPearChannel($this->getChannel());
 
@@ -102,121 +101,89 @@ class opPluginPackageReleaseForm extends BaseForm
       $file = new File();
       $file->setFromValidatedFile($tgz);
       $file->save();
-      $release = Doctrine::getTable('PluginRelease')->create(array(
-        'version'   => $info['version'],
-        'stability' => $info['stability']['release'],
-        'file_id'   => $file->id,
-        'member_id' => sfContext::getInstance()->getUser()->getMemberId(),
-        'package_definition' => $xml,
-      ));
+
+      $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, $xml);
       $this->package->PluginRelease[] = $release;
       $this->package->save();
     }
     elseif ($svn)
     {
-      require_once 'VersionControl/SVN.php';
-
-      $dir = sfConfig::get('sf_cache_dir').'/svn-'.md5($svn);
-
-      $result = VersionControl_SVN::factory('export', array(
-        'svn_path' => 'svn', // FIXME: It should be configurable
-      ))->run(array($svn, $dir));
-
-      $info = $pear->infoFromDescriptionFile($dir.'/package.xml');
-      if ($info instanceof PEAR_Error)
-      {
-        throw new RuntimeException($info->getMessage());
-      }
-
-      require_once 'Archive/Tar.php';
-
-      $filename = sprintf('%s-%s.tgz', $info['name'], $info['version']);
-
-      $tar = new Archive_Tar(sfConfig::get('sf_cache_dir').'/'.$filename, true);
-      foreach ($info['filelist'] as $file => $data)
-      {
-        $tar->addString($info['name'].'-'.$info['version'].'/'.$file, file_get_contents($dir.'/'.$file));
-      }
-      $tar->addString('package.xml', file_get_contents($dir.'/package.xml'));
-
-      $file = new File();
-      $file->setType('application/x-gzip');
-      $file->setOriginalFilename($filename);
-      $file->setName(strtr($filename, '.', '_'));
-
-      $bin = new FileBin();
-      $bin->setBin(file_get_contents(sfConfig::get('sf_cache_dir').'/'.$filename));
-      $file->setFileBin($bin);
-      $file->save();
-
-      $release = Doctrine::getTable('PluginRelease')->create(array(
-        'version'   => $info['version'],
-        'stability' => $info['stability']['release'],
-        'file_id'   => $file->id,
-        'member_id' => sfContext::getInstance()->getUser()->getMemberId(),
-        'package_definition' => file_get_contents($dir.'/package.xml'),
-      ));
-      $this->package->PluginRelease[] = $release;
-      $this->package->save();
-
-      sfToolkit::clearDirectory($dir);
-      $filesystem = new sfFilesystem();
-      $filesystem->remove($dir);
+      $dir = $this->importFromSvn($svn);
+      $this->importSCMFile($pear, $memberId, $dir);
     }
     elseif ($gitUrl && $gitCommit)
     {
-      $filesystem = new sfFilesystem();
-
-      require_once 'VersionControl/Git.php';
-
-      $dir = sfConfig::get('sf_cache_dir').'/git-'.md5($gitUrl.$gitCommit);
-      $filesystem->mkdirs($dir);
-
-      $git = new VersionControl_Git(sfConfig::get('sf_cache_dir'));
-      $git->createClone($gitUrl, false, $dir);
-      $filesystem->chmod($dir, 0777);
-      $git = new VersionControl_Git($dir);
-      $git->checkout($gitCommit);
-
-      $info = $pear->infoFromDescriptionFile($dir.'/package.xml');
-      if ($info instanceof PEAR_Error)
-      {
-        throw new RuntimeException($info->message());
-      }
-
-      require_once 'Archive/Tar.php';
-
-      $filename = sprintf('%s-%s.tgz', $info['name'], $info['version']);
-
-      $tar = new Archive_Tar(sfConfig::get('sf_cache_dir').'/'.$filename, true);
-      foreach ($info['filelist'] as $file => $data)
-      {
-        $tar->addString($info['name'].'-'.$info['version'].'/'.$file, file_get_contents($dir.'/'.$file));
-      }
-      $tar->addString('package.xml', file_get_contents($dir.'/package.xml'));
-
-      $file = new File();
-      $file->setType('application/x-gzip');
-      $file->setOriginalFilename($filename);
-      $file->setName(strtr($filename, '.', '_'));
-
-      $bin = new FileBin();
-      $bin->setBin(file_get_contents(sfConfig::get('sf_cache_dir').'/'.$filename));
-      $file->setFileBin($bin);
-      $file->save();
-
-      $release = Doctrine::getTable('PluginRelease')->create(array(
-        'version'   => $info['version'],
-        'stability' => $info['stability']['release'],
-        'file_id'   => $file->id,
-        'member_id' => sfContext::getInstance()->getUser()->getMemberId(),
-        'package_definition' => file_get_contents($dir.'/package.xml'),
-      ));
-      $this->package->PluginRelease[] = $release;
-      $this->package->save();
-
-      sfToolkit::clearDirectory($dir);
-      $filesystem->remove($dir);
+      $dir = $this->importFromGit($gitUrl, $gitCommit);
+      $this->importSCMFile($pear, $memberId, $dir);
     }
+  }
+
+  protected function importSCMFile($pear, $memberId, $dir)
+  {
+    $filesystem = new sfFilesystem();
+
+    $info = $pear->infoFromDescriptionFile($dir.'/package.xml');
+    if ($info instanceof PEAR_Error)
+    {
+      throw new RuntimeException($info->message());
+    }
+
+    $filename = sprintf('%s-%s.tgz', $info['name'], $info['version']);
+    $tar = opPluginChannelServerToolkit::generateTarByPluginDir($info, $filename, $dir, sfConfig::get('sf_cache_dir'));
+
+    $file = $this->getImportedPluginFile($filename, sfConfig::get('sf_cache_dir').'/'.$filename);
+
+    $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, file_get_contents($dir.'/package.xml'));
+    $this->package->PluginRelease[] = $release;
+    $this->package->save();
+
+    sfToolkit::clearDirectory($dir);
+    $filesystem->remove($dir);
+  }
+
+  protected function importFromSvn($url)
+  {
+    require_once 'VersionControl/SVN.php';
+
+    $dir = sfConfig::get('sf_cache_dir').'/svn-'.md5($url);
+
+    $result = VersionControl_SVN::factory('export', array(
+      'svn_path' => 'svn', // FIXME: It should be configurable
+    ))->run(array($url, $dir));
+
+    return $dir;
+  }
+
+  protected function importFromGit($gitUrl, $gitCommit)
+  {
+    $filesystem = new sfFilesystem();
+
+    require_once 'VersionControl/Git.php';
+
+    $dir = sfConfig::get('sf_cache_dir').'/git-'.md5($gitUrl.$gitCommit);
+    $filesystem->mkdirs($dir);
+
+    $git = new VersionControl_Git(sfConfig::get('sf_cache_dir'));
+    $git->createClone($gitUrl, false, $dir);
+    $filesystem->chmod($dir, 0777);
+    $git = new VersionControl_Git($dir);
+    $git->checkout($gitCommit);
+
+    return $dir;
+  }
+
+  protected function getImportedPluginFile($filename, $filepath)
+  {
+    $file = new File();
+    $file->setType('application/x-gzip');
+    $file->setOriginalFilename($filename);
+    $file->setName(strtr($filename, '.', '_'));
+
+    $bin = new FileBin();
+    $bin->setBin($filepath);
+    $file->setFileBin($bin);
+    $file->save();
+
+    return $file;
   }
 }
