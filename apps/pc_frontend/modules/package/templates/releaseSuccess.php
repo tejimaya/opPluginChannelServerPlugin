@@ -13,7 +13,7 @@ op_include_parts('listBox', 'releaseInfoList', array(
   ),
 ));
 
-if ($release->Package->isLead($sf_user->getMemberId()))
+if ($release->isAllowed($sf_user->getRawValue()->getMember(), 'delete'))
 {
   op_include_form('removeRelease', $form, array(
     'title'  => __('Do you want to delete this release?'),

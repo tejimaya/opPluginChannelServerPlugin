@@ -25,7 +25,32 @@
  * @subpackage model
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class PluginPluginRelease extends BasePluginRelease
+abstract class PluginPluginRelease extends BasePluginRelease implements opAccessControlRecordInterface
 {
+  public function generateRoleId(Member $member = null)
+  {
+    if (!$member)
+    {
+      return 'anonymous';
+    }
 
+    if ($this->Package->isLead($member->id))
+    {
+      return 'lead';
+    }
+    elseif ($this->Package->isDeveloper($member->id))
+    {
+      return 'developer';
+    }
+    elseif ($this->Package->isContributor($member->id))
+    {
+      return 'contributor';
+    }
+    elseif ($member->id)
+    {
+      return 'sns_member';
+    }
+
+    return 'anonymous';
+  }
 }

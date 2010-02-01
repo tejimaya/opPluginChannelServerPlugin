@@ -25,7 +25,30 @@
  * @subpackage model
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class PluginPluginPackageTable extends Doctrine_Table
+class PluginPluginPackageTable extends opAccessControlDoctrineTable
 {
+  public function appendRoles(Zend_Acl $acl)
+  {
+    return $acl
+      ->addRole(new Zend_Acl_Role('anonymous'))
+      ->addRole(new Zend_Acl_Role('sns_member'), 'anonymous')
+      ->addRole(new Zend_Acl_Role('contributor'), 'sns_member')
+      ->addRole(new Zend_Acl_Role('developer'), 'contributor')
+      ->addRole(new Zend_Acl_Role('lead'), 'developer');
+  }
 
+  public function appendRules(Zend_Acl $acl, $resource = null)
+  {
+    return $acl
+      ->allow('anonymous', $resource, 'view')
+      ->allow('sns_member', $resource, 'create')
+      ->allow('sns_member', $resource, 'request')
+      ->allow('sns_member', $resource, 'countUser')
+      ->deny('contributor', $resource, 'request')
+      ->allow('lead', $resource, 'edit')
+      ->allow('lead', $resource, 'delete')
+      ->allow('lead', $resource, 'release')
+      ->allow('lead', $resource, 'manageMember')
+    ;
+  }
 }

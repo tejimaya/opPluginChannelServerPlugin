@@ -25,7 +25,7 @@
  * @subpackage model
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class PluginPluginPackage extends BasePluginPackage
+abstract class PluginPluginPackage extends BasePluginPackage implements opAccessControlRecordInterface
 {
   public function getImageFilename()
   {
@@ -115,6 +115,26 @@ abstract class PluginPluginPackage extends BasePluginPackage
   public function isLead($id)
   {
     return in_array($id, $this->getLeadMemberIds());
+  }
+
+  public function isDeveloper($id)
+  {
+    return (bool)Doctrine::getTable('PluginMember')
+      ->createQuery()
+      ->where('package_id = ?', array($this->id))
+      ->andWhere('member_id = ?', array($id))
+      ->andWhere('position = ?', array('developer'))
+      ->fetchOne();
+  }
+
+  public function isContributor($id)
+  {
+    return (bool)Doctrine::getTable('PluginMember')
+      ->createQuery()
+      ->where('package_id = ?', array($this->id))
+      ->andWhere('member_id = ?', array($id))
+      ->andWhere('position = ?', array('developer'))
+      ->fetchOne();
   }
 
   public function toggleUsing($id)
@@ -261,5 +281,32 @@ abstract class PluginPluginPackage extends BasePluginPackage
       ->limit($limit)
       ->orderBy('created_at DESC')
       ->execute();
+  }
+
+  public function generateRoleId(Member $member = null)
+  {
+    if (!$member)
+    {
+      return 'anonymous';
+    }
+
+    if ($this->isLead($member->id))
+    {
+      return 'lead';
+    }
+    elseif ($this->isDeveloper($member->id))
+    {
+      return 'developer';
+    }
+    elseif ($this->isContributor($member->id))
+    {
+      return 'contributor';
+    }
+    elseif ($member->id)
+    {
+      return 'sns_member';
+    }
+
+    return 'anonymous';
   }
 }

@@ -18,6 +18,7 @@ padding:10px;
 text-align:center;
 " id="plugin_user">
 <span id="plugin_user_count"><?php echo $package->countUsers() ?></span><br /><span>users</span>
+<?php if ($package->isAllowed($sf_user->getRawValue()->getMember(), 'countUser')): ?>
 <p style="margin-top: 10px; text-align: center; font-size: 9px; color: #000;">
 <?php
 $form = new sfForm();
@@ -38,6 +39,7 @@ $_ajax_parameter = '"'.sfForm::getCSRFFieldName().'='.$form->getDefault(sfForm::
 ), array('id' => 'package_use_link',
 'style' => 'display:'.(!$package->isUser($sf_user->getMemberId()) ? 'inline' : 'none'))) ?>
 </p>
+<?php endif; ?>
 </div>
 <?php echo javascript_tag('
 function updateUser(ajax)
@@ -65,7 +67,7 @@ $options = array(
   'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $package->countMembers()), '@package_list_member?name='.$package->name)),
 );
 
-if ($package->isLead($sf_user->getMemberId()))
+if ($package->isAllowed($sf_user->getRawValue()->getMember(), 'manageMember'))
 {
   $options['moreInfo'][] = link_to(__('Manage developers'), '@package_manageMember?name='.$package->name);
 }
@@ -94,16 +96,18 @@ if ($package->bts)
 $options = array(
   'title' => __('Detail of this plugin'),
   'list' => $list,
-  'moreInfo' => array(
-    link_to(__('Join this plugin developer team'), 'package_join', $package),
-  ),
+  'moreInfo' => array(),
 );
 
-if ($package->isLead($sf_user->getMemberId()))
+if ($package->isAllowed($sf_user->getRawValue()->getMember(), 'edit'))
 {
   $options['moreInfo'][] = link_to(__('Edit this plugin information'), 'package_edit', $package);
 }
 
+if ($package->isAllowed($sf_user->getRawValue()->getMember(), 'request'))
+{
+  $options['moreInfo'][] = link_to(__('Join this plugin developer team'), 'package_join', $package);
+}
 op_include_parts('listBox', 'packageInformation', $options);
 ?>
 
@@ -119,7 +123,7 @@ op_include_parts('listBox', 'packageInformation', $options);
 </ul>
 <div class="moreInfo">
 <ul class="moreInfo">
-<?php if ($package->isLead($sf_user->getMemberId())): ?>
+<?php if ($package->isAllowed($sf_user->getRawValue()->getMember(), 'release')): ?>
 <li>
 <?php echo link_to(__('Release Packages'), 'package_add_release', $package) ?>
 </li>

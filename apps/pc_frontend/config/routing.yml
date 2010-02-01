@@ -203,8 +203,8 @@ package_create:
 
 package_edit:
   url:  /package/edit/:name
-  class: sfDoctrineRoute
-  options: { model: PluginPackage, type: object }
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: edit }
   param: { module: package, action: edit }
   requirements:
     name: op.+Plugin
@@ -212,8 +212,8 @@ package_edit:
 
 package_update:
   url:  /package/:name
-  class: sfDoctrineRoute
-  options: { model: PluginPackage, type: object }
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: edit }
   param: { module: package, action: update }
   requirements:
     name: op.+Plugin
@@ -221,8 +221,8 @@ package_update:
 
 package_use:
   url:  /package/use/:name
-  class: sfDoctrineRoute
-  options: { model: PluginPackage, type: object }
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: countUser }
   param: { module: package, action: toggleUsing }
   requirements:
     name: op.+[pP]lugin
@@ -230,8 +230,8 @@ package_use:
 
 package_unuse:
   url:  /package/unuse/:name
-  class: sfDoctrineRoute
-  options: { model: PluginPackage, type: object }
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: countUser }
   param: { module: package, action: toggleUsing }
   requirements:
     name: op.+[pP]lugin
@@ -239,8 +239,8 @@ package_unuse:
 
 package_add_release:
   url:  /package/:name/release/add
-  class: sfDoctrineRoute
-  options: { model: PluginPackage, type: object }
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: release }
   param: { module: package, action: addRelease }
   requirements:
     name: op.+[pP]lugin
@@ -248,8 +248,8 @@ package_add_release:
 
 package_join:
   url:  /package/:name/join
-  class: sfDoctrineRoute
-  options: { model: PluginPackage, type: object }
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: request }
   param: { module: package, action: join }
   requirements:
     name: op.+[pP]lugin
@@ -257,8 +257,8 @@ package_join:
 
 package_manageMember:
   url:  /package/:name/manageMember
-  class: sfDoctrineRoute
-  options: { model: PluginPackage, type: object }
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: manageMember }
   param: { module: package, action: manageMember }
   requirements:
     name: op.+[pP]lugin
@@ -293,8 +293,8 @@ release_detail:
 
 release_delete:
   url:  /release/:id/delete
-  class: sfDoctrineRoute
-  options: { model: PluginRelease, type: object }
+  class: opDynamicAclRoute
+  options: { model: PluginRelease, type: object, privilege: delete }
   param: { module: package, action: releaseDelete }
   requirements:
     sf_method: [post]
@@ -324,3 +324,19 @@ package_search:
   requirements:
     sf_method: [get]
 
+#nodefaults
+package_nodefaults:
+  url: /package/*
+  param: { module: default, action: error }
+
+release_nodefaults:
+  url: /release/*
+  param: { module: default, action: error }
+
+pluginRest_nodefaults:
+  url: /pluginRest/*
+  param: { module: default, action: error }
+
+get_nodefaults:
+  url: /get/*
+  param: { module: default, action: error }

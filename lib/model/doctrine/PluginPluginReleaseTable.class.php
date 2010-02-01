@@ -25,7 +25,7 @@
  * @subpackage model
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class PluginPluginReleaseTable extends Doctrine_Table
+class PluginPluginReleaseTable extends opAccessControlDoctrineTable
 {
   public function getPager($id, $page = 1, $size = 20)
   {
@@ -49,5 +49,23 @@ class PluginPluginReleaseTable extends Doctrine_Table
       'member_id' => $memberId,
       'package_definition' => $xml,
     ));
+  }
+
+  public function appendRoles(Zend_Acl $acl)
+  {
+    return $acl
+      ->addRole(new Zend_Acl_Role('anonymous'))
+      ->addRole(new Zend_Acl_Role('sns_member'), 'anonymous')
+      ->addRole(new Zend_Acl_Role('contributor'), 'sns_member')
+      ->addRole(new Zend_Acl_Role('developer'), 'contributor')
+      ->addRole(new Zend_Acl_Role('lead'), 'developer');
+  }
+
+  public function appendRules(Zend_Acl $acl, $resource = null)
+  {
+    return $acl
+      ->allow('lead', $resource, 'add')
+      ->allow('lead', $resource, 'delete')
+    ;
   }
 }
