@@ -82,6 +82,9 @@ class opPluginChannelServerToolkit
 
   public static function generateTarByPluginDir(array $info, $filename, $input, $output)
   {
+    $timeLimit = ini_get('max_execution_time');
+    set_time_limit(0);
+
     require_once 'Archive/Tar.php';
 
     $tar = new Archive_Tar($output.'/'.$filename, true);
@@ -90,5 +93,7 @@ class opPluginChannelServerToolkit
       $tar->addString($info['name'].'-'.$info['version'].'/'.$file, file_get_contents($input.'/'.$file));
     }
     $tar->addString('package.xml', file_get_contents($input.'/package.xml'));
+
+    set_time_limit($timeLimit);
   }
 }

@@ -129,7 +129,7 @@ class opPluginPackageReleaseForm extends BaseForm
     }
 
     $filename = sprintf('%s-%s.tgz', $info['name'], $info['version']);
-    $tar = opPluginChannelServerToolkit::generateTarByPluginDir($info, $filename, $dir, sfConfig::get('sf_cache_dir'));
+    opPluginChannelServerToolkit::generateTarByPluginDir($info, $filename, $dir, sfConfig::get('sf_cache_dir'));
 
     $file = $this->getImportedPluginFile($filename, sfConfig::get('sf_cache_dir').'/'.$filename);
 
@@ -137,8 +137,10 @@ class opPluginPackageReleaseForm extends BaseForm
     $this->package->PluginRelease[] = $release;
     $this->package->save();
 
+    $filesystem = new sfFilesystem();
     sfToolkit::clearDirectory($dir);
     $filesystem->remove($dir);
+    $filesystem->remove(sfConfig::get('sf_cache_dir').'/'.$filename);
   }
 
   protected function importFromSvn($url)
@@ -180,7 +182,7 @@ class opPluginPackageReleaseForm extends BaseForm
     $file->setName(strtr($filename, '.', '_'));
 
     $bin = new FileBin();
-    $bin->setBin($filepath);
+    $bin->setBin(file_get_contents($filepath));
     $file->setFileBin($bin);
     $file->save();
 
