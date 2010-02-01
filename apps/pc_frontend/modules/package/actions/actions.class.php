@@ -43,6 +43,11 @@ class packageActions extends sfActions
     }
   }
 
+  public function executeHomeRedirector(sfWebRequest $request)
+  {
+    $this->redirect('package_home', $this->package);
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new PluginPackageForm();
@@ -201,5 +206,32 @@ class packageActions extends sfActions
 
     $this->pager = Doctrine::getTable('PluginMember')
       ->getPager($this->package->id, $request['page'], 20);
+  }
+
+  public function executeSearch(sfWebRequest $request)
+  {
+    if ($this->getUser()->getMemberId())
+    {
+      $this->security['search'] = array('is_secure' => true);
+    }
+
+    $params = $request->getParameter('package', array());
+    if (isset($request['search_query']))
+    {
+      $params = array_merge($params, array('name' => $request->getParameter('search_query', '')));
+    }
+
+    $this->filters = new PluginPackageFormFilter();
+    $this->filters->bind($request->getParameter('plugin_package_filters', array()));
+
+    if (!isset($this->size))
+    {
+      $this->size = 20;
+    }
+
+    $this->pager = new sfDoctrinePager('PluginPackage', $this->size);
+    $this->pager->setQuery($this->filters->getQuery());
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
   }
 }

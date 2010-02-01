@@ -10,4 +10,15 @@
  */
 abstract class PluginPluginPackageFormFilter extends BasePluginPackageFormFilter
 {
+  public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
+  {
+    parent::__construct($defaults, $options, false);
+  }
+
+  public function setup()
+  {
+    parent::setup();
+
+    $this->useFields(array('name', 'description', 'category_id'));
+  }
 }

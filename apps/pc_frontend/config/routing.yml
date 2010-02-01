@@ -255,6 +255,15 @@ package_home:
     name: op.+Plugin
     sf_method: [get]
 
+package_home_id:
+  url:  /package/id/:id
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: homeRedirector }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get]
+
 release_detail:
   url:  /release/:id
   class: sfDoctrineRoute
@@ -280,5 +289,12 @@ package_list_member:
   param: { module: package, action: memberList }
   requirements:
     name: op.+Plugin
+    sf_method: [get]
+
+package_search:
+  url:  /package/search
+  class: sfRequestRoute
+  param: { module: package, action: search }
+  requirements:
     sf_method: [get]
 
