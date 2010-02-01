@@ -168,7 +168,6 @@ class opPluginPackageReleaseForm extends BaseForm
     $git = new VersionControl_Git(sfConfig::get('sf_cache_dir'));
     $git->createClone($gitUrl, false, $dir);
     $filesystem->chmod($dir, 0777);
-    $git = new VersionControl_Git($dir);
     $git->checkout($gitCommit);
 
     return $dir;
