@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2009 Kousuke Ebihara
+ * Copyright 2010 Kousuke Ebihara
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  * @category  VersionControl
  * @package   VersionControl_Git
  * @author    Kousuke Ebihara <kousuke@co3k.org>
- * @copyright 2009 Kousuke Ebihara
+ * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
 
@@ -30,7 +30,7 @@
  * @category  VersionControl
  * @package   VersionControl_Git
  * @author    Kousuke Ebihara <kousuke@co3k.org>
- * @copyright 2009 Kousuke Ebihara
+ * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
 class VersionControl_Git_Object_Commit extends VersionControl_Git_Object
@@ -95,7 +95,7 @@ class VersionControl_Git_Object_Commit extends VersionControl_Git_Object
     public static function createInstanceByArray($git, $array)
     {
         if (!isset($array['commit']) || !$array['commit']) {
-            throw new PEAR_Exception('The commit object must have id');
+            throw new VersionControl_Git_Exception('The commit object must have id');
         }
 
         $parts = explode(' ', $array['commit'], 2);
@@ -196,7 +196,7 @@ class VersionControl_Git_Object_Commit extends VersionControl_Git_Object
                     ->target($v)
                     ->setOption('max-count', 1)
                     ->fetch();
-            } catch (PEAR_Exception $e) {
+            } catch (VersionControl_Git_Exception $e) {
                 return false;
             }
 
@@ -358,8 +358,8 @@ class VersionControl_Git_Object_Commit extends VersionControl_Git_Object
                   ->target($this->id)
                   ->setOption('max-count', 1)
                   ->fetch();
-            } catch (PEAR_Exception $e) {
-                throw new PEAR_Exception('The object id is not valid.');
+            } catch (VersionControl_Git_Exception $e) {
+                throw new VersionControl_Git_Exception('The object id is not valid.');
             }
 
             if (!$this->tree) {

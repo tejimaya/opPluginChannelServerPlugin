@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2009 Kousuke Ebihara
+ * Copyright 2010 Kousuke Ebihara
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  * @category  VersionControl
  * @package   VersionControl_Git
  * @author    Kousuke Ebihara <kousuke@co3k.org>
- * @copyright 2009 Kousuke Ebihara
+ * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
 
@@ -30,7 +30,7 @@
  * @category  VersionControl
  * @package   VersionControl_Git
  * @author    Kousuke Ebihara <kousuke@co3k.org>
- * @copyright 2009 Kousuke Ebihara
+ * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
 class VersionControl_Git_Util_Command extends VersionControl_Git_Component
@@ -165,7 +165,7 @@ class VersionControl_Git_Util_Command extends VersionControl_Git_Component
     protected function createCommandString($arguments = array(), $options = array())
     {
         if (!$this->subCommand) {
-            throw new PEAR_Exception('You must specified "subCommand"');
+            throw new VersionControl_Git_Exception('You must specify "subCommand"');
         }
 
         $command = $this->git->getGitCommandPath().' '.$this->subCommand;
@@ -225,7 +225,7 @@ class VersionControl_Git_Util_Command extends VersionControl_Git_Component
 
         if ($status) {
             $message = 'Some errors in executing git command: '.$result;
-            throw new PEAR_Exception($message);
+            throw new VersionControl_Git_Exception($message);
         }
 
         return $result;

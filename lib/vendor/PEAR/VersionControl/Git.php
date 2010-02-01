@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2009 Kousuke Ebihara
+ * Copyright 2010 Kousuke Ebihara
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,12 @@
  * @category  VersionControl
  * @package   VersionControl_Git
  * @author    Kousuke Ebihara <kousuke@co3k.org>
- * @copyright 2009 Kousuke Ebihara
+ * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
 
 require_once 'PEAR/Exception.php';
+require_once 'VersionControl/Git/Exception.php';
 
 require_once 'VersionControl/Git/Component.php';
 
@@ -44,7 +45,7 @@ require_once 'VersionControl/Git/Object/Tree.php';
  * @category  VersionControl
  * @package   VersionControl_Git
  * @author    Kousuke Ebihara <kousuke@co3k.org>
- * @copyright 2009 Kousuke Ebihara
+ * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
 class VersionControl_Git
@@ -72,7 +73,7 @@ class VersionControl_Git
     {
         if (!is_dir($reposDir)) {
             $message = 'You must specified readable directory as repository.';
-            throw new PEAR_Exception($message);
+            throw new VersionControl_Git_Exception($message);
         }
 
         $this->directory = $reposDir;
@@ -116,17 +117,23 @@ class VersionControl_Git
      *
      * @param string $repository The path to repository
      * @param bool   $isBare     Whether to create bare clone
+     * @param string $directory  The path to new repository
      *
      * @return null
      */
-    public function createClone($repository, $isBare = false, $path = '.')
+    public function createClone($repository, $isBare = false, $directory = null)
     {
-        $this->getCommand('clone')
+        $command = $this->getCommand('clone')
             ->setOption('bare', $isBare)
             ->setOption('q')
-            ->addArgument($repository)
-            ->addArgument($path)
-            ->execute();
+            ->addArgument($repository);
+
+        if (null !== $directory) {
+            $command->addArgument($directory);
+        }
+        $command->execute();
+
+        $this->directory = $directory;
     }
 
     /**
@@ -138,12 +145,26 @@ class VersionControl_Git
      *
      * @return null
      */
-    public function initialRepository($isBare = false)
+    public function initRepository($isBare = false)
     {
         $this->getCommand('init')
             ->setOption('bare', $isBare)
             ->setOption('q')
             ->execute();
+    }
+
+    /**
+     * Alias of VersionControl_Git::initRepository()
+     *
+     * This method is available for backward compatibility.
+     *
+     * @param bool $isBare Whether to create bare clone
+     *
+     * @return null
+     */
+    public function initialRepository($isBare = false)
+    {
+        $this->initRepository($isBare);
     }
 
     /**

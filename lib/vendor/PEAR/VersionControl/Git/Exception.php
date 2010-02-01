@@ -25,7 +25,7 @@
  */
 
 /**
- * The OO interface for blob object
+ * The exception class for VersionControl_Git
  *
  * @category  VersionControl
  * @package   VersionControl_Git
@@ -33,38 +33,6 @@
  * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
-class VersionControl_Git_Object_Blob extends VersionControl_Git_Object
+class VersionControl_Git_Exception extends PEAR_Exception
 {
-    /**
-     * The contents of this object
-     *
-     * @var string
-     */
-    protected $content;
-
-    /**
-     * Fetch the substance of this object
-     *
-     * @return VersionControl_Git_Object The "$this" object for method chain
-     */
-    public function fetch()
-    {
-        $command = $this->git->getCommand('cat-file')
-            ->setOption('p')
-            ->addArgument($this->id);
-
-        $this->content = trim($command->execute());
-
-        return $this;
-    }
-
-    /**
-     * Get the contents of this object
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
 }
