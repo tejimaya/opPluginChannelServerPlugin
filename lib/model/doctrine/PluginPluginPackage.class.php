@@ -105,7 +105,7 @@ abstract class PluginPluginPackage extends BasePluginPackage implements opAccess
     return Doctrine::getTable('PluginUser')
       ->createQuery()
       ->where('package_id = ?', array($this->id))
-      ->where('member_id = ?', array($id))
+      ->andWhere('member_id = ?', array($id))
       ->fetchOne();
   }
 
