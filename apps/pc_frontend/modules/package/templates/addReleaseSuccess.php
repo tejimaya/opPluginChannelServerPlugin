@@ -1,3 +1,7 @@
+<?php slot('op_sidemenu'); ?>
+<?php include_partial('pluginInformationBar', array('package' => $package)) ?>
+<?php end_slot(); ?>
+
 <style type="text/css">
 .example
 {

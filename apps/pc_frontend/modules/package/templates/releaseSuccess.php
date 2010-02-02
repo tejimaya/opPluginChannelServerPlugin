@@ -1,3 +1,7 @@
+<?php slot('op_sidemenu'); ?>
+<?php include_partial('pluginInformationBar', array('package' => $release->Package)) ?>
+<?php end_slot(); ?>
+
 <?php
 
 op_include_parts('listBox', 'releaseInfoList', array(
