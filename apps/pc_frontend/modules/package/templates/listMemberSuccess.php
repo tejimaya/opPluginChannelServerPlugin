@@ -1,5 +1,5 @@
+<?php if ($pager->getNbResults()): ?>
 <?php
-
 op_include_parts('photoTable', 'pluginList', array(
   'title' => __('Developing Plugin List'),
   'list' => $pager->getResults(),
@@ -8,3 +8,7 @@ op_include_parts('photoTable', 'pluginList', array(
   'pager' => $pager,
   'link_to_pager' => '@package_listMember_member?page=%d&id='.$member->id,
 ));
+?>
+<?php else: ?>
+<?php op_include_box('pluginList', __('Developing Plugin List'), __('There are no plugins.')) ?>
+<?php endif; ?>

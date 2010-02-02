@@ -135,6 +135,10 @@
         <target>まだリリースがありません。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>There are no plugins.</source>
+        <target>まだプラグインがありません。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Detail of this release</source>
         <target>リリースの詳細</target>
       </trans-unit>
