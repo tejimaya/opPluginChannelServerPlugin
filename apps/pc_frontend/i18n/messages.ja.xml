@@ -210,6 +210,86 @@
         <source>License should be "MIT", "BSD", "LGPL", "PHP", "Apache" (case-insensitive). If you select other license, plugin installer will output notice.</source>
         <target>ライセンスは「MIT」「BSD」「LGPL」「PHP」「Apache」（大文字小文字の区別なし）を推奨します。他のライセンスを選択した場合、インストーラが警告を表示するようになります。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>You can create a package file by the opPlugin:release task.</source>
+        <target>パッケージファイルは opPlugin:release タスクで作成することができます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The first argument</source>
+        <target>第 1 引数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The second argument</source>
+        <target>第 2 引数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The third argument</source>
+        <target>第 3 引数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The --channel option (OpenPNE 3.5.0 +)</source>
+        <target>--channel オプション (OpenPNE 3.5.0 以降)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The name of plugin which you want to release</source>
+        <target>リリースしたいプラグインの名前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The path to directory which you want to save the generated package file</source>
+        <target>生成したパッケージファイルの保存先ディレクトリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The channel server which you want to release</source>
+        <target>リリースしたいチャンネルサーバ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Before your releasing, you need to create / update and commit a package definition file (package.xml) to your repository.</source>
+        <target>リリースの前に、パッケージ定義ファイル (package.xml) を作成・更新し、リポジトリにコミットしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can generate a definition file by the following command:</source>
+        <target>パッケージ定義ファイルの生成には以下のコマンドを実行してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The version of plugin which you want to release</source>
+        <target>リリースしたいプラグインのバージョン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The release note</source>
+        <target>リリースノート</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Before your releasing, you need to create / update and push a package definition file (package.xml) to your repository.</source>
+        <target>リリースの前に、パッケージ定義ファイル (package.xml) を作成・更新し、リポジトリに push してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Tgz file</source>
+        <target>パッケージファイル</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Svn url</source>
+        <target>Subversion の URL</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Git url</source>
+        <target>Git リポジトリの URL</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Git commit</source>
+        <target>Git のコミット</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please specify tag url</source>
+        <target>タグの URL を指定してください</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The url must be HTTP protocol format. e.g. http://github.com/openpne/opSamplePlugin.git</source>
+        <target>URL は HTTP プロトコルのものである必要があります。 例：http://github.com/openpne/opSamplePlugin.git</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This can be many formatted string: "master" (branch name), "9af9b" (commit object name), "v1.0.0" (tag name)</source>
+        <target>様々な形式の文字列を受け付けます: "master" (ブランチ名)、 "9af9b" (コミットオブジェクト名)、 "v1.0.0" (タグ名)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

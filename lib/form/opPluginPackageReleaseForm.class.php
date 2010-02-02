@@ -43,7 +43,13 @@ class opPluginPackageReleaseForm extends BaseForm
       ->setValidator('git_commit', new sfValidatorString(array('required' => false)))
     ;
 
-    $this->widgetSchema->setNameFormat('plugin_release[%s]');
+    $this->widgetSchema
+      ->setNameFormat('plugin_release[%s]')
+
+      ->setHelp('svn_url', 'Please specify tag url')
+      ->setHelp('git_url', 'The url must be HTTP protocol format. e.g. http://github.com/openpne/opSamplePlugin.git')
+      ->setHelp('git_commit', 'This can be many formatted string: "master" (branch name), "9af9b" (commit object name), "v1.0.0" (tag name)')
+    ;
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
   }
