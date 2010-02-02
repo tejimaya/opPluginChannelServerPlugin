@@ -27,13 +27,8 @@
  */
 abstract class PluginPluginRelease extends BasePluginRelease implements opAccessControlRecordInterface
 {
-  public function generateRoleId(Member $member = null)
+  public function generateRoleId(Member $member)
   {
-    if (!$member)
-    {
-      return 'anonymous';
-    }
-
     if ($this->Package->isLead($member->id))
     {
       return 'lead';
