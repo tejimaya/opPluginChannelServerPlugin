@@ -77,4 +77,17 @@ class packageComponents extends sfComponents
     }
     $this->plugins = Doctrine::getTable('PluginPackage')->getMemberPlugin($this->member->id, $this->row * $this->col);
   }
+
+  public function executeListMemberPlugin($request)
+  {
+    if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
+    {
+      $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
+    }
+    else
+    {
+      $this->member = $this->getUser()->getMember();
+    }
+    $this->plugins = Doctrine::getTable('PluginPackage')->getMemberPlugin($this->member->id, 5);
+  }
 }
