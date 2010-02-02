@@ -10,5 +10,5 @@ op_include_parts('photoTable', 'pluginList', array(
 ));
 ?>
 <?php else: ?>
-<?php op_include_box('pluginList', __('Developing Plugin List'), __('There are no plugins.')) ?>
+<?php op_include_box('pluginList', __('There are no plugins.'), array('title' => __('Developing Plugin List'))) ?>
 <?php endif; ?>
