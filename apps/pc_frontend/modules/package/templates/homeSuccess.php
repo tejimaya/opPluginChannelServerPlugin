@@ -18,8 +18,8 @@ padding:10px;
 text-align:center;
 " id="plugin_user">
 <span id="plugin_user_count"><?php echo $package->countUsers() ?></span><br /><span>users</span>
-<?php if ($package->isAllowed($sf_user->getRawValue()->getMember(), 'countUser')): ?>
 <p style="margin-top: 10px; text-align: center; font-size: 9px; color: #000;">
+<?php if ($package->isAllowed($sf_user->getRawValue()->getMember(), 'countUser')): ?>
 <?php
 $form = new sfForm();
 $_ajax_parameter = '"'.sfForm::getCSRFFieldName().'='.$form->getDefault(sfForm::getCSRFFieldName()).'"';
@@ -38,8 +38,10 @@ $_ajax_parameter = '"'.sfForm::getCSRFFieldName().'='.$form->getDefault(sfForm::
   'with'     => $_ajax_parameter,
 ), array('id' => 'package_use_link',
 'style' => 'display:'.(!$package->isUser($sf_user->getMemberId()) ? 'inline' : 'none'))) ?>
-</p>
+<?php else: ?>
+<?php echo __('Please login to vote for this plugin') ?>
 <?php endif; ?>
+</p>
 </div>
 <?php echo javascript_tag('
 function updateUser(ajax)

@@ -9,9 +9,9 @@ op_include_parts('listBox', 'releaseInfoList', array(
     __('Release Note') => nl2br($info['notes']),
     __('Installation') => 
       __('Install the plugin:').'<br />
-      <code>$ ./symfony opPlugin:install '.$release->Package->name.' -r '.$release->version.' --chanel='.opPluginChannelServerToolkit::getConfig('channel_name').'</code><br />
+      <code>$ ./symfony opPlugin:install '.$release->Package->name.' -r '.$release->version.' --channel='.opPluginChannelServerToolkit::getConfig('channel_name').'</code><br />
       <br />'.
-      __('Migrate your model and database').':<br />
+      __('Migrate your model and database:').'<br />
       <code>$ ./symfony openpne:migrate --target='.$release->Package->name.'</code><br />
       ',
     __('Download') => link_to(

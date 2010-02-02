@@ -14,5 +14,5 @@ $title = __('Releases of this plugin');
 <?php echo op_include_pager_navigation($pager, '@package_list_release?name='.$package->name.'page=%d'); ?>
 </div></div>
 <?php else: ?>
-<?php op_include_box('pluginList', __('There are no plugins.'), array('title' => $title)) ?>
+<?php op_include_box('pluginList', __('There are no releases.'), array('title' => $title)) ?>
 <?php endif; ?>
