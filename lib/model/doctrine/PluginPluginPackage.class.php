@@ -309,4 +309,9 @@ abstract class PluginPluginPackage extends BasePluginPackage implements opAccess
 
     return 'anonymous';
   }
+
+  public function getNameAndCount()
+  {
+    return $this->getName();
+  }
 }

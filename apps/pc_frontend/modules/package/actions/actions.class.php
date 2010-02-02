@@ -41,6 +41,10 @@ class packageActions extends sfActions
         $this->release = $object;
         $this->package = $object->Package;
       }
+      elseif ($object instanceof Member)
+      {
+        $this->member = $object;
+      }
     }
 
     if ($this->getUser()->hasCredential('SNSMember'))
@@ -223,5 +227,30 @@ class packageActions extends sfActions
     $this->getUser()->setFlash('notice', 'The release is removed successfully.');
 
     $this->redirect('package_home', $this->release->Package);
+  }
+
+  public function executeListMember(sfWebRequest $request)
+  {
+    if (!$this->member)
+    {
+      if (isset($request['id']))
+      {
+        $this->member = Doctrine::getTable('Member')->find($request['id']);
+      }
+      else
+      {
+        $this->member = $this->getUser()->getMember();
+      }
+    }
+
+    $this->forward404Unless($this->member->id);
+
+    if ($this->member->id !== $this->getUser()->getMemberId())
+    {
+      sfConfig::set('sf_nav_type', 'friend');
+      sfConfig::set('sf_nav_id', $this->member->id);
+    }
+
+    $this->pager = Doctrine::getTable('PluginPackage')->getMemberPluginPager($this->member->id, $request->getParameter('page', 1), 20);
   }
 }

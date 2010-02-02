@@ -51,4 +51,17 @@ class PluginPluginPackageTable extends opAccessControlDoctrineTable
       ->allow('lead', $resource, 'manageMember')
     ;
   }
+
+  public function getMemberPluginPager($memberId, $page = 1, $size = 20)
+  {
+    $q = $this->createQuery()
+      ->where('id IN (SELECT pm.package_id FROM PluginMember pm WHERE pm.member_id = ? AND pm.is_active = ?)', array($memberId, true));
+
+    $pager = new sfDoctrinePager('PluginPackage', $size);
+    $pager->setQuery($q);
+    $pager->setPage($page);
+    $pager->init();
+
+    return $pager;
+  }
 }

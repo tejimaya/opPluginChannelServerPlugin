@@ -324,6 +324,21 @@ package_search:
   requirements:
     sf_method: [get]
 
+package_listMember:
+  url:  /package/listMember
+  class: sfRequestRoute
+  param: { module: package, action: listMember }
+  requirements:
+    sf_method: [get]
+
+package_listMember_member:
+  url:  /package/listMember/:id
+  class: sfDoctrineRoute
+  options: { model: Member, type: object }
+  param: { module: package, action: listMember }
+  requirements:
+    sf_method: [get]
+
 #nodefaults
 package_nodefaults:
   url: /package/*

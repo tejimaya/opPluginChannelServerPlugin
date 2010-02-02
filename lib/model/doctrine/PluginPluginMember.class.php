@@ -27,7 +27,4 @@
  */
 abstract class PluginPluginMember extends BasePluginMember
 {
-  public function getInfomation()
-  {
-  }
 }
