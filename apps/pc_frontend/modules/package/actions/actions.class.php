@@ -251,6 +251,12 @@ class packageActions extends sfActions
       sfConfig::set('sf_nav_id', $this->member->id);
     }
 
+    $this->crownIds = array();
+    foreach (Doctrine::getTable('PluginMember')->getLeadPlugins($this->member->id) as $v)
+    {
+      $this->crownIds[] = $v->id;
+    }
+
     $this->pager = Doctrine::getTable('PluginPackage')->getMemberPluginPager($this->member->id, $request->getParameter('page', 1), 20);
   }
 }

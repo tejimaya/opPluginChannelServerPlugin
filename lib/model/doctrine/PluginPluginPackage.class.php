@@ -92,10 +92,7 @@ abstract class PluginPluginPackage extends BasePluginPackage implements opAccess
 
   public function countUsers()
   {
-    return Doctrine::getTable('PluginUser')
-      ->createQuery()
-      ->where('package_id = ?', array($this->id))
-      ->count();
+    return $this->user_count;
   }
 
   public function isUser($id)
@@ -148,6 +145,15 @@ abstract class PluginPluginPackage extends BasePluginPackage implements opAccess
       $this->PluginUser[]->member_id = $id;
       $this->save();
     }
+
+    $count = Doctrine::getTable('PluginUser')
+      ->createQuery()
+      ->where('package_id = ?', array($this->id))
+      ->count();
+
+    $this->user_count = $count;
+
+    $this->save();
   }
 
   public function getLatestRelease()

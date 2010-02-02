@@ -29,4 +29,52 @@ class packageComponents extends sfComponents
   {
     $this->count = Doctrine::getTable('PluginMember')->countJoinRequests($this->getUser()->getMemberId());
   }
+
+  public function executeUsage()
+  {
+  }
+
+  public function executeListRecentPlugin()
+  {
+    $this->plugins = Doctrine::getTable('PluginPackage')->createQuery()
+      ->orderBy('created_at DESC')
+      ->limit(5)
+      ->execute();
+  }
+
+  public function executeListPopularPlugin()
+  {
+    $this->plugins = Doctrine::getTable('PluginPackage')->createQuery()
+      ->orderBy('user_count DESC')
+      ->limit(5)
+      ->execute();
+  }
+
+  public function executeListRecentRelease()
+  {
+    $this->releases = Doctrine::getTable('PluginRelease')->createQuery()
+      ->orderBy('created_at DESC')
+      ->limit(5)
+      ->execute();
+  }
+
+  public function executeMemberPlugins($request)
+  {
+    if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
+    {
+      $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
+    }
+    else
+    {
+      $this->member = $this->getUser()->getMember();
+    }
+    $this->row = $this->gadget->getConfig('row');
+    $this->col = $this->gadget->getConfig('col');
+    $this->crownIds = array();
+    foreach (Doctrine::getTable('PluginMember')->getLeadPlugins($this->member->id) as $v)
+    {
+      $this->crownIds[] = $v->id;
+    }
+    $this->plugins = Doctrine::getTable('PluginPackage')->getMemberPlugin($this->member->id, $this->row * $this->col);
+  }
 }

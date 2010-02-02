@@ -1,0 +1,27 @@
+usageBox:
+  caption:
+    ja_JP: "チャンネルサーバの使い方"
+  description:
+    ja_JP: "チャンネルサーバの使い方を説明したボックスを設置できます。"
+  component: [package, usage]
+
+recentPluginListBox:
+  caption:
+    ja_JP: "最近のプラグイン"
+  description:
+    ja_JP: "最近のプラグインのリストを設置できます。"
+  component: [package, listRecentPlugin]
+
+popularPluginListBox:
+  caption:
+    ja_JP: "人気のプラグイン"
+  description:
+    ja_JP: "人気のプラグインのリストを設置できます。"
+  component: [package, listPopularPlugin]
+
+recentReleaseListBox:
+  caption:
+    ja_JP: "最近のリリース"
+  description:
+    ja_JP: "最近のリリースのリストを設置できます。"
+  component: [package, listRecentRelease]

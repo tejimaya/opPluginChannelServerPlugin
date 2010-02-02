@@ -52,6 +52,14 @@ class PluginPluginPackageTable extends opAccessControlDoctrineTable
     ;
   }
 
+  public function getMemberPlugin($memberId, $size = 20)
+  {
+    return $this->createQuery()
+      ->where('id IN (SELECT pm.package_id FROM PluginMember pm WHERE pm.member_id = ? AND pm.is_active = ?)', array($memberId, true))
+      ->limit($size)
+      ->execute();
+  }
+
   public function getMemberPluginPager($memberId, $page = 1, $size = 20)
   {
     $q = $this->createQuery()
