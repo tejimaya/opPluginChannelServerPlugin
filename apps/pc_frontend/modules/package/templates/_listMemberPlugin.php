@@ -14,7 +14,7 @@
 <ul class="moreInfo">
 <li><?php echo link_to(__('More'), '@package_listMember?id='.$member->id) ?></li>
 <?php if ($member->id == $sf_user->getMemberId()): ?>
-<li><?php echo link_to(__('Create Plugin'), '@package_listMember?id='.$member->id) ?></li>
+<li><?php echo link_to(__('Create Plugin'), '@package_new') ?></li>
 <?php endif; ?>
 </ul>
 </div>
