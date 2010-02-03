@@ -3,6 +3,7 @@ memberPluginBox:
     ja_JP: "開発しているプラグインリスト（画像リスト）"
   description:
     ja_JP: "開発しているプラグインのリストを設置できます。"
+  viewable_privilege: 4
   component: [package, memberPlugins]
   config:
     row:
@@ -27,4 +28,5 @@ listMemberPlugin:
     ja_JP: "開発しているプラグインリスト"
   description:
     ja_JP: "開発しているプラグインのリストを設置できます。"
+  viewable_privilege: 4
   component: [package, listMemberPlugin]
