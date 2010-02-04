@@ -294,6 +294,10 @@
         <source>This can be many formatted string: "master" (branch name), "9af9b" (commit object name), "v1.0.0" (tag name)</source>
         <target>様々な形式の文字列を受け付けます: "master" (ブランチ名)、 "9af9b" (コミットオブジェクト名)、 "v1.0.0" (タグ名)</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Plugin name must start with "op" and end with "Plugin"</source>
+        <target>プラグイン名は「op」ではじまり「Plugin」で終わらなければなりません</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
