@@ -298,6 +298,22 @@
         <source>Plugin name must start with "op" and end with "Plugin"</source>
         <target>プラグイン名は「op」ではじまり「Plugin」で終わらなければなりません</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Use related redmine</source>
+        <target>Redmine 使用設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Use</source>
+        <target>使用する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do not use</source>
+        <target>使用しない</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you select "Use", you can use a project of related redmine, and your inputted "Bts" value will be overwritten</source>
+        <target>もし「使用する」を選択した場合、提携している Redmine 上のプロジェクトが利用可能になり、入力されている「バグトラッカーの URL」が上書きされます</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

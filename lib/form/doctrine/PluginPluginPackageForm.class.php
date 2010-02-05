@@ -29,27 +29,32 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
   {
     parent::setup();
 
-    $this->useFields(array(
-      'name', 'summary', 'description', 'license',
-      'repository', 'bts', 'category_id', 'file_id',
-    ));
+    $redmineChoices = array(
+      '1' => 'Use',
+      '0' => 'Do not use',
+    );
 
     $this
       ->setWidget('repository', new sfWidgetFormInputText(array('label' => 'Repository URL')))
       ->setWidget('bts', new sfWidgetFormInputText(array('label' => 'BTS URL')))
       ->setWidget('summary', new sfWidgetFormInputText())
       ->setWidget('license', new sfWidgetFormInputText())
+      ->setWidget('is_relating_redmine', new sfWidgetFormChoice(array('choices' => $redmineChoices)))
       ->addEditableImageFormWidget('file_id', array('label' => 'Image'))
 
       ->setValidator('name', new sfValidatorCallback(array('callback' => array($this, 'validatePluginName'), 'required' => true)))
       ->setValidator('repository', new sfValidatorUrl(array('required' => false)))
       ->setValidator('bts', new sfValidatorUrl(array('required' => false)))
       ->setValidator('file_id', new opValidatorImageFile(array('required' => false)))
+      ->setValidator('is_relating_redmine', new sfValidatorChoice(array('choices' => array_keys($redmineChoices))))
       ->setValidator('id', new opValidatorString(array('required' => false)))
     ;
 
     $this->widgetSchema
       ->setLabel('name', 'Plugin Name')
+      ->setLabel('is_relating_redmine', 'Use related redmine')
+
+      ->setHelp('is_relating_redmine', 'If you select "Use", you can use a project of related redmine, and your inputted "Bts" value will be overwritten')
       ->setHelp('name', 'Plugin name must start with "op" and end with "Plugin"')
       ->setHelp('license', 'License should be "MIT", "BSD", "LGPL", "PHP", "Apache" (case-insensitive). If you select other license, plugin installer will output notice.')
     ;
@@ -58,6 +63,12 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     {
       $this->embedForm('captcha', new opCaptchaForm());
     }
+
+    $this->useFields(array(
+      'name', 'summary', 'description', 'license',
+      'category_id', 'repository', 'bts',
+      'is_relating_redmine', 'file_id',
+    ), true);
 
     if (!$this->isNew())
     {
@@ -91,6 +102,8 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
 
   public function updateObject($values = null)
   {
+    $member = sfContext::getInstance()->getUser()->getMember();
+
     if (is_null($values))
     {
       $values = $this->getValues();
@@ -108,7 +121,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
 
     if ($this->isNew())
     {
-      $obj->PluginMember[0]->Member = sfContext::getInstance()->getUser()->getMember();
+      $obj->PluginMember[0]->Member = $member;
       $obj->PluginMember[0]->position = 'lead';
       $obj->PluginMember[0]->is_active = true;
     }
@@ -134,7 +147,57 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
       }
     }
 
+    $baseUrl = opPluginChannelServerToolkit::getConfig('related_redmine_base_url', 'http://redmine.openpne.jp/');
+
+    $url = $this->injectAPIKeyToRedminUrl($baseUrl, $member->getConfig('redmine_api_token'));
+    $user = new opRedmineUserResource();
+    $user->find($member->getConfig('redmine_username'));
+
+    $url = $this->injectAPIKeyToRedminUrl($baseUrl, $member->getConfig('redmine_api_token'));
+    $project = new opRedmineProjectResource();
+    $project->site = $url;
+    $project->find(strtolower($obj->name));
+    if ($project->error)
+    {
+      $parentId = opPluginChannelServerToolkit::getConfig('parent_project_id');
+
+      $project = new opRedmineProjectResource(array(
+        'name'        => $obj->name,
+        'identifier'  => strtolower($obj->name),
+        'homepage'    => 'http://example.com/', // will be sns url
+        'description' => $obj->description,
+        'parent_id'   => $parentId,
+      ));
+      $project->site = $url;
+    }
+    else
+    {
+      $project->set('description', $obj->description);
+      $project->set('homepage', 'http://example.com/');
+    }
+    $result = $project->save();
+
+    $projectMember = new opRedmineMemberResource(array(
+      'user_ids' => array($user->id),
+      'role_ids' => array(opPluginChannelServerToolkit::getConfig('user_role_id', 1)),
+    ));
+    $projectMember->site = $url.'/projects/'.strtolower($obj->name).'/';
+    $projectMember->save();
+
     $obj->save();
+  }
+
+  protected function injectAPIKeyToRedminUrl($url, $key)
+  {
+    $result = parse_url($url, PHP_URL_SCHEME).'://'
+      . $key.'@'
+      . parse_url($url, PHP_URL_HOST)
+      . (parse_url($url, PHP_URL_PORT) ? ':'.parse_url($url, PHP_URL_PORT) : '')
+      . (parse_url($url, PHP_URL_PATH) ? parse_url($url, PHP_URL_PATH) : '/')
+      . (parse_url($url, PHP_URL_QUERY) ? '?'.parse_url($url, PHP_URL_QUERY) : '')
+      . (parse_url($url, PHP_URL_FRAGMENT) ? '#'.parse_url($url, PHP_URL_FRAGMENT) : '');
+
+    return $result;
   }
 
   protected function processUploadedFile($field, $filename = null, $values = null)

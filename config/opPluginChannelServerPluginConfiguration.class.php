@@ -32,7 +32,12 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
 
   public function initialize()
   {
-    sfToolkit::addIncludePath(array(sfConfig::get('sf_plugins_dir').'/opPluginChannelServerPlugin/lib/vendor/PEAR/'));
+    $pathToPlugin = sfConfig::get('sf_plugins_dir').'/opPluginChannelServerPlugin';
+
+    sfToolkit::addIncludePath(array(
+      $pathToPlugin.'/lib/vendor/PEAR/',
+      $pathToPlugin.'/lib/vendor/ActiveResource/',
+    ));
 
     $this->dispatcher->connect('op_confirmation.list', array($this, 'listJoinConfirmation'));
     $this->dispatcher->connect('op_confirmation.decision', array($this, 'processJoinConfirmation'));

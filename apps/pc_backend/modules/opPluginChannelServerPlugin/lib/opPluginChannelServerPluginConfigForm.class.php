@@ -36,6 +36,15 @@ class opPluginChannelServerPluginConfigForm extends BaseForm
 
       ->setWidget('suggestedalias', new sfWidgetFormInputText())
       ->setValidator('suggestedalias', new opValidatorString(array('required' => false)))
+
+      ->setWidget('related_redmine_base_url', new sfWidgetFormInputText())
+      ->setValidator('related_redmine_base_url', new sfValidatorUrl(array('required' => false)))
+
+      ->setWidget('parent_project_id', new sfWidgetFormInputText())
+      ->setValidator('parent_project_id', new sfValidatorInteger(array('required' => false)))
+
+      ->setWidget('user_role_id', new sfWidgetFormInputText())
+      ->setValidator('user_role_id', new sfValidatorInteger(array('required' => false)))
     ;
 
     $this->getWidgetSchema()

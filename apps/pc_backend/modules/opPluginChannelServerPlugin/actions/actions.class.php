@@ -36,6 +36,9 @@ class opPluginChannelServerPluginActions extends sfActions
       'channel_name' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'channel_name'),
       'summary' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'summary'),
       'suggestedalias' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'suggestedalias'),
+      'related_redmine_base_url' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'related_redmine_base_url'),
+      'parent_project_id' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'parent_project_id'),
+      'user_role_id' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'user_role_id'),
     ));
     if ($request->isMethod(sfWebRequest::POST))
     {
