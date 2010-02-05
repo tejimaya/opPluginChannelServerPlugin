@@ -147,6 +147,9 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
       }
     }
 
+    sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
+    $pluginUrl = url_for('package_home', $obj, true);
+
     $baseUrl = opPluginChannelServerToolkit::getConfig('related_redmine_base_url', 'http://redmine.openpne.jp/');
 
     $url = $this->injectAPIKeyToRedminUrl($baseUrl, $member->getConfig('redmine_api_token'));
@@ -164,7 +167,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
       $project = new opRedmineProjectResource(array(
         'name'        => $obj->name,
         'identifier'  => strtolower($obj->name),
-        'homepage'    => 'http://example.com/', // will be sns url
+        'homepage'    => $pluginUrl,
         'description' => $obj->description,
         'parent_id'   => $parentId,
       ));
@@ -173,7 +176,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     else
     {
       $project->set('description', $obj->description);
-      $project->set('homepage', 'http://example.com/');
+      $project->set('homepage', $pluginUrl);
     }
     $result = $project->save();
 
