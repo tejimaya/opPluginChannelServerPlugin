@@ -25,4 +25,12 @@
  */
 abstract class PluginPluginCategoryForm extends BasePluginCategoryForm
 {
+  public function setup()
+  {
+    parent::setup();
+
+    $this->useFields(array(
+      'name', 'description',
+    ));
+  }
 }
