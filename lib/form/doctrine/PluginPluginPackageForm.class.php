@@ -103,6 +103,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
   public function updateObject($values = null)
   {
     $member = sfContext::getInstance()->getUser()->getMember();
+    $baseUrl = opPluginChannelServerToolkit::getConfig('related_redmine_base_url', 'http://redmine.openpne.jp/');
 
     if (is_null($values))
     {
@@ -150,8 +151,6 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
     $pluginUrl = url_for('package_home', $obj, true);
 
-    $baseUrl = opPluginChannelServerToolkit::getConfig('related_redmine_base_url', 'http://redmine.openpne.jp/');
-
     $url = $this->injectAPIKeyToRedminUrl($baseUrl, $member->getConfig('redmine_api_token'));
     $user = new opRedmineUserResource();
     $user->find($member->getConfig('redmine_username'));
@@ -186,6 +185,11 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     ));
     $projectMember->site = $url.'/projects/'.strtolower($obj->name).'/';
     $projectMember->save();
+
+    if (!empty($values['is_relating_redmine']))
+    {
+      $obj->bts = $baseUrl.'projects/'.strtolower($obj->name);
+    }
 
     $obj->save();
   }

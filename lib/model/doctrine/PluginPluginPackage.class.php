@@ -315,4 +315,20 @@ abstract class PluginPluginPackage extends BasePluginPackage implements opAccess
   {
     return $this->getName();
   }
+
+  public function toArray($deep = true, $prefixKey = false)
+  {
+    $result = parent::toArray($deep, $prefixKey);
+
+    $result['is_relating_redmine'] = (int)$this->isRelatingRedmine();
+
+    return $result;
+  }
+
+  public function isRelatingRedmine()
+  {
+    $baseUrl = opPluginChannelServerToolkit::getConfig('related_redmine_base_url', 'http://redmine.openpne.jp/');
+
+    return (0 === strpos($this->bts, $baseUrl));
+  }
 }
