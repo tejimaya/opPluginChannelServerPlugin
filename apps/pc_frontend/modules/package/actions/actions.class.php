@@ -213,7 +213,7 @@ class packageActions extends sfActions
     }
 
     $this->pager = new sfDoctrinePager('PluginPackage', $this->size);
-    $this->pager->setQuery($this->filters->getQuery());
+    $this->pager->setQuery($this->filters->getQuery()->orderBy('created_at DESC'));
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
   }
