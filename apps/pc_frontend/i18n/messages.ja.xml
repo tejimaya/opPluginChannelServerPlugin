@@ -295,8 +295,8 @@
         <target>様々な形式の文字列を受け付けます: "master" (ブランチ名)、 "9af9b" (コミットオブジェクト名)、 "v1.0.0" (タグ名)</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Plugin name must start with "op" and end with "Plugin"</source>
-        <target>プラグイン名は「op」ではじまり「Plugin」で終わらなければなりません</target>
+        <source>Plugin name must start with "op" and end with "Plugin". If you want to use related redmine, a length of the plugin name must be less than 24 characters.</source>
+        <target>プラグイン名は「op」ではじまり「Plugin」で終わらなければなりません。また、もし提携している Redmine のプロジェクトを作成したい場合、 24 文字以内で入力してください。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Use related redmine</source>
@@ -313,6 +313,10 @@
       <trans-unit id="">
         <source>If you select "Use", you can use a project of related redmine, and your inputted "Bts" value will be overwritten</source>
         <target>もし「使用する」を選択した場合、提携している Redmine 上のプロジェクトが利用可能になり、入力されている「バグトラッカーの URL」が上書きされます</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The relating redmine project cannot be created for this plugin because of the name is longer than 24 characters.If you want to create and relate the redmine project, please create project automatically and fill the "bts" field.</source>
+        <target>プラグイン名が 24 文字を超えているために、提携している Redmine プロジェクトを作成することができませんでした。もし提携している Redmine 上にプロジェクトを作りたい場合は、手動で作成した上で「バグトラッカーの URL」に URL を入力してください。</target>
       </trans-unit>
     </body>
   </file>

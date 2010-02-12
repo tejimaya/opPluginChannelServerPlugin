@@ -55,7 +55,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
       ->setLabel('is_relating_redmine', 'Use related redmine')
 
       ->setHelp('is_relating_redmine', 'If you select "Use", you can use a project of related redmine, and your inputted "Bts" value will be overwritten')
-      ->setHelp('name', 'Plugin name must start with "op" and end with "Plugin"')
+      ->setHelp('name', 'Plugin name must start with "op" and end with "Plugin". If you want to use related redmine, a length of the plugin name must be less than 24 characters.')
       ->setHelp('license', 'License should be "MIT", "BSD", "LGPL", "PHP", "Apache" (case-insensitive). If you select other license, plugin installer will output notice.')
     ;
 
@@ -74,6 +74,8 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     {
       unset($this['name']);
     }
+
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'validateProjectCreation'))));
   }
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
@@ -85,6 +87,45 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     }
 
     parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function validateProjectCreation($validator, $value, $arguments)
+  {
+    if ($this->isNew())
+    {
+      $name = $value['name'];
+    }
+    else
+    {
+      $name = $this->getObject()->getName();
+      if ($this->getObject()->isRelatingRedmine())
+      {
+        return $value;
+      }
+    }
+
+    $baseUrl = opPluginChannelServerToolkit::getConfig('related_redmine_base_url', 'http://redmine.openpne.jp/');
+    if (!$value['is_relating_redmine'] || 0 === strpos($value['bts'], $baseUrl))
+    {
+      return $value;
+    }
+
+    if (24 < strlen($name))
+    {
+      throw new sfValidatorError($this->validatorSchema['is_relating_redmine'], 
+        'The relating redmine project cannot be created for this plugin because of the name is longer than 24 characters.'
+        .'If you want to create and relate the redmine project, please create project automatically and fill the "bts" field.'
+      );
+    }
+
+    return $value;
+  }
+
+  public function generatePluginIdentifier($name)
+  {
+    $identifier = 'plg-'.strtolower(substr($name, 2, -6));
+
+    return $identifier;
   }
 
   public function validatePluginName($validator, $value, $arguments)
@@ -158,14 +199,14 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     $url = $this->injectAPIKeyToRedminUrl($baseUrl, $member->getConfig('redmine_api_token'));
     $project = new opRedmineProjectResource();
     $project->site = $url;
-    $project->find(strtolower($obj->name));
+    $project->find($this->generatePluginIdentifier($obj->name));
     if ($project->error)
     {
       $parentId = opPluginChannelServerToolkit::getConfig('parent_project_id');
 
       $project = new opRedmineProjectResource(array(
         'name'        => $obj->name,
-        'identifier'  => strtolower($obj->name),
+        'identifier'  => $this->generatePluginIdentifier($obj->name),
         'homepage'    => $pluginUrl,
         'description' => $obj->description,
         'parent_id'   => $parentId,
@@ -183,12 +224,12 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
       'user_ids' => array($user->id),
       'role_ids' => array(opPluginChannelServerToolkit::getConfig('user_role_id', 1)),
     ));
-    $projectMember->site = $url.'/projects/'.strtolower($obj->name).'/';
+    $projectMember->site = $url.'/projects/'.$this->generatePluginIdentifier($obj->name).'/';
     $projectMember->save();
 
     if (!empty($values['is_relating_redmine']))
     {
-      $obj->bts = $baseUrl.'projects/'.strtolower($obj->name);
+      $obj->bts = $baseUrl.'projects/'.$this->generatePluginIdentifier($obj->name);
     }
 
     $obj->save();

@@ -88,11 +88,11 @@ $list = array(
 
 if ($package->repository)
 {
-  $list['Repository URL'] = link_to($package->repository, $package->repository);
+  $list[__('Repository URL')] = link_to($package->repository, $package->repository);
 }
 if ($package->bts)
 {
-  $list['BTS URL'] = link_to($package->bts, $package->bts);
+  $list[__('BTS URL')] = link_to($package->bts, $package->bts);
 }
 
 $options = array(
