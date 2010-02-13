@@ -318,6 +318,14 @@
         <source>The relating redmine project cannot be created for this plugin because of the name is longer than 24 characters.If you want to create and relate the redmine project, please create project automatically and fill the "bts" field.</source>
         <target>プラグイン名が 24 文字を超えているために、提携している Redmine プロジェクトを作成することができませんでした。もし提携している Redmine 上にプロジェクトを作りたい場合は、手動で作成した上で「バグトラッカーの URL」に URL を入力してください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>More</source>
+        <target>もっと見る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>More info</source>
+        <target>もっと見る</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
