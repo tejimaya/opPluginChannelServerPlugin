@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>opPluginChannelServerPlugin</name>
+ <channel>plugins.openpne.jp</channel>
+ <summary>Provide plugin channel server features</summary>
+ <description>The opPluginChannelServerPlugin provides *fully* plugin channel server features. It also provides good web interfaces.</description>
+ <lead>
+  <name>Kousuke Ebihara</name>
+  <user>ebihara</user>
+  <email />
+  <active>yes</active>
+ </lead>
+ <date>2010-02-17</date>
+ <time>16:27:10</time>
+ <version>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license>apache</license>
+ <notes>
+initial release
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="4475d4bd5bb98696a9843a4a0a98dc56" name="apps/pc_backend/modules/opPluginChannelServerPlugin/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="f6d96497798f437b7bbc6e1a958626f2" name="apps/pc_backend/modules/opPluginChannelServerPlugin/lib/opPluginChannelServerPluginConfigForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="dc9885861b4ff4d708484f4bd7516742" name="apps/pc_backend/modules/opPluginChannelServerPlugin/templates/categorySuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="f7da5a33ce9bcb9a21f9e7c57e96fe7c" name="apps/pc_backend/modules/opPluginChannelServerPlugin/templates/indexSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="ad4e06b8c38fa5c4dfc4dc46cfc3c129" name="apps/pc_backend/modules/opPluginChannelServerPlugin/templates/_categoryListForm.php" role="data" />
+   <file baseinstalldir="/" md5sum="acf516abef6e27e08383ad2947e1bc27" name="apps/pc_backend/modules/opPluginChannelServerPlugin/templates/_submenu.php" role="data" />
+   <file baseinstalldir="/" md5sum="dab435be6eb653d570f992071e4955b7" name="apps/pc_frontend/config/routing.yml" role="data" />
+   <file baseinstalldir="/" md5sum="e6d5a8a568c57caa69ca5b89040a17a1" name="apps/pc_frontend/i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="7bbf1bbec1c3c9738f5a87b01b15428f" name="apps/pc_frontend/modules/member/config/view.yml" role="data" />
+   <file baseinstalldir="/" md5sum="30bd013fd457ccb911ad5c1f6cef3838" name="apps/pc_frontend/modules/package/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="5211f9d0e51191272d4fba68d4d08581" name="apps/pc_frontend/modules/package/actions/components.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="4ebc53a4103068d57127f7ee2b66e24b" name="apps/pc_frontend/modules/package/config/security.yml" role="data" />
+   <file baseinstalldir="/" md5sum="12286877b49d8a6626044c53fe43765b" name="apps/pc_frontend/modules/package/config/view.yml" role="data" />
+   <file baseinstalldir="/" md5sum="e60ef9c0988cac90d7ab06a6f7e351e1" name="apps/pc_frontend/modules/package/templates/addReleaseSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="79d37d6efd76671eb94afefde6556831" name="apps/pc_frontend/modules/package/templates/editSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="5bad01b7f3e6769be95d752d7da18214" name="apps/pc_frontend/modules/package/templates/homeSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="d41d8cd98f00b204e9800998ecf8427e" name="apps/pc_frontend/modules/package/templates/indexSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="60789b66f5aae9e1a35f248e711cae3a" name="apps/pc_frontend/modules/package/templates/joinSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="06a8e96355bd47b0cb0c2385d44582b8" name="apps/pc_frontend/modules/package/templates/listMemberSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="fe0d84050204802902d138992a021dec" name="apps/pc_frontend/modules/package/templates/manageMemberSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="4dcab20b44f5763e7bac7974a9ed53b9" name="apps/pc_frontend/modules/package/templates/memberListSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="f441a490103ffd6e17667b6f5c72c497" name="apps/pc_frontend/modules/package/templates/newSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="d72041ae4f3fad46c32bed84789ac239" name="apps/pc_frontend/modules/package/templates/releaseListSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="b35f030ab20094bab6b78b9a8a6217ee" name="apps/pc_frontend/modules/package/templates/releaseSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="3ca7814bbe48590867c131d35bc4c8a3" name="apps/pc_frontend/modules/package/templates/searchSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="6a23a01eff58fafb095d5e3151b90faf" name="apps/pc_frontend/modules/package/templates/_cautionAboutPluginJoinRequest.php" role="data" />
+   <file baseinstalldir="/" md5sum="09f7e3ae97f6cad9bef2f808d0183a5a" name="apps/pc_frontend/modules/package/templates/_listMemberPlugin.php" role="data" />
+   <file baseinstalldir="/" md5sum="8c619a22215753dc2aceb7458f1c1e46" name="apps/pc_frontend/modules/package/templates/_listPopularPlugin.php" role="data" />
+   <file baseinstalldir="/" md5sum="a40e1900a1ff0dae69becc8562f4659a" name="apps/pc_frontend/modules/package/templates/_listRecentPlugin.php" role="data" />
+   <file baseinstalldir="/" md5sum="a62f18e08bf44f8445d5432af73d8a97" name="apps/pc_frontend/modules/package/templates/_listRecentRelease.php" role="data" />
+   <file baseinstalldir="/" md5sum="c56970b9b264a7679510a3b23afca59f" name="apps/pc_frontend/modules/package/templates/_memberPlugins.php" role="data" />
+   <file baseinstalldir="/" md5sum="9262a6685c8922355528de429e022300" name="apps/pc_frontend/modules/package/templates/_pluginInformationBar.php" role="data" />
+   <file baseinstalldir="/" md5sum="cfbf7bf9470530b249792a6e86284e89" name="apps/pc_frontend/modules/package/templates/_usage.php" role="data" />
+   <file baseinstalldir="/" md5sum="9d5acc8074a461b46d5a4683febd237f" name="apps/pc_frontend/modules/pluginRest/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="d41d8cd98f00b204e9800998ecf8427e" name="apps/pc_frontend/modules/pluginRest/templates/allReleaseSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="9c1855eb345fa50add2f9599be065be9" name="apps/pc_frontend/modules/pluginRest/templates/alphaReleaseSuccess.txt.php" role="data" />
+   <file baseinstalldir="/" md5sum="9c1855eb345fa50add2f9599be065be9" name="apps/pc_frontend/modules/pluginRest/templates/betaReleaseSuccess.txt.php" role="data" />
+   <file baseinstalldir="/" md5sum="6f15364ca61ea7f91dcc6668cd85404f" name="apps/pc_frontend/modules/pluginRest/templates/categoryAllSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="b1af2b2ba3650cff798bbf93ada7d3e9" name="apps/pc_frontend/modules/pluginRest/templates/categoryInfoSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="64da6593a020fd2bcbf2fa822a1b88e9" name="apps/pc_frontend/modules/pluginRest/templates/categoryPackagesInfoSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="768d7e09ff40da8bf78a2528de2c18e0" name="apps/pc_frontend/modules/pluginRest/templates/categoryPackagesSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="5af692ebd8749a2f61ef0f1bd20042ee" name="apps/pc_frontend/modules/pluginRest/templates/channelSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="9c1855eb345fa50add2f9599be065be9" name="apps/pc_frontend/modules/pluginRest/templates/develReleaseSuccess.txt.php" role="data" />
+   <file baseinstalldir="/" md5sum="d41d8cd98f00b204e9800998ecf8427e" name="apps/pc_frontend/modules/pluginRest/templates/indexSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="9c1855eb345fa50add2f9599be065be9" name="apps/pc_frontend/modules/pluginRest/templates/latestReleaseSuccess.txt.php" role="data" />
+   <file baseinstalldir="/" md5sum="9060ccae2dd39c3eecbb5102c8d7fd6e" name="apps/pc_frontend/modules/pluginRest/templates/maintainerAllSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="508bc4863fbb92502cdcede00090a60c" name="apps/pc_frontend/modules/pluginRest/templates/maintainerInfoSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="78ed521db7c9bb3eb45d3d105aacbc1a" name="apps/pc_frontend/modules/pluginRest/templates/packageAllSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="7c38335ed9b3119b9bd14456efbdf1e5" name="apps/pc_frontend/modules/pluginRest/templates/packageInfoSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="6cb545efae3f979227213472890e78ef" name="apps/pc_frontend/modules/pluginRest/templates/packageMaintainers2Success.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="6854417c03fbb1df68a520b2038fe821" name="apps/pc_frontend/modules/pluginRest/templates/packageMaintainersSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="6ebc6a5357bfa4f66db6e96cad385501" name="apps/pc_frontend/modules/pluginRest/templates/releaseAll2Success.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="d2552b64fe21d2409585b2baf0135de8" name="apps/pc_frontend/modules/pluginRest/templates/releaseAllSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="d6db16641f93280fcdd68a68f97ba231" name="apps/pc_frontend/modules/pluginRest/templates/releasePackageDefinitionSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="81f9118c112d986896fe50f2878de507" name="apps/pc_frontend/modules/pluginRest/templates/releaseVersion2Success.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="6c953fb64aa4ab7d85448937ccaba7d4" name="apps/pc_frontend/modules/pluginRest/templates/releaseVersionSuccess.xml.php" role="data" />
+   <file baseinstalldir="/" md5sum="9c1855eb345fa50add2f9599be065be9" name="apps/pc_frontend/modules/pluginRest/templates/stableReleaseSuccess.txt.php" role="data" />
+   <file baseinstalldir="/" md5sum="19a12f93d6f4392697fd68d4f9e15ff1" name="config/confirmation.yml" role="data" />
+   <file baseinstalldir="/" md5sum="13345e385396dd3a4d0818556e17b7a1" name="config/gadget.yml" role="data" />
+   <file baseinstalldir="/" md5sum="ad8f5a85c68ab169a76b77241480cf7a" name="config/login_gadget.yml" role="data" />
+   <file baseinstalldir="/" md5sum="2e065e56c23978c3ef051a2c6efdbb04" name="config/member_config.yml" role="data" />
+   <file baseinstalldir="/" md5sum="04a0d3a5ce46a9ba926a449a7d3600df" name="config/opPluginChannelServerPluginConfiguration.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="4929335079d234047aa33cac41c1700b" name="config/profile_gadget.yml" role="data" />
+   <file baseinstalldir="/" md5sum="ad8f5a85c68ab169a76b77241480cf7a" name="config/side_banner_gadget.yml" role="data" />
+   <file baseinstalldir="/" md5sum="4a23f967349da8503386de37e54ecf87" name="config/doctrine/schema.yml" role="data" />
+   <file baseinstalldir="/" md5sum="df5b2f05bf044c1979853d2e37d530da" name="data/fixtures/001_import_message_type.yml" role="data" />
+   <file baseinstalldir="/" md5sum="e3ecf8c0b2ba277eaa18dfefdca12938" name="data/fixtures/002_category.yml" role="data" />
+   <file baseinstalldir="/" md5sum="c49b1ced63561e7211c52cb463eabb10" name="data/fixtures/010_navigation.yml" role="data" />
+   <file baseinstalldir="/" md5sum="77e14d50ac6c29972c109462ab9c34d5" name="lib/activeResource/opRedmineResource.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="7616b38302cadc3a712d0be6f3088fd7" name="lib/filter/doctrine/PluginPluginCategoryFormFilter.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="6900b8d24e00babb63fd25410981c5a1" name="lib/filter/doctrine/PluginPluginMemberFormFilter.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="3122356584adefc7056b2326618784b8" name="lib/filter/doctrine/PluginPluginPackageFormFilter.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="998eb6e83e54636b0bafbbcd267fda5d" name="lib/filter/doctrine/PluginPluginReleaseFormFilter.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="ed68fd983cd6e674584e98facc048c03" name="lib/filter/doctrine/PluginPluginUserFormFilter.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="fca0592e367fd0543e0e4a8f80413aa5" name="lib/form/opPluginMemberManageForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="24a7ff499874b633099e76a0f63f092e" name="lib/form/opPluginPackageJoinForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="cda7e1955564b9e835887398c667ac2c" name="lib/form/opPluginPackageReleaseForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="f532c031baaa788095f85aea3bae8801" name="lib/form/doctrine/PluginPluginCategoryForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="4be97540f4a879cf3b8cdba9baaa666c" name="lib/form/doctrine/PluginPluginMemberForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="48793a2300a662476c6001dda8c54a45" name="lib/form/doctrine/PluginPluginPackageForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="05bbb0b773361ee142adad2cfafd00aa" name="lib/form/doctrine/PluginPluginReleaseForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="fb4e58679c87dd2d6fe9feba87bebcdf" name="lib/form/doctrine/PluginPluginUserForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="47c1f607febec1ee03de00d71c367ceb" name="lib/model/doctrine/PluginPluginCategory.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="1eeaf759251ff99dac7a46666160d46c" name="lib/model/doctrine/PluginPluginCategoryTable.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="6160cba7ee17b95f3e15fd19ba5aecca" name="lib/model/doctrine/PluginPluginMember.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="6cab678181113b3a859f3b99a474f410" name="lib/model/doctrine/PluginPluginMemberTable.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="7a91c5cfa1791fe0ceb92eae017a1f75" name="lib/model/doctrine/PluginPluginPackage.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="05ebe78ff04071f946ce004872126d14" name="lib/model/doctrine/PluginPluginPackageTable.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="3892fcec56ee964415a79d25f029f018" name="lib/model/doctrine/PluginPluginRelease.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="4463457733d4dc19e0c5f8dca815bef4" name="lib/model/doctrine/PluginPluginReleaseTable.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="2479358f7dc6354208a4de48ab2a6c48" name="lib/model/doctrine/PluginPluginUser.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="e10316ba9cb06aee18e2e3e87b229d62" name="lib/model/doctrine/PluginPluginUserTable.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="0ec01e895a77eaa164870fd3374374b8" name="lib/util/opPluginChannelServerToolkit.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="e859e2899dfff3a32f33ac4a6cfe334a" name="lib/vendor/ActiveResource/ActiveResource.php" role="data" />
+   <file baseinstalldir="/" md5sum="4e68d4303d986b4b2861aca085efe3b1" name="lib/vendor/PEAR/VersionControl/Git.php" role="data" />
+   <file baseinstalldir="/" md5sum="98f39802e64486158056916a668cf0b2" name="lib/vendor/PEAR/VersionControl/SVN.php" role="data" />
+   <file baseinstalldir="/" md5sum="e5b80d0de174ec2652282c2ca186d2e3" name="lib/vendor/PEAR/VersionControl/Git/Component.php" role="data" />
+   <file baseinstalldir="/" md5sum="41f0f7990be06722c1c937ef3bdcdec9" name="lib/vendor/PEAR/VersionControl/Git/Exception.php" role="data" />
+   <file baseinstalldir="/" md5sum="d074c9ed39ecfd9e746f1a6f8f8c71c7" name="lib/vendor/PEAR/VersionControl/Git/Object.php" role="data" />
+   <file baseinstalldir="/" md5sum="6228e1f11306e9b67e803c8571190989" name="lib/vendor/PEAR/VersionControl/Git/Object/Blob.php" role="data" />
+   <file baseinstalldir="/" md5sum="8dfdac48a236abb80e06da324b77f26e" name="lib/vendor/PEAR/VersionControl/Git/Object/Commit.php" role="data" />
+   <file baseinstalldir="/" md5sum="c6b0e0d8ff1c2289c064d9703ce473c8" name="lib/vendor/PEAR/VersionControl/Git/Object/Tree.php" role="data" />
+   <file baseinstalldir="/" md5sum="62182205aa70a056bb5108ce609fc80b" name="lib/vendor/PEAR/VersionControl/Git/Util/Command.php" role="data" />
+   <file baseinstalldir="/" md5sum="50f2ea78548e6f4f6b63960ffd688154" name="lib/vendor/PEAR/VersionControl/Git/Util/RevListFetcher.php" role="data" />
+   <file baseinstalldir="/" md5sum="cfd3e742cda7b43bc31faa92e4a295aa" name="lib/vendor/PEAR/VersionControl/SVN/Add.php" role="data" />
+   <file baseinstalldir="/" md5sum="c7be70ec88dd201582bb94e06d3972e2" name="lib/vendor/PEAR/VersionControl/SVN/Blame.php" role="data" />
+   <file baseinstalldir="/" md5sum="bcd26a6aa30f61f579c92e2ca2d91739" name="lib/vendor/PEAR/VersionControl/SVN/Cat.php" role="data" />
+   <file baseinstalldir="/" md5sum="21d48620dcd0bdbd153a9aed31ef1d62" name="lib/vendor/PEAR/VersionControl/SVN/Checkout.php" role="data" />
+   <file baseinstalldir="/" md5sum="3a096789d5aa9729cb8d5611a3d978fc" name="lib/vendor/PEAR/VersionControl/SVN/Cleanup.php" role="data" />
+   <file baseinstalldir="/" md5sum="e0839582017441c6c0eedc85ab45bd39" name="lib/vendor/PEAR/VersionControl/SVN/Commit.php" role="data" />
+   <file baseinstalldir="/" md5sum="3c5a39d193a28bf95ed97506695a2e05" name="lib/vendor/PEAR/VersionControl/SVN/Copy.php" role="data" />
+   <file baseinstalldir="/" md5sum="2f9deb4fc0cfae7e7ffaf718e3f0df98" name="lib/vendor/PEAR/VersionControl/SVN/Delete.php" role="data" />
+   <file baseinstalldir="/" md5sum="926e0eb8e22219dae2b28afce1a0b0dd" name="lib/vendor/PEAR/VersionControl/SVN/Diff.php" role="data" />
+   <file baseinstalldir="/" md5sum="9fd2ab89cfb784d06a30cb4a684a54cd" name="lib/vendor/PEAR/VersionControl/SVN/Export.php" role="data" />
+   <file baseinstalldir="/" md5sum="546f35fe77ee6ef5ee3ed3f5ecd34dc4" name="lib/vendor/PEAR/VersionControl/SVN/Import.php" role="data" />
+   <file baseinstalldir="/" md5sum="031662fcf3e0d8892dfc45c1a7a0c107" name="lib/vendor/PEAR/VersionControl/SVN/Info.php" role="data" />
+   <file baseinstalldir="/" md5sum="a76c4d8569bdb70287a2992213e35fe4" name="lib/vendor/PEAR/VersionControl/SVN/List.php" role="data" />
+   <file baseinstalldir="/" md5sum="69824cb423f93db602ab19ac3d988a53" name="lib/vendor/PEAR/VersionControl/SVN/Log.php" role="data" />
+   <file baseinstalldir="/" md5sum="fde5126e10e11567f1e89cebf72bd6d2" name="lib/vendor/PEAR/VersionControl/SVN/Merge.php" role="data" />
+   <file baseinstalldir="/" md5sum="2a42afe50dcd213590d859cb036e9a00" name="lib/vendor/PEAR/VersionControl/SVN/Mkdir.php" role="data" />
+   <file baseinstalldir="/" md5sum="2f1043738a9a676d7aeb78b0a97b6290" name="lib/vendor/PEAR/VersionControl/SVN/Move.php" role="data" />
+   <file baseinstalldir="/" md5sum="9fd9dc97970b5ece657eb5f9a832c27f" name="lib/vendor/PEAR/VersionControl/SVN/Propdel.php" role="data" />
+   <file baseinstalldir="/" md5sum="5627d4df601a6a649c2ef8824c5008b1" name="lib/vendor/PEAR/VersionControl/SVN/Propget.php" role="data" />
+   <file baseinstalldir="/" md5sum="657761068ae19aa809e8af859cf0f961" name="lib/vendor/PEAR/VersionControl/SVN/Proplist.php" role="data" />
+   <file baseinstalldir="/" md5sum="f5af9dab951d1077affa0d95b4b8bf45" name="lib/vendor/PEAR/VersionControl/SVN/Propset.php" role="data" />
+   <file baseinstalldir="/" md5sum="9850bb3cfbff247c406399ace6e03e2c" name="lib/vendor/PEAR/VersionControl/SVN/Resolved.php" role="data" />
+   <file baseinstalldir="/" md5sum="be6aa0bdca6de71baa961eeb444c6fde" name="lib/vendor/PEAR/VersionControl/SVN/Revert.php" role="data" />
+   <file baseinstalldir="/" md5sum="4a2d06b9b2876076dad523dabb1c4c84" name="lib/vendor/PEAR/VersionControl/SVN/Status.php" role="data" />
+   <file baseinstalldir="/" md5sum="a2f7b5406f73510b6b2491a6b87fdbaf" name="lib/vendor/PEAR/VersionControl/SVN/Switch.php" role="data" />
+   <file baseinstalldir="/" md5sum="d1cecf81fec692c5bf1c26cd3b8ce5cc" name="lib/vendor/PEAR/VersionControl/SVN/Update.php" role="data" />
+   <file baseinstalldir="/" md5sum="ff0496362bae89d7e5a20fad10bfad41" name="lib/vendor/PEAR/VersionControl/SVN/Parsers/Log.php" role="data" />
+   <file baseinstalldir="/" md5sum="25b04d5e2306bbc79824f120dc88d181" name="test/bootstrap/database.php" role="data" />
+   <file baseinstalldir="/" md5sum="2089e76b9d0ae0fd4d222ee37ea68cb5" name="test/bootstrap/functional.php" role="data" />
+   <file baseinstalldir="/" md5sum="4bfa4b596e946c8a283410a2e2ba4315" name="test/bootstrap/unit.php" role="data" />
+   <file baseinstalldir="/" md5sum="8471fade12b0760fab6715ffb8b8f9e4" name="test/fixtures/test_data.yml" role="data" />
+   <file baseinstalldir="/" md5sum="8a98cacfcc151f2808c399543fd52679" name="test/functional/mobile_frontend/skeletonActionsTest.php" role="data" />
+   <file baseinstalldir="/" md5sum="1faa199e87c1ce270e86edee706b37fd" name="test/functional/pc_frontend/skeletonActionsTest.php" role="data" />
+   <file baseinstalldir="/" md5sum="52440ab0abcc01c98551283f1e9942e1" name="test/unit/model/SkeletonTest.php" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.3</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.2.0</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-02-17</date>
+   <license>apache</license>
+   <notes>
+initial release
+   </notes>
+  </release>
+ </changelog>
+</package>
