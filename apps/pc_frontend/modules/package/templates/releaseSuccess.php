@@ -4,6 +4,12 @@
 
 <?php
 
+$channelOption = '';
+if (opPluginChannelServerToolkit::getConfig('channel_name') !== opPluginManager::OPENPNE_PLUGIN_CHANNEL)
+{
+  $channelOption = ' --channel='.opPluginChannelServerToolkit::getConfig('channel_name');
+}
+
 op_include_parts('listBox', 'releaseInfoList', array(
   'title' =>  __('Detail of this release'),
   'list' => array(
@@ -13,7 +19,7 @@ op_include_parts('listBox', 'releaseInfoList', array(
     __('Release Note') => nl2br($info['notes']),
     __('Installation') => 
       __('Install the plugin:').'<br />
-      <code>$ ./symfony opPlugin:install '.$release->Package->name.' -r '.$release->version.' --channel='.opPluginChannelServerToolkit::getConfig('channel_name').'</code><br />
+      <code>$ ./symfony opPlugin:install '.$release->Package->name.' -r '.$release->version.$channelOption.'</code><br />
       <br />'.
       __('Migrate your model and database:').'<br />
       <code>$ ./symfony openpne:migrate --target='.$release->Package->name.'</code><br />
