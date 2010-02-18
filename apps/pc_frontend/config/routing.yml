@@ -175,7 +175,7 @@ plugin_rest_release_version:
 
 # plugin_download
 plugin_download_tgz:
-  url:  /get/:name-:version
+  url:  /opPluginChannelServerPlugin/get/:name-:version
   class: sfDoctrineRoute
   options: { model: PluginPackage, type: object, segment_separators: [/, -], suffix: .tgz }
   param: { module: pluginRest, action: downloadTgz }
@@ -184,7 +184,7 @@ plugin_download_tgz:
     sf_method: [get, head]
 
 plugin_download_without_extension:
-  url:  /get/:name-:version
+  url:  /opPluginChannelServerPlugin/get/:name-:version
   class: sfDoctrineRoute
   options: { model: PluginPackage, type: object, segment_separators: [/, -] }
   param: { module: pluginRest, action: downloadTgz, sf_format: tgz }
@@ -359,5 +359,5 @@ pluginRest_nodefaults:
   param: { module: default, action: error }
 
 get_nodefaults:
-  url: /get/*
+  url: /opPluginChannelServerPlugin/get/*
   param: { module: default, action: error }

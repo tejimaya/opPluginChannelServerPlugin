@@ -96,4 +96,12 @@ class opPluginChannelServerToolkit
 
     set_time_limit($timeLimit);
   }
+
+  public static function getFilePathToCache($name, $version)
+  {
+    $ds = DIRECTORY_SEPARATOR;
+    $path = sfConfig::get('sf_plugins_dir').$ds.'opPluginChannelServerPlugin'.$ds.'web'.$ds.'get'.$ds.$name.'-'.$version.'.tgz';
+
+    return $path;
+  }
 }

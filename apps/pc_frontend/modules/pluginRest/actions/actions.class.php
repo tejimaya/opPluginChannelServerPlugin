@@ -214,8 +214,14 @@ class pluginRestActions extends sfActions
     $this->release = Doctrine::getTable('PluginRelease')->findOneByPackageIdAndVersion($this->package->id, $version);
     $this->forward404Unless($this->release);
 
+    $bin = $this->release->File->FileBin->bin;
+
+    $path = opPluginChannelServerToolkit::getFilePathToCache($this->package->name, $version);
+    @file_put_contents($path, $bin);
+    @chmod($path, 0777);
+
     header('Content-type: '.$this->release->File->type);
-    echo $this->release->File->FileBin->bin;
+    echo $bin;
 
     exit;
   }

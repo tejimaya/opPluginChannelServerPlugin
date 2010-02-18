@@ -224,6 +224,9 @@ class packageActions extends sfActions
 
     $this->release->delete();
 
+    $path = opPluginChannelServerToolkit::getFilePathToCache($this->release->Package->name, $this->release->version);
+    @unlink($path);
+
     $this->getUser()->setFlash('notice', 'The release is removed successfully.');
 
     $this->redirect('package_home', $this->release->Package);
