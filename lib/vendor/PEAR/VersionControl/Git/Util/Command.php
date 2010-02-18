@@ -19,7 +19,7 @@
  *
  * @category  VersionControl
  * @package   VersionControl_Git
- * @author    Kousuke Ebihara <kousuke@co3k.org>
+ * @author    Kousuke Ebihara <ebihara@php.net>
  * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
@@ -29,7 +29,7 @@
  *
  * @category  VersionControl
  * @package   VersionControl_Git
- * @author    Kousuke Ebihara <kousuke@co3k.org>
+ * @author    Kousuke Ebihara <ebihara@php.net>
  * @copyright 2010 Kousuke Ebihara
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
@@ -212,22 +212,29 @@ class VersionControl_Git_Util_Command extends VersionControl_Git_Component
     {
         $command = $this->createCommandString($arguments, $options);
 
-        $currentDir = getcwd();
-        chdir($this->git->getDirectory());
+        $descriptorspec = array(
+            1 => array('pipe', 'w'),
+            2 => array('pipe', 'w'),
+        );
+        $pipes = array();
+        $resource = proc_open($command, $descriptorspec, $pipes, realpath($this->git->getDirectory()));
 
-        $outputFile = tempnam(sys_get_temp_dir(), 'VCG');
+        $stdout = stream_get_contents($pipes[1]);
+        $stderr = stream_get_contents($pipes[2]);
+        foreach ($pipes as $pipe) {
+            fclose($pipe);
+        }
 
-        $status = trim(shell_exec($command.' > '.$outputFile.'; echo $?'));
-        $result = file_get_contents($outputFile);
-        unlink($outputFile);
-
-        chdir($currentDir);
-
+        $status = trim(proc_close($resource));
         if ($status) {
-            $message = 'Some errors in executing git command: '.$result;
+            $message = "Some errors in executing git command\n\n"
+                     . "Output:\n"
+                     . $stdout."\n"
+                     . "Error:\n"
+                     . $stderr;
             throw new VersionControl_Git_Exception($message);
         }
 
-        return $result;
+        return $stdout;
     }
 }
