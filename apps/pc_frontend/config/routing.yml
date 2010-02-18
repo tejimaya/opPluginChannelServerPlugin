@@ -6,6 +6,12 @@ channel_xml:
   requirements:
     sf_method: [get, head]
 
+chiara_redirector:
+  url:  /Chiara_PEAR_Server_REST/*
+  param: { module: pluginRest, action: chiaraRedirector }
+  requirements:
+    sf_method: [get, head]
+
 plugin_rest:
   url:  /pluginRest/
   class: sfRequestRoute

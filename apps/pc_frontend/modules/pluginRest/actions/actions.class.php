@@ -65,6 +65,21 @@ class pluginRestActions extends sfActions
     }
   }
 
+  public function executeChiaraRedirector(sfWebRequest $request)
+  {
+    $pathInfo = str_replace('Chiara_PEAR_Server_REST', 'pluginRest', $request->getPathInfo());
+    $routing = sfContext::getInstance()->getRouting();
+    $parameter = $routing->parse($pathInfo);
+
+    $request->setAttribute('sf_route', $parameter['_sf_route']);
+    unset($parameter['_sf_route']);
+
+    $parameterHolder = $request->getParameterHolder();
+    $parameterHolder->add($parameter);
+
+    $this->forward($parameter['module'], $parameter['action']);
+  }
+
   public function executeChannel(sfWebRequest $request)
   {
   }
