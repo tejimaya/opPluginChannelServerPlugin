@@ -10,5 +10,5 @@
  <c><?php echo $channel_name ?></c>
 <?php foreach ($package->PluginRelease as $release): ?>
  <r><v><?php echo $release->version ?></v><s><?php echo $release->stability ?></s><m>5.2.3</m></r>
-</a>
 <?php endforeach; ?>
+</a>
