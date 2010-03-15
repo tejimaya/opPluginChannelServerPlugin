@@ -2,8 +2,10 @@ general:
   pear_handle:
     Name:       "pear_handle"
     Caption:    "PEAR Account"
+    Info:       "Input your account name for using plugin release. Account must be 3-12 characters."
     FormType:   "input"
-    ValueType:  "text"
+    ValueType:   "regexp"
+    ValueRegexp: "/^[a-z3-Z1-9]{3,12}$/"
     IsRegist:   true
     IsConfig:   false
     IsUnique:   true
