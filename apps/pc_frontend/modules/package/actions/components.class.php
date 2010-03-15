@@ -52,10 +52,7 @@ class packageComponents extends sfComponents
 
   public function executeListRecentRelease()
   {
-    $this->releases = Doctrine::getTable('PluginRelease')->createQuery()
-      ->orderBy('created_at DESC')
-      ->limit(5)
-      ->execute();
+    $this->releases = Doctrine::getTable('PluginRelease')->getRecentRelease(5);
   }
 
   public function executeMemberPlugins($request)

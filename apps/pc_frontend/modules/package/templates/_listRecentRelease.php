@@ -9,6 +9,11 @@
 </li>
 <?php endforeach; ?>
 </ul>
+<div class="moreInfo">
+<ul class="moreInfo">
+<li><?php echo link_to(__('More'), '@package_list_recent_release') ?></li>
+</ul>
+</div>
 </div>
 </div></div>
 <?php endif; ?>

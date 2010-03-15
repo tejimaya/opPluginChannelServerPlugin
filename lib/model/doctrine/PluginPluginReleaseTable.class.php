@@ -51,6 +51,28 @@ class PluginPluginReleaseTable extends opAccessControlDoctrineTable
     ));
   }
 
+  public function getRecentReleaseQuery($size = 5)
+  {
+    return Doctrine::getTable('PluginRelease')->createQuery()
+      ->orderBy('created_at DESC')
+      ->limit($size);
+  }
+
+  public function getRecentRelease($size = 5)
+  {
+    return $this->getRecentReleaseQuery($size)->execute();
+  }
+
+  public function getRecentPager($page = 1, $size = 20)
+  {
+    $pager = new sfDoctrinePager('PluginPackage', $size);
+    $pager->setQuery($this->getRecentReleaseQuery($size));
+    $pager->setPage($page);
+    $pager->init();
+
+    return $pager;
+  }
+
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl

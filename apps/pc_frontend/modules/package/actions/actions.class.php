@@ -262,4 +262,12 @@ class packageActions extends sfActions
 
     $this->pager = Doctrine::getTable('PluginPackage')->getMemberPluginPager($this->member->id, $request->getParameter('page', 1), 20);
   }
+
+  public function executeListRecentRelease(sfWebRequest $request)
+  {
+    $this->pager = Doctrine::getTable('PluginRelease')
+      ->getRecentPager($request['page'], 20);
+
+    $this->forward404Unless(count($this->pager));
+  }
 }

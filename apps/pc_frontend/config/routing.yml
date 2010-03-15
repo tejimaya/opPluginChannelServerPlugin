@@ -323,6 +323,13 @@ package_list_member:
     name: op.+[pP]lugin
     sf_method: [get, head]
 
+package_list_recent_release:
+  url:  /package/listRecentRelease
+  class: sfRequestRoute
+  param: { module: package, action: listRecentRelease }
+  requirements:
+    sf_method: [get, head]
+
 package_search:
   url:  /package/search
   class: sfRequestRoute
