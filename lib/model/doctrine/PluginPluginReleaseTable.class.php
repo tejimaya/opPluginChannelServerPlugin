@@ -30,7 +30,8 @@ class PluginPluginReleaseTable extends opAccessControlDoctrineTable
   public function getPager($id, $page = 1, $size = 20)
   {
     $q = Doctrine::getTable('PluginRelease')->createQuery()
-      ->where('package_id = ?', $id);
+      ->where('package_id = ?', $id)
+      ->orderBy('created_at DESC');
 
     $pager = new sfDoctrinePager('PluginPackage', $size);
     $pager->setQuery($q);
