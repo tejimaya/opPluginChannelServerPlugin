@@ -338,6 +338,14 @@
         <source>This pear_handle address already exists.</source>
         <target>入力されたアカウント名は既に使われています。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Rates</source>
+        <target>評価</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Bookmark</source>
+        <target>ブックマーク</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

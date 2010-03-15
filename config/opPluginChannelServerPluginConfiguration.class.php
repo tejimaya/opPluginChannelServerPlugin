@@ -45,6 +45,8 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('op_action.post_execute_friend_link', array('opMessagePluginObserver', 'listenToPostActionEventSendFriendLinkRequestMessage'));
     $this->dispatcher->connect('form.post_configure', array('opMessagePluginObserver', 'injectMessageFormField'));
     */
+
+    $this->dispatcher->connect('op_action.post_execute_package_home', array(__CLASS__, 'appendHatenaStar'));
   }
 
   public function listJoinConfirmation($event)
@@ -112,5 +114,12 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
     opActivateBehavior::enable();
 
     return true;
+  }
+
+  static public function appendHatenaStar(sfEvent $event)
+  {
+    $event['actionInstance']->getResponse()->addJavascript('http://s.hatena.ne.jp/js/HatenaStar.js');
+    $event['actionInstance']->getResponse()->addJavascript('/sfProtoculousPlugin/js/prototype.js');
+    $event['actionInstance']->getResponse()->addJavascript('/opPluginChannelServerPlugin/js/HatenaStar.js');
   }
 }

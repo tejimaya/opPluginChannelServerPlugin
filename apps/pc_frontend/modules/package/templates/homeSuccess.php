@@ -79,10 +79,14 @@ op_include_parts('nineTable', 'developerList', $options);
 <?php end_slot(); ?>
 
 <?php
+$current_url = url_for('@package_home?name='.$package->name, true);
 $list = array(
   __('Category')       => $package->Category,
   __('Summary')        => $package->summary,
   __('License')        => $package->license,
+  __('Bookmark')       => '<a href="http://b.hatena.ne.jp/entry/'.$current_url.'"><img src="http://d.hatena.ne.jp/images/b_entry.gif" width="16" height="12"></a> '
+                       .'<a href="http://b.hatena.ne.jp/entry/'.$current_url.'"><img src="http://b.hatena.ne.jp/entry/image/'.$current_url.'"></a>',
+  __('Rates')          => '',
   __('Description')    => nl2br($package->description),
 );
 
