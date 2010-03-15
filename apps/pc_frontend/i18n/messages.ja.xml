@@ -346,6 +346,10 @@
         <source>Bookmark</source>
         <target>ブックマーク</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>%1% Recently Releases</source>
+        <target>%1% の最近のリリース</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

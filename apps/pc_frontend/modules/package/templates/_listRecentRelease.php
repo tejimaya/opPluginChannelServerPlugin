@@ -1,6 +1,7 @@
 <?php if (count($releases)): ?>
 <div id="homeRecentList_<?php echo $gadget->getId() ?>" class="dparts homeRecentList"><div class="parts">
-<div class="partsHeading"><h3><?php echo __('Recently Releases') ?></h3></div>
+<div class="partsHeading"><h3><?php echo __('Recently Releases') ?>
+ <?php echo link_to(image_tag('/opPluginChannelServerPlugin/images/feed-icon-14x14.png'), '@package_list_recent_release_atom') ?></h3></div>
 <div class="block">
 <ul class="articleList">
 <?php foreach ($releases as $release): ?>

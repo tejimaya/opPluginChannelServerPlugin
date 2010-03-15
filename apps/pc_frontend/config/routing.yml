@@ -330,6 +330,13 @@ package_list_recent_release:
   requirements:
     sf_method: [get, head]
 
+package_list_recent_release_atom:
+  url:  /package/releases.atom
+  class: sfRequestRoute
+  param: { module: package, action: listRecentReleaseAtom, sf_format: atom }
+  requirements:
+    sf_method: [get, head]
+
 package_search:
   url:  /package/search
   class: sfRequestRoute

@@ -190,6 +190,13 @@ class packageActions extends sfActions
       ->getPager($this->package->id, $request['page'], 20);
   }
 
+  public function executeListRecentReleaseAtom(sfWebRequest $request)
+  {
+    $this->list = Doctrine::getTable('PluginRelease')->getRecentRelease(20);
+    $this->forward404Unless(count($this->list));
+    $this->channel_name = opPluginChannelServerToolkit::getConfig('channel_name', $this->getRequest()->getHost());
+  }
+
   public function executeMemberList(sfWebRequest $request)
   {
     $this->pager = Doctrine::getTable('PluginMember')
