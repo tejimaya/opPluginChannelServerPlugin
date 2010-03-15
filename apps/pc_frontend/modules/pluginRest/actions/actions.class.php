@@ -199,6 +199,16 @@ class pluginRestActions extends sfActions
     $this->forward404Unless($this->release);
 
     $this->info = $this->pear->infoFromString($this->release->package_definition);
+    if (PEAR::isError($this->info))
+    {
+      $this->info = array(
+        'summary'     => '',
+        'description' => '',
+        'date'        => '',
+        'time'        => '',
+        'notes'       => '',
+      );
+    }
   }
 
   public function executeCategoryPackagesInfo(sfWebRequest $request)
