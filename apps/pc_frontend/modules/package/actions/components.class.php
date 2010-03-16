@@ -87,4 +87,9 @@ class packageComponents extends sfComponents
     }
     $this->plugins = Doctrine::getTable('PluginPackage')->getMemberPlugin($this->member->id, 5);
   }
+
+  public function executeSideMenu($request)
+  {
+    $this->categories = Doctrine::getTable('PluginCategory')->findAll();
+  }
 }

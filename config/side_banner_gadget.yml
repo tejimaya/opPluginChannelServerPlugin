@@ -6,6 +6,14 @@ usageBox:
   viewable_privilege: 4
   component: [package, usage]
 
+channelServerMenuBox:
+  caption:
+    ja_JP: "チャンネルサーバのメニュー"
+  description:
+    ja_JP: "チャンネルサーバのメニューのボックスを設置します。"
+  viewable_privilege: 4
+  component: [package, sideMenu]
+
 recentPluginListBox:
   caption:
     ja_JP: "最近のプラグイン"
