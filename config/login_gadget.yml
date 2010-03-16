@@ -29,3 +29,11 @@ recentReleaseListBox:
     ja_JP: "最近のリリースのリストを設置できます。"
   viewable_privilege: 4
   component: [package, listRecentRelease]
+
+pluginSearchBox:
+  caption:
+    ja_JP: "プラグイン検索ボックス"
+  description:
+    ja_JP: "プラグイン検索ボックスを設置できます。"
+  viewable_privilege: 4
+  component: [package, search]

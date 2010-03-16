@@ -34,6 +34,25 @@ abstract class PluginPluginPackageFormFilter extends BasePluginPackageFormFilter
   {
     parent::setup();
 
-    $this->useFields(array('name', 'description', 'category_id'));
+    $this->setWidget('keyword', new sfWidgetFormFilterInput(array('with_empty' => false)));
+    $this->setValidator('keyword', new sfValidatorPass(array('required' => false)));
+
+    $this->useFields(array('keyword', 'category_id'));
+  }
+
+  public function getFields()
+  {
+    return array_merge(
+      parent::getFields(),
+      array('keyword' => 'Keyword')
+    );
+  }
+
+  public function addKeywordColumnQuery(Doctrine_Query $q, $field, $values)
+  {
+    $alias = $q->getRootAlias();
+    $text = '%'.$values['text'].'%';
+
+    $q->andWhere($alias.'.name LIKE ? OR '.$alias.'.description LIKE ?', array($text, $text));
   }
 }

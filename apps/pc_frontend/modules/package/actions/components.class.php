@@ -92,4 +92,8 @@ class packageComponents extends sfComponents
   {
     $this->categories = Doctrine::getTable('PluginCategory')->findAll();
   }
+
+  public function executeSearch($request)
+  {
+  }
 }

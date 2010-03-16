@@ -62,3 +62,11 @@ listMemberPlugin:
     ja_JP: "開発しているプラグインのリストを設置できます。"
   viewable_privilege: 4
   component: [package, listMemberPlugin]
+
+pluginSearchBox:
+  caption:
+    ja_JP: "プラグイン検索ボックス"
+  description:
+    ja_JP: "プラグイン検索ボックスを設置できます。"
+  viewable_privilege: 4
+  component: [package, search]
