@@ -1,6 +1,6 @@
 <ul id="channelServerSideMenu">
   <li class="menu"><?php echo link_to(__('Search Plugin'), '@package_search') ?></li>
-  <li class="menu"><?php echo link_to(__('Recently Releases'), '@homepage') ?></li>
+  <li class="menu"><?php echo link_to(__('Recently Releases'), '@package_list_recent_release') ?></li>
   <li class="tree"><span class="parentTitle"><?php echo __('Category') ?></span>
     <ul>
       <?php foreach ($categories as $category): ?>
