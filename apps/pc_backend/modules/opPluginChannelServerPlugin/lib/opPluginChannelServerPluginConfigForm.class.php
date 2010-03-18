@@ -48,6 +48,15 @@ class opPluginChannelServerPluginConfigForm extends BaseForm
 
       ->setWidget('package_download_base_url', new sfWidgetFormInputText())
       ->setValidator('package_download_base_url', new sfValidatorUrl(array('required' => false)))
+
+      ->setWidget('s3_key', new sfWidgetFormInputText())
+      ->setValidator('s3_key', new sfValidatorString(array('required' => false)))
+
+      ->setWidget('s3_secret', new sfWidgetFormInputText())
+      ->setValidator('s3_secret', new sfValidatorString(array('required' => false)))
+
+      ->setWidget('s3_bucket', new sfWidgetFormInputText())
+      ->setValidator('s3_bucket', new sfValidatorString(array('required' => false)))
     ;
 
     $this->getWidgetSchema()

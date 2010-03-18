@@ -108,6 +108,8 @@ class opPluginPackageReleaseForm extends BaseForm
       $file->setFromValidatedFile($tgz);
       $file->save();
 
+      $this->uploadToS3($file);
+
       $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, $xml);
       $this->package->PluginRelease[] = $release;
       $this->package->save();
@@ -191,6 +193,20 @@ class opPluginPackageReleaseForm extends BaseForm
     $file->setFileBin($bin);
     $file->save();
 
+    $this->uploadToS3($file);
+
     return $file;
+  }
+
+  protected function uploadToS3(File $file)
+  {
+    $key = opPluginChannelServerToolkit::getConfig('s3_key');
+    $secret = opPluginChannelServerToolkit::getConfig('s3_secret');
+    $bucket = opPluginChannelServerToolkit::getConfig('s3_bucket');
+
+    if ($key && $secret && $bucket)
+    {
+      opPluginChannelServerToolkit::uploadFileToS3($key, $secret, $bucket, $file);
+    }
   }
 }

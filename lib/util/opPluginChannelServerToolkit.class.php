@@ -104,4 +104,18 @@ class opPluginChannelServerToolkit
 
     return $path;
   }
+
+  public static function uploadFileToS3($account, $secret, $bucket, File $file)
+  {
+    require_once 'Services/Amazon/S3.php';
+
+    $s3 = Services_Amazon_S3::getAccount($account, $secret);
+    $bucket = $s3->getBucket($bucket);
+
+    $object = $bucket->getObject($file->original_filename);
+    $object->contentType = $file->type;
+    $object->acl = Services_Amazon_S3_AccessControlList::ACL_PUBLIC_READ;
+    $object->data = $file->FileBin->bin;
+    $object->save();
+  }
 }

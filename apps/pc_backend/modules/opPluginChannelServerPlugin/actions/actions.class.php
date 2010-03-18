@@ -40,6 +40,9 @@ class opPluginChannelServerPluginActions extends sfActions
       'parent_project_id' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'parent_project_id'),
       'user_role_id' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'user_role_id'),
       'package_download_base_url' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'package_download_base_url'),
+      's3_key' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'s3_key'),
+      's3_secret' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'s3_secret'),
+      's3_bucket' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'s3_bucket'),
     ));
     if ($request->isMethod(sfWebRequest::POST))
     {
