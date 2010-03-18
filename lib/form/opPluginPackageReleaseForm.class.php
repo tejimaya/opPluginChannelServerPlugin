@@ -200,9 +200,9 @@ class opPluginPackageReleaseForm extends BaseForm
 
   protected function uploadToS3(File $file)
   {
-    $key = opPluginChannelServerToolkit::getConfig('s3_key');
-    $secret = opPluginChannelServerToolkit::getConfig('s3_secret');
-    $bucket = opPluginChannelServerToolkit::getConfig('s3_bucket');
+    $key = sfConfig::get('op_plugin_channel_s3_key');
+    $secret = sfConfig::get('op_plugin_channel_s3_secret');
+    $bucket = sfConfig::get('op_plugin_channel_s3_bucket');
 
     if ($key && $secret && $bucket)
     {
