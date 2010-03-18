@@ -170,8 +170,14 @@ plugin_rest_release_version:
     name: op.+[pP]lugin
     sf_method: [get, head]
 
-#plugin_rest_release_deps:
-#  url:  /pluginRest/r/:name/deps.:version.txt
+plugin_rest_release_deps:
+  url:  /pluginRest/r/:name/:version
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object, segment_separators: [/], suffix: .txt }
+  param: { module: pluginRest, action: releaseDeps, sf_format: txt }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
 
 # plugin_download
 plugin_download_tgz:

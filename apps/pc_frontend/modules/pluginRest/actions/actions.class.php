@@ -216,6 +216,14 @@ class pluginRestActions extends sfActions
     $this->category = $this->getRoute()->getObject();
   }
 
+  public function executeReleaseDeps(sfWebRequest $request)
+  {
+    $this->forward404Unless(0 === strpos($request['version'], 'deps.'));
+    $version = substr($request['version'], strlen('deps.'));
+
+    return $this->renderText(serialize(array()));
+  }
+
   public function executeDownloadTgz(sfWebRequest $request)
   {
     $version = $request['version'];
