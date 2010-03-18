@@ -1,4 +1,7 @@
-<?php echo '<?xml version="1.0" encoding="utf-8" ?>' ?>
+<?php
+
+use_helper('opPluginChannelServerPlugin');
+echo '<?xml version="1.0" encoding="utf-8" ?>' ?>
 
 <r xmlns="http://pear.php.net/dtd/rest.release"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -17,6 +20,6 @@
  <da><?php echo $info['date'] ?> <?php echo $info['time'] ?></da>
  <n><?php echo $info['notes'] ?></n>
  <f><?php echo $release->File->filesize ?></f>
- <g><?php echo url_for('@plugin_download_without_extension?name='.$package->name.'&version='.$release->version, true) ?></g>
+ <g><?php echo get_plugin_download_url($package->name, $release->version) ?></g>
  <x xlink:href="package.<?php echo $release->version ?>.xml"/>
 </r>

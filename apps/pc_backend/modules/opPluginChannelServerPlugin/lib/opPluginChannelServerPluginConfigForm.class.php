@@ -45,6 +45,9 @@ class opPluginChannelServerPluginConfigForm extends BaseForm
 
       ->setWidget('user_role_id', new sfWidgetFormInputText())
       ->setValidator('user_role_id', new sfValidatorInteger(array('required' => false)))
+
+      ->setWidget('package_download_base_url', new sfWidgetFormInputText())
+      ->setValidator('package_download_base_url', new sfValidatorUrl(array('required' => false)))
     ;
 
     $this->getWidgetSchema()

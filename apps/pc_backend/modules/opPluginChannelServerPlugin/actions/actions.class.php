@@ -39,6 +39,7 @@ class opPluginChannelServerPluginActions extends sfActions
       'related_redmine_base_url' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'related_redmine_base_url'),
       'parent_project_id' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'parent_project_id'),
       'user_role_id' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'user_role_id'),
+      'package_download_base_url' => Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.'package_download_base_url'),
     ));
     if ($request->isMethod(sfWebRequest::POST))
     {

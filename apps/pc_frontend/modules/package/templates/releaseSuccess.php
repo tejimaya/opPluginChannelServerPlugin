@@ -3,6 +3,7 @@
 <?php end_slot(); ?>
 
 <?php
+use_helper('opPluginChannelServerPlugin');
 
 $channelOption = '';
 if (opPluginChannelServerToolkit::getConfig('channel_name') !== opPluginManager::OPENPNE_PLUGIN_CHANNEL)
@@ -25,10 +26,10 @@ op_include_parts('listBox', 'releaseInfoList', array(
       <code>$ ./symfony openpne:migrate --target='.$release->Package->name.'</code><br />
       ',
     __('Download') => link_to(
-      url_for('@plugin_download_tgz?version='.$release->version.'&name='.$release->Package->name, true),
-      '@plugin_download_tgz?version='.$release->version.'&name='.$release->Package->name),
-  ),
-));
+      get_plugin_download_url($release->Package->name, $release->version, 'tgz'),
+      get_plugin_download_url($release->Package->name, $release->version, 'tgz')
+    ),
+)));
 
 if ($release->isAllowed($sf_user->getRawValue()->getMember(), 'delete'))
 {
