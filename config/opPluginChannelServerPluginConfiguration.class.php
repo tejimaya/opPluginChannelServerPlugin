@@ -41,6 +41,8 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
 
     $this->dispatcher->connect('op_confirmation.list', array($this, 'listJoinConfirmation'));
     $this->dispatcher->connect('op_confirmation.decision', array($this, 'processJoinConfirmation'));
+
+    $this->dispatcher->connect('response.filter_content', array($this, 'cacheOutput'));
     /*
     $this->dispatcher->connect('op_action.post_execute_friend_link', array('opMessagePluginObserver', 'listenToPostActionEventSendFriendLinkRequestMessage'));
     $this->dispatcher->connect('form.post_configure', array('opMessagePluginObserver', 'injectMessageFormField'));
@@ -121,5 +123,37 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
     $event['actionInstance']->getResponse()->addJavascript('http://s.hatena.ne.jp/js/HatenaStar.js');
     $event['actionInstance']->getResponse()->addJavascript('/sfProtoculousPlugin/js/prototype.js');
     $event['actionInstance']->getResponse()->addJavascript('/opPluginChannelServerPlugin/js/HatenaStar.js');
+  }
+
+  public function cacheOutput($event, $content)
+  {
+    $cacheBaseDir = $this->rootDir.DIRECTORY_SEPARATOR.'cache';
+    $cacheRoutes = array(
+      'plugin_rest_release_deps',
+      'plugin_rest_package_info',
+      'plugin_rest_release_version',
+    );
+
+    $lastEntry = sfContext::getInstance()->getActionStack()->getLastEntry();
+    if (!$lastEntry)
+    {
+      return $content;
+    }
+
+    $lastRouting = $lastEntry->getActionInstance()->getContext()->getRouting();
+    $lastRequest = $lastEntry->getActionInstance()->getRequest();
+
+    $currentRouteName = $lastRouting->getCurrentRouteName();
+    $filePath = $cacheBaseDir.$lastRequest->getPathInfo(); // TODO: Add consider to Windows directory separator
+
+    if (in_array($currentRouteName, $cacheRoutes))
+    {
+      $filesystem = new sfFilesystem();
+      $filesystem->mkdirs(dirname($filePath));
+
+      file_put_contents($filePath, $content);
+    }
+
+    return $content;
   }
 }
