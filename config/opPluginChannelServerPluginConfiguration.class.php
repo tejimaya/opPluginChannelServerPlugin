@@ -43,6 +43,7 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('op_confirmation.decision', array($this, 'processJoinConfirmation'));
 
     $this->dispatcher->connect('response.filter_content', array($this, 'cacheOutput'));
+    $this->dispatcher->connect('op_action.pre_execute_pluginRest_channel', array($this, 'injectEtag'));
     /*
     $this->dispatcher->connect('op_action.post_execute_friend_link', array('opMessagePluginObserver', 'listenToPostActionEventSendFriendLinkRequestMessage'));
     $this->dispatcher->connect('form.post_configure', array('opMessagePluginObserver', 'injectMessageFormField'));
@@ -155,5 +156,26 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
     }
 
     return $content;
+  }
+
+  public function injectEtag($event)
+  {
+    $action = $event['actionInstance'];
+
+    $currentRouteName = $action->getContext()->getRouting()->getCurrentRouteName();
+
+    $ds = DIRECTORY_SEPARATOR;
+    $mtime = filemtime($this->rootDir.$ds.'apps'.$ds.'pc_frontend'.$ds.'modules'.$ds.'pluginRest'.$ds.'templates'.$ds.'channelSuccess.xml.php');
+
+    if ('channel_xml' === $currentRouteName)
+    {
+      $etag = '"'.md5($mtime.$action->channel_name.$action->summary.$action->suggestedalias).'"';
+      if ($action->getRequest()->getHttpHeader('IF_NONE_MATCH') == $etag)
+      {
+        $action->getResponse()->setStatusCode(304);
+        $action->getResponse()->setHeaderOnly(true);
+      }
+      $action->getResponse()->setHttpHeader('ETag', $etag);
+    }
   }
 }
