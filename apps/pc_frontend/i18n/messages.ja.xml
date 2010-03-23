@@ -287,8 +287,8 @@
         <target>タグの URL を指定してください</target>
       </trans-unit>
       <trans-unit id="">
-        <source>The url must be HTTP protocol format. e.g. http://github.com/openpne/opSamplePlugin.git</source>
-        <target>URL は HTTP プロトコルのものである必要があります。 例：http://github.com/openpne/opSamplePlugin.git</target>
+        <source>The url must be Git protocol format. e.g. git://github.com/openpne/opSamplePlugin.git</source>
+        <target>URL は Git プロトコルのものである必要があります。 例：git://github.com/openpne/opSamplePlugin.git</target>
       </trans-unit>
       <trans-unit id="">
         <source>This can be many formatted string: "master" (branch name), "9af9b" (commit object name), "v1.0.0" (tag name)</source>
