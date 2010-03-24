@@ -126,9 +126,14 @@ class opPluginChannelServerPluginConfiguration extends sfPluginConfiguration
     $event['actionInstance']->getResponse()->addJavascript('/opPluginChannelServerPlugin/js/HatenaStar.js');
   }
 
+  public function getCacheDir()
+  {
+    return $this->rootDir.DIRECTORY_SEPARATOR.'cache';
+  }
+
   public function cacheOutput($event, $content)
   {
-    $cacheBaseDir = $this->rootDir.DIRECTORY_SEPARATOR.'cache';
+    $cacheBaseDir = $this->getCacheDir();
     $cacheRoutes = array(
       'plugin_rest_release_deps',
       'plugin_rest_package_info',

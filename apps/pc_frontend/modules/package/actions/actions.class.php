@@ -69,6 +69,8 @@ class packageActions extends sfActions
 
   public function executeCreate(sfWebRequest $request)
   {
+    $this->clearOutputCacheDirectory();
+
     $this->form = new PluginPackageForm();
     $this->redirectIf($this->form->bindAndSave($request['plugin_package'], $request->getFiles('plugin_package')),
       'package_home', $this->form->getObject());
@@ -83,6 +85,8 @@ class packageActions extends sfActions
 
   public function executeUpdate(sfWebRequest $request)
   {
+    $this->clearOutputCacheDirectory();
+
     $this->form = new PluginPackageForm($this->package);
     $this->redirectIf($this->form->bindAndSave($request['plugin_package'], $request->getFiles('plugin_package')),
       'package_home', $this->form->getObject());
@@ -234,6 +238,8 @@ class packageActions extends sfActions
     $path = opPluginChannelServerToolkit::getFilePathToCache($this->release->Package->name, $this->release->version);
     @unlink($path);
 
+    $this->clearOutputCacheDirectory();
+
     $this->getUser()->setFlash('notice', 'The release is removed successfully.');
 
     $this->redirect('package_home', $this->release->Package);
@@ -276,5 +282,54 @@ class packageActions extends sfActions
       ->getRecentPager($request['page'], 20);
 
     $this->forward404Unless(count($this->pager));
+  }
+
+  protected function clearOutputCacheDirectory()
+  {
+    $directory = $this->getContext()->getConfiguration()->getPluginConfiguration('opPluginChannelServerPlugin')->getCacheDir();
+    $this->clearDirectoryWithoutGitIgnore($directory);
+  }
+
+  protected function clearDirectoryWithoutGitIgnore($directory)
+  {
+    // ported from sfToolkit::clearDirectory()
+    if (!is_dir($directory))
+    {
+      return;
+    }
+
+    // open a file point to the cache dir
+    $fp = opendir($directory);
+
+    // ignore names
+    $ignore = array('.', '..', 'CVS', '.svn', '.gitignore');
+
+    while (($file = readdir($fp)) !== false)
+    {
+      if (!in_array($file, $ignore))
+      {
+        if (is_link($directory.'/'.$file))
+        {
+          // delete symlink
+          unlink($directory.'/'.$file);
+        }
+        else if (is_dir($directory.'/'.$file))
+        {
+          // recurse through directory
+          $this->clearDirectoryWithoutGitIgnore($directory.'/'.$file);
+
+          // delete the directory
+          rmdir($directory.'/'.$file);
+        }
+        else
+        {
+          // delete the file
+          unlink($directory.'/'.$file);
+        }
+      }
+    }
+
+    // close file pointer
+    closedir($fp);
   }
 }
