@@ -1,3 +1,6 @@
+all:
+  stylesheets: [/opPluginChannelServerPlugin/css/channel]
+
 homeSuccess:
   layout: layoutA
 

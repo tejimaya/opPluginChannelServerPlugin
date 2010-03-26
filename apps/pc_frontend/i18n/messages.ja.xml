@@ -350,6 +350,22 @@
         <source>%1% Recently Releases</source>
         <target>%1% の最近のリリース</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Dependency</source>
+        <target>依存関係</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Greater than %1%</source>
+        <target>%1% 以上</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Less than %1%</source>
+        <target>%1% 以下</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you installed %1%, you cannot install this plugin.</source>
+        <target>%1% がインストールされている場合、このプラグインをインストールすることはできません。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

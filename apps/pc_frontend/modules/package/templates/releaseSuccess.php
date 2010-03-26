@@ -18,6 +18,7 @@ op_include_parts('listBox', 'releaseInfoList', array(
     __('Version') => $release->version,
     __('Stability') => __($release->stability),
     __('Release Note') => (PEAR::isError($info->getRawValue())) ? '' : nl2br($info['notes']),
+    __('Dependency') => render_package_dependency_list($info['release_deps']->getRawValue()),
     __('Installation') => 
       __('Install the plugin:').'<br />
       <code>$ ./symfony opPlugin:install '.$release->Package->name.' -r '.$release->version.$channelOption.'</code><br />
