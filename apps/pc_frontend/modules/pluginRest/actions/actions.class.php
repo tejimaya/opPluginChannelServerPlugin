@@ -218,10 +218,23 @@ class pluginRestActions extends sfActions
 
   public function executeReleaseDeps(sfWebRequest $request)
   {
+    $result = array();
+
     $this->forward404Unless(0 === strpos($request['version'], 'deps.'));
     $version = substr($request['version'], strlen('deps.'));
 
-    return $this->renderText(serialize(array()));
+    $this->package = $this->getRoute()->getObject();
+    $this->release = Doctrine::getTable('PluginRelease')->findOneByPackageIdAndVersion($this->package->id, $version);
+    $this->forward404Unless($this->release);
+
+    $packagefile = new PEAR_PackageFile($this->pear->config);
+    $pf = $packagefile->fromXmlString($this->release->package_definition, PEAR_VALIDATE_NORMAL);
+    if (!PEAR::isError($pf))
+    {
+      $result = $pf->getDependencies();
+    }
+
+    return $this->renderText(serialize($result));
   }
 
   public function executeDownloadTgz(sfWebRequest $request)
