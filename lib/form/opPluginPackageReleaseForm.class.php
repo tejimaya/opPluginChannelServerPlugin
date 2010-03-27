@@ -111,6 +111,8 @@ class opPluginPackageReleaseForm extends BaseForm
       $this->uploadToS3($file);
 
       $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, $xml);
+      $opdeps = opPluginChannelServerToolkit::getOpenPNEDependencyFromArray($info['release_deps']);
+      $release->setOpenPNEDeps($opdeps['ge'], $opdeps['le']);
       $this->package->PluginRelease[] = $release;
       $this->package->save();
     }
@@ -142,6 +144,8 @@ class opPluginPackageReleaseForm extends BaseForm
     $file = $this->getImportedPluginFile($filename, sfConfig::get('sf_cache_dir').'/'.$filename);
 
     $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, file_get_contents($dir.'/package.xml'));
+    $opdeps = opPluginChannelServerToolkit::getOpenPNEDependencyFromArray($info['release_deps']);
+    $release->setOpenPNEDeps($opdeps['ge'], $opdeps['le']);
     $this->package->PluginRelease[] = $release;
     $this->package->save();
 

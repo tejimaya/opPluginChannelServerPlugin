@@ -155,4 +155,33 @@ class opPluginChannelServerToolkit
 
     return (float)sprintf('%d%02d%02d%02d', (int)$major, (int)$minor, (int)$bug, (int)$urgency) + $extraNum;
   }
+
+  public function getOpenPNEDependencyFromArray($array)
+  {
+    $results = array(
+      'ge' => null,
+      'le' => null,
+    );
+
+    foreach ($array as $v)
+    {
+      if (isset($v['optional']) && 'no' !== $v['optional'])
+      {
+        continue;
+      }
+
+      if ('pkg' === $v['type'])
+      {
+        $name = $v['name'];
+        if ('openpne' !== $name)
+        {
+          continue;
+        }
+
+        $results[$v['rel']] = $v['version'];
+      }
+    }
+
+    return $results;
+  }
 }
