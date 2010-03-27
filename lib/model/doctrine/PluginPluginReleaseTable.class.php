@@ -27,11 +27,21 @@
  */
 class PluginPluginReleaseTable extends opAccessControlDoctrineTable
 {
-  public function getPager($id, $page = 1, $size = 20)
+  public function getPager($id, $page = 1, $size = 20, $version = null)
   {
     $q = Doctrine::getTable('PluginRelease')->createQuery()
-      ->where('package_id = ?', $id)
-      ->orderBy('created_at DESC');
+      ->where('package_id = ?', $id);
+
+    if ($version)
+    {
+      $versionId = opPluginChannelServerToolkit::calculateVersionId($version);
+      $q
+        ->andWhere('(op_version_ge <= ? OR op_version_ge IS NULL)', $versionId)
+        ->andWhere('(op_version_le >= ? OR op_version_le IS NULL)', $versionId)
+      ;
+    }
+
+    $q->orderBy('created_at DESC');
 
     $pager = new sfDoctrinePager('PluginPackage', $size);
     $pager->setQuery($q);

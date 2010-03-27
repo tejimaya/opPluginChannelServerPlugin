@@ -213,8 +213,9 @@ class packageActions extends sfActions
 
   public function executeReleaseList(sfWebRequest $request)
   {
+    $this->version = $request->getParameter('version', null);
     $this->pager = Doctrine::getTable('PluginRelease')
-      ->getPager($this->package->id, $request['page'], 20);
+      ->getPager($this->package->id, $request['page'], 20, $this->version);
   }
 
   public function executeListRecentReleaseAtom(sfWebRequest $request)
