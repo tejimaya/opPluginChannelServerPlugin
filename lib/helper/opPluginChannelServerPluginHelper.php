@@ -62,6 +62,10 @@ function render_package_dependency_list($dependencies_array, $class = 'deplist')
       {
         $name = 'OpenPNE';
       }
+      elseif ('PEAR' === $name || 'symfony' === $name)
+      {
+        continue;
+      }
 
       if ('not' === $v['rel'])
       {
