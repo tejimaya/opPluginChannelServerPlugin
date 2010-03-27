@@ -65,6 +65,10 @@ PluginRelease:
     file_id: { type: integer(4), notnull: true }
     member_id: { type: integer(4), notnull: true }
     package_definition: { type: clob, notnull: true }
+    op_version_ge_string: { type: string(64) }
+    op_version_le_string: { type: string(64) }
+    op_version_ge: { type: float }
+    op_version_le: { type: float }
   indexes:
     package_id_version_UNIQUE:
       fields: [package_id, version]

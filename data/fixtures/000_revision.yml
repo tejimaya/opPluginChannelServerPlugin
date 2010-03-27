@@ -1,0 +1,4 @@
+SnsConfig:
+  op_plugin_channel_server_plugin_current_revision:
+    name:  "opPluginChannelServerPlugin_revision"
+    value: 1

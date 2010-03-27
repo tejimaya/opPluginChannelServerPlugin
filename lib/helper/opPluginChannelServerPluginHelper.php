@@ -102,3 +102,21 @@ function render_package_dependency_list($dependencies_array, $class = 'deplist')
 
   return $result;
 }
+
+function get_target_openpne(PluginRelease $release)
+{
+  if ($release->op_version_ge && $release->op_version_le)
+  {
+    return __('Compatible with OpenPNE %1% to %2%', array('%1%' => $release->op_version_ge_string, '%2%' => $release->op_version_le_string));
+  }
+  elseif ($release->op_version_ge)
+  {
+    return __('Compatible with greater than OpenPNE %1%', array('%1%' => $release->op_version_ge_string));
+  }
+  elseif ($release->op_version_le)
+  {
+    return __('Compatible with less than OpenPNE %1%', array('%1%' => $release->op_version_le_string));
+  }
+
+  return __('Compatible with all OpenPNE 3');
+}

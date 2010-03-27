@@ -89,6 +89,7 @@ class PluginPluginReleaseTable extends opAccessControlDoctrineTable
     return $acl
       ->allow('lead', $resource, 'add')
       ->allow('lead', $resource, 'delete')
+      ->allow('lead', $resource, 'add_deps')
     ;
   }
 }

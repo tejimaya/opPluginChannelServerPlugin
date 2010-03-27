@@ -303,6 +303,14 @@ release_detail:
     name: op.+[pP]lugin
     sf_method: [get, head]
 
+release_add_deps:
+  url:  /release/:id/adddeps
+  class: opDynamicAclRoute
+  options: { model: PluginRelease, type: object, privilege: add_deps }
+  param: { module: package, action: releaseAddOpenPNEDeps }
+  requirements:
+    sf_method: [post]
+
 release_delete:
   url:  /release/:id/delete
   class: opDynamicAclRoute

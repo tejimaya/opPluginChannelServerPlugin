@@ -186,6 +186,29 @@ class packageActions extends sfActions
     $this->info = $this->pear->infoFromString($this->release->package_definition);
 
     $this->form = new BaseForm();
+    $this->depForm = new opPluginReleaseEditOpenPNEDepsForm(array(
+      'le' => $this->release->op_version_le_string,
+      'ge' => $this->release->op_version_ge_string,
+    ));
+  }
+
+  public function executeReleaseAddOpenPNEDeps(sfWebRequest $request)
+  {
+    $this->depForm = new opPluginReleaseEditOpenPNEDepsForm(array(), array(
+      'release' => $this->release,
+    ));
+    $this->depForm->bind($request['release_dep']);
+    if ($this->depForm->isValid())
+    {
+      $this->depForm->save();
+      $this->getUser()->setFlash('notice', 'Updated target OpenPNE version.');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'Failed to update target OpenPNE version.');
+    }
+
+    $this->redirect('release_detail', $this->release);
   }
 
   public function executeReleaseList(sfWebRequest $request)

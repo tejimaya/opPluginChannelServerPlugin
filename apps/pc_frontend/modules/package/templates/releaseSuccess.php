@@ -1,10 +1,30 @@
+<?php use_helper('opPluginChannelServerPlugin', 'opJavascript'); ?>
+
 <?php slot('op_sidemenu'); ?>
 <?php include_partial('pluginInformationBar', array('package' => $release->Package)) ?>
 <?php end_slot(); ?>
 
-<?php
-use_helper('opPluginChannelServerPlugin');
+<?php slot('_op_depinfo'); ?>
+<p id="op_depinfo">
+<?php echo get_target_openpne($release->getRawValue()); ?>
+<?php if ($release->isAllowed($sf_user->getRawValue()->getMember(), 'add_deps')): ?>
+(<?php echo link_to_function(__('Edit'), visual_effect('fade', 'op_depinfo', array('afterFinishInternal' =>' function(effect){
+'.visual_effect('appear', 'op_dep_edit').'}'))); ?>)
+<?php endif; ?>
+</p>
 
+<?php if ($release->isAllowed($sf_user->getRawValue()->getMember(), 'add_deps')): ?>
+<div id="op_dep_edit" style="display: none">
+<form action="<?php echo url_for('release_add_deps', $release) ?>" method="post">
+<?php echo $depForm->renderHiddenFields(); ?>
+<?php echo __('Compatible with OpenPNE %1% to %2%', array('%1%' => $depForm['ge'], '%2%' => $depForm['le'])); ?>
+<p><input type="submit" class="input_submit" value="<?php echo __('Update') ?>" /></p>
+</form>
+</div>
+<?php endif; ?>
+<?php end_slot(); ?>
+
+<?php
 $channelOption = '';
 if (opPluginChannelServerToolkit::getConfig('channel_name') !== opPluginManager::OPENPNE_PLUGIN_CHANNEL)
 {
@@ -18,6 +38,7 @@ op_include_parts('listBox', 'releaseInfoList', array(
     __('Version') => $release->version,
     __('Stability') => __($release->stability),
     __('Release Note') => (PEAR::isError($info->getRawValue())) ? '' : nl2br($info['notes']),
+    __('Target OpenPNE Version') => get_slot('_op_depinfo'),
     __('Dependency') => render_package_dependency_list($info['release_deps']->getRawValue()),
     __('Installation') => 
       __('Install the plugin:').'<br />

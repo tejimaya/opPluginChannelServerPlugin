@@ -27,6 +27,26 @@
  */
 abstract class PluginPluginRelease extends BasePluginRelease implements opAccessControlRecordInterface
 {
+  public function setOpenPNEDeps($ge, $le)
+  {
+    if (!$ge)
+    {
+      $ge = null;
+    }
+
+    if (!$le)
+    {
+      $le = null;
+    }
+
+    $this->op_version_ge_string = $ge;
+    $this->op_version_le_string = $le;
+    $this->op_version_ge = opPluginChannelServerToolkit::calculateVersionId($ge);
+    $this->op_version_le = opPluginChannelServerToolkit::calculateVersionId($le);
+
+    return $this;
+  }
+
   public function generateRoleId(Member $member)
   {
     if ($this->Package->isLead($member->id))

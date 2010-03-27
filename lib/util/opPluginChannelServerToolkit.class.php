@@ -118,4 +118,41 @@ class opPluginChannelServerToolkit
     $object->data = $file->FileBin->bin;
     $object->save();
   }
+
+  public static function calculateVersionId($version)
+  {
+    if (!$version)
+    {
+      return null;
+    }
+
+    $extras = array(
+      'dev' => -0.9,
+      'alpha' => -0.8,
+      'beta' => -0.7,
+      'RC' => -0.6,
+      'rc' => -0.6,
+      'a' => -0.8,
+      'b' => -0.7,
+    );
+    $extra = '';
+
+    $pattern = '('.implode(array_keys($extras), '|').')';
+    $matches = array();
+    if (preg_match('/\b'.$pattern.'\b/', $version, $matches))
+    {
+      $extra = $matches[1];
+    }
+
+    $parts = array_pad(explode('.', $version, 4), 4, 0);
+    list($major, $minor, $bug, $urgency) = $parts;
+
+    $extraNum = 0.0;
+    if (isset($extras[$extra]))
+    {
+      $extraNum = $extras[$extra];
+    }
+
+    return (float)sprintf('%d%02d%02d%02d', (int)$major, (int)$minor, (int)$bug, (int)$urgency) + $extraNum;
+  }
 }
