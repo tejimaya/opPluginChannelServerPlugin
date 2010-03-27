@@ -58,11 +58,7 @@ function render_package_dependency_list($dependencies_array, $class = 'deplist')
     elseif ('pkg' === $v['type'])
     {
       $name = $v['name'];
-      if ('openpne' === $name)
-      {
-        $name = 'OpenPNE';
-      }
-      elseif ('PEAR' === $name || 'symfony' === $name)
+      if ('openpne' === $name || 'PEAR' === $name || 'symfony' === $name)
       {
         continue;
       }
