@@ -366,6 +366,46 @@
         <source>If you installed %1%, you cannot install this plugin.</source>
         <target>%1% がインストールされている場合、このプラグインをインストールすることはできません。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>If you installed %1%, you cannot install this plugin.</source>
+        <target>%1% がインストールされている場合、このプラグインをインストールすることはできません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Display releases that are usable on a version of OpenPNE %1%</source>
+        <target>OpenPNE のバージョン %1% で使えるリリースを表示</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Filter</source>
+        <target>絞り込み</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Target OpenPNE Version</source>
+        <target>利用できる OpenPNE のバージョン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Compatible with OpenPNE %1% to %2%</source>
+        <target>OpenPNE %1% 以上 %2% 以下で利用可能</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Compatible with greater than OpenPNE %1%</source>
+        <target>OpenPNE %1% 以上で利用可能</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Compatible with less than OpenPNE %1%</source>
+        <target>OpenPNE %1% 以下で利用可能</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Compatible with all OpenPNE 3</source>
+        <target>すべての OpenPNE 3 で利用可能</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Updated target OpenPNE version.</source>
+        <target>利用できる OpenPNE のバージョンを更新しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Failed to update target OpenPNE version.</source>
+        <target>利用できる OpenPNE のバージョンの更新に失敗しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
