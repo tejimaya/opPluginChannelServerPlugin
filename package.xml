@@ -5,19 +5,19 @@
     http://pear.php.net/dtd/package-2.0.xsd">
  <name>opPluginChannelServerPlugin</name>
  <channel>plugins.openpne.jp</channel>
- <summary>Provide plugin channel server features</summary>
- <description>The opPluginChannelServerPlugin provides *fully* plugin channel server features. It also provides good web interfaces.</description>
+ <summary>opPluginChannelServerPlugin</summary>
+ <description>opPluginChannelServerPlugin</description>
  <lead>
   <name>Kousuke Ebihara</name>
   <user>ebihara</user>
   <email />
   <active>yes</active>
  </lead>
- <date>2010-03-23</date>
- <time>16:45:15</time>
+ <date>2010-03-29</date>
+ <time>13:35:45</time>
  <version>
-  <release>1.0.1</release>
-  <api>1.0.1</api>
+  <release>1.0.2</release>
+  <api>1.0.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -25,26 +25,11 @@
  </stability>
  <license>Apache</license>
  <notes>
-Add many features and fix for plugins.openpne.jp.
-  - Added ability to accept Chiara_PEAR_Server_REST format parameter
-  - Package files are now cached
-  - Fixed xml syntax in allreleases.xml
-  - Fixed the releasing command example is wrong
-  - Fixed White Screen of Death in the plugin-release detail page if the release doesn't have a valid package.xml
-  - Added the listRecentRelease page
-  - Fixed sort-order in a list of the releases of a plugin
-  - replaced "symfony" to "./symfony" in all command examples
-  - Added an information for the "PEAR Account" field
-  - Added ability to display Hatena-bookmark and Hatena-star
-  - Added ability to syndicate Atom feed for the recently release information
-  - Added the sideMenu gadget
-  - Added the plugin search box gadget
-  - Added ability to output empty dependency text
-  - Added ability to configure package download url
-  - Added the PEAR::Services_Amazon_S3
-  - Added ability to store tgz file to S3 (if S3-account is configured)
-  - Added ability to cache output for the specified API
-  - Changed channel.xml to send Etag header
+- changed recommended git format from HTTP protocol URL to Git protocol URL
+- added ability to clear output-cache-directory on updating package / release
+- added ability to output package dependency in the pluginRest module
+- added ability to show dependency from release-detail page
+- added ability to filter releases by a version of OpenPNE
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -54,13 +39,13 @@ Add many features and fix for plugins.openpne.jp.
    <file baseinstalldir="/" md5sum="f7da5a33ce9bcb9a21f9e7c57e96fe7c" name="apps/pc_backend/modules/opPluginChannelServerPlugin/templates/indexSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="ad4e06b8c38fa5c4dfc4dc46cfc3c129" name="apps/pc_backend/modules/opPluginChannelServerPlugin/templates/_categoryListForm.php" role="data" />
    <file baseinstalldir="/" md5sum="acf516abef6e27e08383ad2947e1bc27" name="apps/pc_backend/modules/opPluginChannelServerPlugin/templates/_submenu.php" role="data" />
-   <file baseinstalldir="/" md5sum="93cff0ceef5f83bd6aed4fe4f26c1dd9" name="apps/pc_frontend/config/routing.yml" role="data" />
-   <file baseinstalldir="/" md5sum="971042d0b41ba98c7c1f903ffaf4d82f" name="apps/pc_frontend/i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="b4444786fbdd9d12356eddea313d1d58" name="apps/pc_frontend/config/routing.yml" role="data" />
+   <file baseinstalldir="/" md5sum="6bd9c88eb65cd9b5fd682295f60a3e81" name="apps/pc_frontend/i18n/messages.ja.xml" role="data" />
    <file baseinstalldir="/" md5sum="7bbf1bbec1c3c9738f5a87b01b15428f" name="apps/pc_frontend/modules/member/config/view.yml" role="data" />
-   <file baseinstalldir="/" md5sum="f264fa58152791d3223dce90bce0ef66" name="apps/pc_frontend/modules/package/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="5ed0fe09a4468f95f3ac1c0b42b41d1a" name="apps/pc_frontend/modules/package/actions/actions.class.php" role="data" />
    <file baseinstalldir="/" md5sum="1db88c8498bd1613219bd7806158430d" name="apps/pc_frontend/modules/package/actions/components.class.php" role="data" />
    <file baseinstalldir="/" md5sum="4ebc53a4103068d57127f7ee2b66e24b" name="apps/pc_frontend/modules/package/config/security.yml" role="data" />
-   <file baseinstalldir="/" md5sum="12286877b49d8a6626044c53fe43765b" name="apps/pc_frontend/modules/package/config/view.yml" role="data" />
+   <file baseinstalldir="/" md5sum="d169075f6c5a8fb5f9d4cef41e45add5" name="apps/pc_frontend/modules/package/config/view.yml" role="data" />
    <file baseinstalldir="/" md5sum="db9e5d32e6c785c36682b013b0b3d48d" name="apps/pc_frontend/modules/package/templates/addReleaseSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="79d37d6efd76671eb94afefde6556831" name="apps/pc_frontend/modules/package/templates/editSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="2d3fa62c50e6237de346554671bf4f61" name="apps/pc_frontend/modules/package/templates/homeSuccess.php" role="data" />
@@ -72,8 +57,8 @@ Add many features and fix for plugins.openpne.jp.
    <file baseinstalldir="/" md5sum="fe0d84050204802902d138992a021dec" name="apps/pc_frontend/modules/package/templates/manageMemberSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="4dcab20b44f5763e7bac7974a9ed53b9" name="apps/pc_frontend/modules/package/templates/memberListSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="f441a490103ffd6e17667b6f5c72c497" name="apps/pc_frontend/modules/package/templates/newSuccess.php" role="data" />
-   <file baseinstalldir="/" md5sum="d72041ae4f3fad46c32bed84789ac239" name="apps/pc_frontend/modules/package/templates/releaseListSuccess.php" role="data" />
-   <file baseinstalldir="/" md5sum="91b88c6b5d32ae11036dda1d75c0901b" name="apps/pc_frontend/modules/package/templates/releaseSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="7437cd59bb14798625830da5c371c230" name="apps/pc_frontend/modules/package/templates/releaseListSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="4cbc43ada3da0ebfb308d693144f0868" name="apps/pc_frontend/modules/package/templates/releaseSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="3ca7814bbe48590867c131d35bc4c8a3" name="apps/pc_frontend/modules/package/templates/searchSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="6a23a01eff58fafb095d5e3151b90faf" name="apps/pc_frontend/modules/package/templates/_cautionAboutPluginJoinRequest.php" role="data" />
    <file baseinstalldir="/" md5sum="09f7e3ae97f6cad9bef2f808d0183a5a" name="apps/pc_frontend/modules/package/templates/_listMemberPlugin.php" role="data" />
@@ -85,7 +70,7 @@ Add many features and fix for plugins.openpne.jp.
    <file baseinstalldir="/" md5sum="94ac8f6def7db915b80a4b12d4094f79" name="apps/pc_frontend/modules/package/templates/_search.php" role="data" />
    <file baseinstalldir="/" md5sum="3a8aef51b12f739e331e78409693f2c8" name="apps/pc_frontend/modules/package/templates/_sideMenu.php" role="data" />
    <file baseinstalldir="/" md5sum="be6a94bfca900a57cba409f7f04ecd69" name="apps/pc_frontend/modules/package/templates/_usage.php" role="data" />
-   <file baseinstalldir="/" md5sum="c19f2db575e649c4c822305b7af35062" name="apps/pc_frontend/modules/pluginRest/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="ee645139275f5d7046cd854b03f7175f" name="apps/pc_frontend/modules/pluginRest/actions/actions.class.php" role="data" />
    <file baseinstalldir="/" md5sum="d41d8cd98f00b204e9800998ecf8427e" name="apps/pc_frontend/modules/pluginRest/templates/allReleaseSuccess.xml.php" role="data" />
    <file baseinstalldir="/" md5sum="9c1855eb345fa50add2f9599be065be9" name="apps/pc_frontend/modules/pluginRest/templates/alphaReleaseSuccess.txt.php" role="data" />
    <file baseinstalldir="/" md5sum="9c1855eb345fa50add2f9599be065be9" name="apps/pc_frontend/modules/pluginRest/templates/betaReleaseSuccess.txt.php" role="data" />
@@ -113,13 +98,15 @@ Add many features and fix for plugins.openpne.jp.
    <file baseinstalldir="/" md5sum="4286a3d2f81b56834b4293877f13aaf3" name="config/gadget.yml" role="data" />
    <file baseinstalldir="/" md5sum="da862e6610c3b9226e55e46aa7b004a6" name="config/login_gadget.yml" role="data" />
    <file baseinstalldir="/" md5sum="52f245a0abc1b1bd751d3da9b05395a7" name="config/member_config.yml" role="data" />
-   <file baseinstalldir="/" md5sum="3256a92d102b0eef343f3c619b280e3e" name="config/opPluginChannelServerPluginConfiguration.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="391a34be649d17eea618ae0a90fc2038" name="config/opPluginChannelServerPluginConfiguration.class.php" role="data" />
    <file baseinstalldir="/" md5sum="4929335079d234047aa33cac41c1700b" name="config/profile_gadget.yml" role="data" />
    <file baseinstalldir="/" md5sum="bbceeb44fd2469e4e2a87b91302c23eb" name="config/side_banner_gadget.yml" role="data" />
-   <file baseinstalldir="/" md5sum="4a23f967349da8503386de37e54ecf87" name="config/doctrine/schema.yml" role="data" />
+   <file baseinstalldir="/" md5sum="8e93dce150473bdfb14cd8262bd50b50" name="config/doctrine/schema.yml" role="data" />
+   <file baseinstalldir="/" md5sum="e281220c8811c46fdf185b61979dfb3e" name="data/fixtures/000_revision.yml" role="data" />
    <file baseinstalldir="/" md5sum="df5b2f05bf044c1979853d2e37d530da" name="data/fixtures/001_import_message_type.yml" role="data" />
    <file baseinstalldir="/" md5sum="e3ecf8c0b2ba277eaa18dfefdca12938" name="data/fixtures/002_category.yml" role="data" />
    <file baseinstalldir="/" md5sum="c49b1ced63561e7211c52cb463eabb10" name="data/fixtures/010_navigation.yml" role="data" />
+   <file baseinstalldir="/" md5sum="c2b9fae5c57ae7c6aeab8470fc64b2c3" name="data/migrations/1.0.2/001_add_op_version_column.php" role="data" />
    <file baseinstalldir="/" md5sum="77e14d50ac6c29972c109462ab9c34d5" name="lib/activeResource/opRedmineResource.class.php" role="data" />
    <file baseinstalldir="/" md5sum="7616b38302cadc3a712d0be6f3088fd7" name="lib/filter/doctrine/PluginPluginCategoryFormFilter.class.php" role="data" />
    <file baseinstalldir="/" md5sum="6900b8d24e00babb63fd25410981c5a1" name="lib/filter/doctrine/PluginPluginMemberFormFilter.class.php" role="data" />
@@ -128,24 +115,25 @@ Add many features and fix for plugins.openpne.jp.
    <file baseinstalldir="/" md5sum="ed68fd983cd6e674584e98facc048c03" name="lib/filter/doctrine/PluginPluginUserFormFilter.class.php" role="data" />
    <file baseinstalldir="/" md5sum="fca0592e367fd0543e0e4a8f80413aa5" name="lib/form/opPluginMemberManageForm.class.php" role="data" />
    <file baseinstalldir="/" md5sum="24a7ff499874b633099e76a0f63f092e" name="lib/form/opPluginPackageJoinForm.class.php" role="data" />
-   <file baseinstalldir="/" md5sum="50953c95d0c674fca369fb9248093067" name="lib/form/opPluginPackageReleaseForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="f7ea33089e5070029f0ef28c26fb9617" name="lib/form/opPluginPackageReleaseForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="2b89a7e03299cea5ee27a6ac022df971" name="lib/form/opPluginReleaseEditOpenPNEDepsForm.class.php" role="data" />
    <file baseinstalldir="/" md5sum="f532c031baaa788095f85aea3bae8801" name="lib/form/doctrine/PluginPluginCategoryForm.class.php" role="data" />
    <file baseinstalldir="/" md5sum="4be97540f4a879cf3b8cdba9baaa666c" name="lib/form/doctrine/PluginPluginMemberForm.class.php" role="data" />
    <file baseinstalldir="/" md5sum="48793a2300a662476c6001dda8c54a45" name="lib/form/doctrine/PluginPluginPackageForm.class.php" role="data" />
    <file baseinstalldir="/" md5sum="05bbb0b773361ee142adad2cfafd00aa" name="lib/form/doctrine/PluginPluginReleaseForm.class.php" role="data" />
    <file baseinstalldir="/" md5sum="fb4e58679c87dd2d6fe9feba87bebcdf" name="lib/form/doctrine/PluginPluginUserForm.class.php" role="data" />
-   <file baseinstalldir="/" md5sum="d77975ac1d9618e8bff1cb8c10737c90" name="lib/helper/opPluginChannelServerPluginHelper.php" role="data" />
+   <file baseinstalldir="/" md5sum="8f3458f04be896648758b7eb386d6416" name="lib/helper/opPluginChannelServerPluginHelper.php" role="data" />
    <file baseinstalldir="/" md5sum="47c1f607febec1ee03de00d71c367ceb" name="lib/model/doctrine/PluginPluginCategory.class.php" role="data" />
    <file baseinstalldir="/" md5sum="1eeaf759251ff99dac7a46666160d46c" name="lib/model/doctrine/PluginPluginCategoryTable.class.php" role="data" />
    <file baseinstalldir="/" md5sum="6160cba7ee17b95f3e15fd19ba5aecca" name="lib/model/doctrine/PluginPluginMember.class.php" role="data" />
    <file baseinstalldir="/" md5sum="6cab678181113b3a859f3b99a474f410" name="lib/model/doctrine/PluginPluginMemberTable.class.php" role="data" />
    <file baseinstalldir="/" md5sum="7a91c5cfa1791fe0ceb92eae017a1f75" name="lib/model/doctrine/PluginPluginPackage.class.php" role="data" />
    <file baseinstalldir="/" md5sum="05ebe78ff04071f946ce004872126d14" name="lib/model/doctrine/PluginPluginPackageTable.class.php" role="data" />
-   <file baseinstalldir="/" md5sum="3892fcec56ee964415a79d25f029f018" name="lib/model/doctrine/PluginPluginRelease.class.php" role="data" />
-   <file baseinstalldir="/" md5sum="a3fc1fde935c990afea338ba9773c048" name="lib/model/doctrine/PluginPluginReleaseTable.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="5d96a4accf8c832c5db4da3bbcc54847" name="lib/model/doctrine/PluginPluginRelease.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="0707b72c9952ecefa85f40e93b4bdeaf" name="lib/model/doctrine/PluginPluginReleaseTable.class.php" role="data" />
    <file baseinstalldir="/" md5sum="2479358f7dc6354208a4de48ab2a6c48" name="lib/model/doctrine/PluginPluginUser.class.php" role="data" />
    <file baseinstalldir="/" md5sum="e10316ba9cb06aee18e2e3e87b229d62" name="lib/model/doctrine/PluginPluginUserTable.class.php" role="data" />
-   <file baseinstalldir="/" md5sum="8e25e657d0bc8bdb7ca244674b492051" name="lib/util/opPluginChannelServerToolkit.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="d0cf3c7a8865291617ae455beeec9ddd" name="lib/util/opPluginChannelServerToolkit.class.php" role="data" />
    <file baseinstalldir="/" md5sum="e859e2899dfff3a32f33ac4a6cfe334a" name="lib/vendor/ActiveResource/ActiveResource.php" role="data" />
    <file baseinstalldir="/" md5sum="8421d5d7ca7121b83d4db45e2fda4770" name="lib/vendor/PEAR/Crypt/HMAC2.php" role="data" />
    <file baseinstalldir="/" md5sum="32c25bf62e8f8166716a70d714da18b5" name="lib/vendor/PEAR/Crypt/HMAC2/Exception.php" role="data" />
@@ -215,6 +203,7 @@ Add many features and fix for plugins.openpne.jp.
    <file baseinstalldir="/" md5sum="8a98cacfcc151f2808c399543fd52679" name="test/functional/mobile_frontend/skeletonActionsTest.php" role="data" />
    <file baseinstalldir="/" md5sum="1faa199e87c1ce270e86edee706b37fd" name="test/functional/pc_frontend/skeletonActionsTest.php" role="data" />
    <file baseinstalldir="/" md5sum="52440ab0abcc01c98551283f1e9942e1" name="test/unit/model/SkeletonTest.php" role="data" />
+   <file baseinstalldir="/" md5sum="4b3656ed201bfde4a4bd54dd50f11bda" name="web/css/channel.css" role="data" />
    <file baseinstalldir="/" md5sum="2168a573d0d45bd2f9a89b8236453d61" name="web/images/feed-icon-14x14.png" role="data" />
    <file baseinstalldir="/" md5sum="2b168b0a57bde66f2f148b1dc9ab7f7d" name="web/js/HatenaStar.js" role="data" />
   </dir>
@@ -263,11 +252,11 @@ Add many features and fix for plugins.openpne.jp.
   - Package files are now cached
   - Fixed xml syntax in allreleases.xml
   - Fixed the releasing command example is wrong
-  - Fixed White Screen of Death in the plugin-release detail page if the release doesn't have a valid package.xml
+  - Fixed White Screen of Death in the plugin-release detail page if the release doesn&apos;t have a valid package.xml
   - Added the listRecentRelease page
   - Fixed sort-order in a list of the releases of a plugin
-  - replaced "symfony" to "./symfony" in all command examples
-  - Added an information for the "PEAR Account" field
+  - replaced &quot;symfony&quot; to &quot;./symfony&quot; in all command examples
+  - Added an information for the &quot;PEAR Account&quot; field
   - Added ability to display Hatena-bookmark and Hatena-star
   - Added ability to syndicate Atom feed for the recently release information
   - Added the sideMenu gadget
@@ -278,6 +267,25 @@ Add many features and fix for plugins.openpne.jp.
   - Added ability to store tgz file to S3 (if S3-account is configured)
   - Added ability to cache output for the specified API
   - Changed channel.xml to send Etag header
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-03-29</date>
+   <license>Apache</license>
+   <notes>
+- changed recommended git format from HTTP protocol URL to Git protocol URL
+- added ability to clear output-cache-directory on updating package / release
+- added ability to output package dependency in the pluginRest module
+- added ability to show dependency from release-detail page
+- added ability to filter releases by a version of OpenPNE
    </notes>
   </release>
  </changelog>
