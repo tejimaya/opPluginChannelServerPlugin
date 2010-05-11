@@ -418,6 +418,10 @@
         <source>The specified plugin name already exist.</source>
         <target>指定されたプラグイン名は既に使われています。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Released plugin package</source>
+        <target>プラグインパッケージをリリースしました</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

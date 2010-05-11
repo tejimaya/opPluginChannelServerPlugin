@@ -61,11 +61,36 @@ class opPluginPackageReleaseForm extends BaseForm
 
   protected function getChannel()
   {
+    // NOTE: opBrowser breaks things in current context.
+    //       So this method need to restore to current context after using dummy context.
+
+    $contextName = '__context_for_get_channel';
+
     $host = sfContext::getInstance()->getRequest()->getHost();
     $serverName = opPluginChannelServerToolkit::getConfig('server_name', str_replace(':80', '', $host));
 
+    $application = sfContext::getInstance()->getConfiguration()->getApplication();
+    $environment = sfContext::getInstance()->getConfiguration()->getEnvironment();
+    $isDebug = sfContext::getInstance()->getConfiguration()->isDebug();
+    $config = sfConfig::getAll();
+
+    if (sfContext::hasInstance($contextName))
+    {
+      sfContext::switchTo($contextName);
+    }
+    else
+    {
+      $configuration = ProjectConfiguration::getApplicationConfiguration($application, 'test', $isDebug);
+      $context = sfContext::createInstance($configuration, $contextName);
+    }
+
     $browser = new opBrowser($serverName);
     $browser->get('/channel.xml');
+
+    // restores the previous states
+    sfContext::switchTo($application);
+    sfConfig::add($config);
+    sfContext::getInstance()->getRequest()->setRequestFormat('html');
 
     $channel = new PEAR_ChannelFile();
     $channel->fromXmlString($browser->getResponse()->getContent());
@@ -135,7 +160,7 @@ class opPluginPackageReleaseForm extends BaseForm
     $info = $pear->infoFromDescriptionFile($dir.'/package.xml');
     if ($info instanceof PEAR_Error)
     {
-      throw new RuntimeException($info->message());
+      throw new RuntimeException($info->getMessage());
     }
 
     $filename = sprintf('%s-%s.tgz', $info['name'], $info['version']);

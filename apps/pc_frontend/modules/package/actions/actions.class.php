@@ -103,12 +103,34 @@ class packageActions extends sfActions
       $this->form->bind($request['plugin_release'], $request->getFiles('plugin_release'));
       if ($this->form->isValid())
       {
-        $this->form->uploadPackage();
+        try
+        {
+          $this->form->uploadPackage();
+        }
+        catch (RuntimeException $e)
+        {
+          $this->handleReleaseException($e);
+        }
+        catch (VersionControl_Git_Exception $e)
+        {
+          $this->handleReleaseException($e);
+        }
 
         $this->getUser()->setFlash('notice', 'Released plugin package');
         $this->redirect('package_home', $this->package);
       }
     }
+  }
+
+  protected function handleReleaseException($e, $message = 'Invalid.')
+  {
+    if ('dev' === sfConfig::get('sf_environment'))
+    {
+      throw $e;
+    }
+
+    $this->getUser()->setFlash('error', $message);
+    $this->redirect('@package_add_release?name='.$this->package->getName());
   }
 
   public function executeJoin(sfWebRequest $request)
