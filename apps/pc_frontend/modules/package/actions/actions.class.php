@@ -166,9 +166,19 @@ class packageActions extends sfActions
       if ($form->isValid())
       {
         $form->save();
-      }
 
-      $this->redirect('package_manageMember', $this->package);
+        $this->getUser()->setFlash('notice', 'Configured.');
+
+        $obj = Doctrine::getTable('PluginMember')
+          ->findOneByMemberIdAndPackageId($this->getUser()->getMemberId(), $form->getValue('package_id'));
+
+        $this->redirectIf($obj->getPosition() !== 'lead', 'package_home', $this->package);
+        $this->redirect('package_manageMember', $this->package);
+      }
+      else
+      {
+        $this->getUser()->setFlash('error', (string)$form->getErrorSchema());
+      }
     }
   }
 

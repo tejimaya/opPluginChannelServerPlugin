@@ -47,6 +47,34 @@ class opPluginMemberManageForm extends BaseForm
     ;
 
     $this->widgetSchema->setNameFormat('plugin_manage[%s]');
+
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'validatePositionUpdate'))));
+  }
+
+  public function validatePositionUpdate($validator, $value, $arguments)
+  {
+    $obj = Doctrine::getTable('PluginMember')->findOneByMemberIdAndPackageId($value['member_id'], $value['package_id']);
+    $leadCount = count($obj->getPackage()->getLeadMemberIds());
+
+    // lead-count won't be changed
+    if ($obj->getPosition() !== 'lead' || 'lead' === $value['position'])
+    {
+      return $value;
+    }
+
+    // postion won't be changed
+    if ($obj->getPosition() === $value['position'])
+    {
+      return $value;
+    }
+
+    // there will be no lead for this plugin
+    if ('lead' !== $value['position'] && 1 === $leadCount)
+    {
+      throw new sfValidatorError($validator, 'At least a lead is required in a plugin.');
+    }
+
+    return $value;
   }
 
   public function save()

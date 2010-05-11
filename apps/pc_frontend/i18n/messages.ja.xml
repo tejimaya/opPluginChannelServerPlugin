@@ -406,6 +406,14 @@
         <source>Failed to update target OpenPNE version.</source>
         <target>利用できる OpenPNE のバージョンの更新に失敗しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>At least a lead is required in a plugin.</source>
+        <target>lead は少なくとも一人は必要です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Configured.</source>
+        <target>設定しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
