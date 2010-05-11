@@ -414,6 +414,10 @@
         <source>Configured.</source>
         <target>設定しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>The specified plugin name already exist.</source>
+        <target>指定されたプラグイン名は既に使われています。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

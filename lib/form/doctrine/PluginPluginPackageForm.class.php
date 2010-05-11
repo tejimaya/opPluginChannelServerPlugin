@@ -75,6 +75,10 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
       unset($this['name']);
     }
 
+    $uniqueValidator = new sfValidatorDoctrineUnique(array('model' => 'PluginPackage', 'column' => array('name')));
+    $uniqueValidator->setMessage('invalid', 'The specified plugin name already exist.');
+    $this->validatorSchema->setPostValidator($uniqueValidator);
+
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'validateProjectCreation'))));
   }
 
