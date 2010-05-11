@@ -133,7 +133,7 @@ abstract class PluginPluginPackageForm extends BasePluginPackageForm
     $_validator = new opValidatorString(array('max_length' => 64));
     $value = $_validator->clean($value);
 
-    if (!preg_match('/^op.+Plugin$/', $value))
+    if (!preg_match('/^op[a-zA-Z0-9]+Plugin$/', $value))
     {
       throw new sfValidatorError($validator, 'invalid');
     }
