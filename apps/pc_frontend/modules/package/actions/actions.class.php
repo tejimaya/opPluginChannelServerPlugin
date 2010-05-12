@@ -289,10 +289,21 @@ class packageActions extends sfActions
   {
     $request->checkCSRFProtection();
 
+    $filename = $this->release->File->original_filename;
+
     $this->release->delete();
 
     $path = opPluginChannelServerToolkit::getFilePathToCache($this->release->Package->name, $this->release->version);
     @unlink($path);
+
+    $key = sfConfig::get('op_plugin_channel_s3_key');
+    $secret = sfConfig::get('op_plugin_channel_s3_secret');
+    $bucket = sfConfig::get('op_plugin_channel_s3_bucket');
+
+    if ($key && $secret && $bucket)
+    {
+      opPluginChannelServerToolkit::deleteFileFromS3($key, $secret, $bucket, $filename);
+    }
 
     $this->clearOutputCacheDirectory();
 

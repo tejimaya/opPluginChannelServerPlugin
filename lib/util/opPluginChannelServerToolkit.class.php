@@ -119,6 +119,17 @@ class opPluginChannelServerToolkit
     $object->save();
   }
 
+  public static function deleteFileFromS3($account, $secret, $bucket, $filename)
+  {
+    require_once 'Services/Amazon/S3.php';
+
+    $s3 = Services_Amazon_S3::getAccount($account, $secret);
+    $bucket = $s3->getBucket($bucket);
+
+    $object = $bucket->getObject($filename);
+    $object->delete();
+  }
+
   public static function calculateVersionId($version)
   {
     if (!$version)

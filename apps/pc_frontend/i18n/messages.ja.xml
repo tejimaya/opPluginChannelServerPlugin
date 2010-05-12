@@ -422,6 +422,10 @@
         <source>Released plugin package</source>
         <target>プラグインパッケージをリリースしました</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>The release is removed successfully.</source>
+        <target>リリースを削除しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

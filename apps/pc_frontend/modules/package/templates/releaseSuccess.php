@@ -39,7 +39,7 @@ op_include_parts('listBox', 'releaseInfoList', array(
     __('Stability') => __($release->stability),
     __('Release Note') => (PEAR::isError($info->getRawValue())) ? '' : nl2br($info['notes']),
     __('Target OpenPNE Version') => get_slot('_op_depinfo'),
-    __('Dependency') => render_package_dependency_list($info['release_deps']->getRawValue()),
+    __('Dependency') => (PEAR::isError($info->getRawValue())) ? '' : render_package_dependency_list($info['release_deps']->getRawValue()),
     __('Installation') => 
       __('Install the plugin:').'<br />
       <code>$ ./symfony opPlugin:install '.$release->Package->name.' -r '.$release->version.$channelOption.'</code><br />
