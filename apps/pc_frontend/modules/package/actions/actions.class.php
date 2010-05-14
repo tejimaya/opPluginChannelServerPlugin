@@ -291,6 +291,14 @@ class packageActions extends sfActions
 
     $filename = $this->release->File->original_filename;
 
+    $tgzFilename = $this->release->File->getName();
+    $tarFile = Doctrine::getTable('File')->retrieveByFilename(str_replace('tgz', 'tar', $tgzFilename));
+    if ($tarFile)
+    {
+      $tarFile->delete();
+    }
+
+    $this->release->File->delete();
     $this->release->delete();
 
     $path = opPluginChannelServerToolkit::getFilePathToCache($this->release->Package->name, $this->release->version);
@@ -302,7 +310,7 @@ class packageActions extends sfActions
 
     if ($key && $secret && $bucket)
     {
-      opPluginChannelServerToolkit::deleteFileFromS3($key, $secret, $bucket, $filename);
+      opPluginChannelServerToolkit::deleteFileFromS3($key, $secret, $bucket, str_replace('.tgz', '.tar', $filename));
     }
 
     $this->clearOutputCacheDirectory();

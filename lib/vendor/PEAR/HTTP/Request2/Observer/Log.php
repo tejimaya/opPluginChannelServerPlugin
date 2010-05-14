@@ -38,7 +38,7 @@
  * @author   David Jean Louis <izi@php.net>
  * @author   Alexey Borzov <avb@php.net>
  * @license  http://opensource.org/licenses/bsd-license.php New BSD License
- * @version  SVN: $Id: Log.php 290743 2009-11-14 13:27:49Z avb $
+ * @version  SVN: $Id: Log.php 293416 2010-01-11 18:06:15Z avb $
  * @link     http://pear.php.net/package/HTTP_Request2
  */
 
@@ -87,7 +87,7 @@ require_once 'HTTP/Request2/Exception.php';
  * @author   David Jean Louis <izi@php.net>
  * @author   Alexey Borzov <avb@php.net>
  * @license  http://opensource.org/licenses/bsd-license.php New BSD License
- * @version  Release: 0.5.1
+ * @version  Release: 0.5.2
  * @link     http://pear.php.net/package/HTTP_Request2
  */
 class HTTP_Request2_Observer_Log implements SplObserver
@@ -134,7 +134,7 @@ class HTTP_Request2_Observer_Log implements SplObserver
         }
         if (is_resource($target) || $target instanceof Log) {
             $this->target = $target;
-        } elseif (false === ($this->target = @fopen($target, 'w'))) {
+        } elseif (false === ($this->target = @fopen($target, 'ab'))) {
             throw new HTTP_Request2_Exception("Unable to open '{$target}'");
         }
     }

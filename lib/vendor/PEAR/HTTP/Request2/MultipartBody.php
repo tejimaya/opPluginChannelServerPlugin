@@ -50,7 +50,7 @@
  * @category   HTTP
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
- * @version    Release: 0.5.1
+ * @version    Release: 0.5.2
  * @link       http://tools.ietf.org/html/rfc1867
  */
 class HTTP_Request2_MultipartBody

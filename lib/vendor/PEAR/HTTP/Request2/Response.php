@@ -70,7 +70,7 @@ require_once 'HTTP/Request2/Exception.php';
  * @category   HTTP
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
- * @version    Release: 0.5.1
+ * @version    Release: 0.5.2
  * @link       http://tools.ietf.org/html/rfc2616#section-6
  */
 class HTTP_Request2_Response

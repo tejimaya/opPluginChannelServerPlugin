@@ -37,7 +37,7 @@
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    SVN: $Id: Request2.php 290921 2009-11-18 17:31:58Z avb $
+ * @version    SVN: $Id: Request2.php 298246 2010-04-21 10:41:16Z avb $
  * @link       http://pear.php.net/package/HTTP_Request2
  */
 
@@ -57,7 +57,7 @@ require_once 'HTTP/Request2/Exception.php';
  * @category   HTTP
  * @package    HTTP_Request2
  * @author     Alexey Borzov <avb@php.net>
- * @version    Release: 0.5.1
+ * @version    Release: 0.5.2
  * @link       http://tools.ietf.org/html/rfc2616#section-5
  */
 class HTTP_Request2 implements SplSubject
@@ -225,7 +225,7 @@ class HTTP_Request2 implements SplSubject
         if (!empty($method)) {
             $this->setMethod($method);
         }
-        $this->setHeader('user-agent', 'HTTP_Request2/0.5.1 ' .
+        $this->setHeader('user-agent', 'HTTP_Request2/0.5.2 ' .
                          '(http://pear.php.net/package/http_request2) ' .
                          'PHP/' . phpversion());
     }
@@ -801,9 +801,9 @@ class HTTP_Request2 implements SplSubject
             $this->setAdapter($this->getConfig('adapter'));
         }
         // magic_quotes_runtime may break file uploads and chunked response
-        // processing; see bug #4543
-        if ($magicQuotes = ini_get('magic_quotes_runtime')) {
-            ini_set('magic_quotes_runtime', false);
+        // processing; see bug #4543. Don't use ini_get() here; see bug #16440.
+        if ($magicQuotes = get_magic_quotes_runtime()) {
+            set_magic_quotes_runtime(false);
         }
         // force using single byte encoding if mbstring extension overloads
         // strlen() and substr(); see bug #1781, bug #10605
@@ -818,7 +818,7 @@ class HTTP_Request2 implements SplSubject
         }
         // cleanup in either case (poor man's "finally" clause)
         if ($magicQuotes) {
-            ini_set('magic_quotes_runtime', true);
+            set_magic_quotes_runtime(true);
         }
         if (!empty($oldEncoding)) {
             mb_internal_encoding($oldEncoding);
