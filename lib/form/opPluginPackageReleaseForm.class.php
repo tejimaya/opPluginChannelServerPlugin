@@ -137,7 +137,7 @@ class opPluginPackageReleaseForm extends BaseForm
 
       // save tar
       $gp = gzopen($tgz->getTempName(), 'rb');
-      $this->getImportedPluginFile(str_replace('.tgz', '.tar', $file->getOriginalFilename()), stream_get_contents($gp));
+      $this->getImportedPluginFile($file->getName().'.tar', stream_get_contents($gp));
 
       $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, $xml);
       $opdeps = opPluginChannelServerToolkit::getOpenPNEDependencyFromArray($info['release_deps']);
@@ -171,7 +171,7 @@ class opPluginPackageReleaseForm extends BaseForm
     opPluginChannelServerToolkit::generateTarByPluginDir($info, $tgzFilename, $dir, sfConfig::get('sf_cache_dir'), true);
     $tgzFile = $this->getImportedPluginFile($tgzFilename, sfConfig::get('sf_cache_dir').'/'.$tgzFilename);
 
-    $tarFilename = sprintf('%s-%s.tar', $info['name'], $info['version']);
+    $tarFilename = sprintf('%s-%s.tgz.tar', $info['name'], $info['version']);
     opPluginChannelServerToolkit::generateTarByPluginDir($info, $tarFilename, $dir, sfConfig::get('sf_cache_dir'), false);
     $tarFile = $this->getImportedPluginFile($tarFilename, sfConfig::get('sf_cache_dir').'/'.$tarFilename);
 

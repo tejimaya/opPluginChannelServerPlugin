@@ -266,7 +266,7 @@ class pluginRestActions extends sfActions
     $this->forward404Unless($this->release);
 
     $tgzFilename = $this->release->File->getName();
-    $tarFile = Doctrine::getTable('File')->retrieveByFilename(str_replace('tgz', 'tar', $tgzFilename));
+    $tarFile = Doctrine::getTable('File')->retrieveByFilename($tgzFilename.'.tar');
     $this->forward404Unless($tarFile);
 
     $path = opPluginChannelServerToolkit::getFilePathToCache($this->package->name, $version);
