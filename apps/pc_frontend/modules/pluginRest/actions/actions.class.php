@@ -256,4 +256,26 @@ class pluginRestActions extends sfActions
 
     exit;
   }
+
+  public function executeDownloadTar(sfWebRequest $request)
+  {
+    $version = $request['version'];
+
+    $this->package = $this->getRoute()->getObject();
+    $this->release = Doctrine::getTable('PluginRelease')->findOneByPackageIdAndVersion($this->package->id, $version);
+    $this->forward404Unless($this->release);
+
+    $tgzFilename = $this->release->File->getName();
+    $tarFile = Doctrine::getTable('File')->retrieveByFilename(str_replace('tgz', 'tar', $tgzFilename));
+    $this->forward404Unless($tarFile);
+
+    $path = opPluginChannelServerToolkit::getFilePathToCache($this->package->name, $version);
+    @file_put_contents(str_replace('tgz', 'tar', $path), $tarFile->FileBin->bin);
+    @chmod($path, 0777);
+
+    header('Content-type: '.$tarFile->type);
+    echo $tarFile->FileBin->bin;
+
+    exit;
+  }
 }

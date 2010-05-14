@@ -80,14 +80,14 @@ class opPluginChannelServerToolkit
     return Doctrine::getTable('SnsConfig')->get(opPluginChannelServerPluginConfiguration::CONFIG_KEY_PREFIX.$name, $default);
   }
 
-  public static function generateTarByPluginDir(array $info, $filename, $input, $output)
+  public static function generateTarByPluginDir(array $info, $filename, $input, $output, $isCompress = true)
   {
     $timeLimit = ini_get('max_execution_time');
     set_time_limit(0);
 
     require_once 'Archive/Tar.php';
 
-    $tar = new Archive_Tar($output.'/'.$filename, true);
+    $tar = new Archive_Tar($output.'/'.$filename, $isCompress);
     foreach ($info['filelist'] as $file => $data)
     {
       $tar->addString($info['name'].'-'.$info['version'].'/'.$file, file_get_contents($input.'/'.$file));

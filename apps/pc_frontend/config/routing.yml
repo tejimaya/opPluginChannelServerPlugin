@@ -189,6 +189,15 @@ plugin_download_tgz:
     name: op.+[pP]lugin
     sf_method: [get, head]
 
+plugin_download_tar:
+  url:  /opPluginChannelServerPlugin/get/:name-:version
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object, segment_separators: [/, -], suffix: .tar }
+  param: { module: pluginRest, action: downloadTar }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
 plugin_download_without_extension:
   url:  /opPluginChannelServerPlugin/get/:name-:version
   class: sfDoctrineRoute

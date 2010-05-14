@@ -129,11 +129,15 @@ class opPluginPackageReleaseForm extends BaseForm
         }
       }
 
+      // save tgz
       $file = new File();
       $file->setFromValidatedFile($tgz);
       $file->save();
-
       $this->uploadToS3($file);
+
+      // save tar
+      $gp = gzopen($tgz->getTempName(), 'rb');
+      $this->getImportedPluginFile(str_replace('.tgz', '.tar', $file->getOriginalFilename()), stream_get_contents($gp));
 
       $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, $xml);
       $opdeps = opPluginChannelServerToolkit::getOpenPNEDependencyFromArray($info['release_deps']);
@@ -163,12 +167,15 @@ class opPluginPackageReleaseForm extends BaseForm
       throw new RuntimeException($info->getMessage());
     }
 
-    $filename = sprintf('%s-%s.tgz', $info['name'], $info['version']);
-    opPluginChannelServerToolkit::generateTarByPluginDir($info, $filename, $dir, sfConfig::get('sf_cache_dir'));
+    $tgzFilename = sprintf('%s-%s.tgz', $info['name'], $info['version']);
+    opPluginChannelServerToolkit::generateTarByPluginDir($info, $tgzFilename, $dir, sfConfig::get('sf_cache_dir'), true);
+    $tgzFile = $this->getImportedPluginFile($tgzFilename, sfConfig::get('sf_cache_dir').'/'.$tgzFilename);
 
-    $file = $this->getImportedPluginFile($filename, sfConfig::get('sf_cache_dir').'/'.$filename);
+    $tarFilename = sprintf('%s-%s.tar', $info['name'], $info['version']);
+    opPluginChannelServerToolkit::generateTarByPluginDir($info, $tarFilename, $dir, sfConfig::get('sf_cache_dir'), false);
+    $tarFile = $this->getImportedPluginFile($tarFilename, sfConfig::get('sf_cache_dir').'/'.$tarFilename);
 
-    $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, file_get_contents($dir.'/package.xml'));
+    $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $tgzFile, $memberId, file_get_contents($dir.'/package.xml'));
     $opdeps = opPluginChannelServerToolkit::getOpenPNEDependencyFromArray($info['release_deps']);
     $release->setOpenPNEDeps($opdeps['ge'], $opdeps['le']);
     $this->package->PluginRelease[] = $release;
@@ -177,7 +184,8 @@ class opPluginPackageReleaseForm extends BaseForm
     $filesystem = new sfFilesystem();
     sfToolkit::clearDirectory($dir);
     $filesystem->remove($dir);
-    $filesystem->remove(sfConfig::get('sf_cache_dir').'/'.$filename);
+    $filesystem->remove(sfConfig::get('sf_cache_dir').'/'.$tgzFilename);
+    $filesystem->remove(sfConfig::get('sf_cache_dir').'/'.$tarFilename);
   }
 
   protected function importFromSvn($url)
@@ -213,12 +221,18 @@ class opPluginPackageReleaseForm extends BaseForm
   protected function getImportedPluginFile($filename, $filepath)
   {
     $file = new File();
-    $file->setType('application/x-gzip');
+    $file->setType(strpos($filename, '.tgz') ? 'application/x-gzip' : 'application/x-tar');
     $file->setOriginalFilename($filename);
     $file->setName(strtr($filename, '.', '_'));
 
+    $binary = $filepath;
+    if (is_file($filepath))
+    {
+      $binary = file_get_contents($filepath);
+    }
+
     $bin = new FileBin();
-    $bin->setBin(file_get_contents($filepath));
+    $bin->setBin($binary);
     $file->setFileBin($bin);
     $file->save();
 
