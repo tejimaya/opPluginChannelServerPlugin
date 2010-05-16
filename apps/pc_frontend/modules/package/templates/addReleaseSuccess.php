@@ -75,17 +75,18 @@
 <p><?php echo __('Before your releasing, you need to create / update and commit a package definition file (package.xml) to your repository.') ?></p>
 <p><?php echo __('You can generate a definition file by the following command:') ?></p>
 <div class="example">
-<code>$ ./symfony opPlugin:define <?php echo $package->name ?> 1.0.0 "First stable release."</code>
+<code>$ ./symfony opPlugin:define <?php echo $package->name ?> 1.0.0 stable "First stable release."</code>
 <?php if (opPluginChannelServerToolkit::getConfig('channel_name') !== opPluginManager::OPENPNE_PLUGIN_CHANNEL): ?>
 <br />
 <br />
 [<?php echo __('OpenPNE 3.5.0 +') ?>]<br />
-<code>$ ./symfony opPlugin:define <?php echo $package->name ?> 1.0.0 "First stable release." --channel=<?php echo opPluginChannelServerToolkit::getConfig('channel_name') ?></code>
+<code>$ ./symfony opPlugin:define <?php echo $package->name ?> 1.0.0 stable "First stable release." --channel=<?php echo opPluginChannelServerToolkit::getConfig('channel_name') ?></code>
 <?php endif; ?>
 <dl>
 <dt><?php echo __('The first argument')?></dt><dd><?php echo __('The name of plugin which you want to release') ?></dd>
 <dt><?php echo __('The second argument')?></dt><dd><?php echo __('The version of plugin which you want to release') ?></dd>
-<dt><?php echo __('The third argument')?></dt><dd><?php echo __('The release note') ?></dd>
+<dt><?php echo __('The third argument')?></dt><dd><?php echo __('The stability (stable, beta, alpha, devel)') ?></dd>
+<dt><?php echo __('The fourth argument')?></dt><dd><?php echo __('The release note') ?></dd>
 <dt><?php echo __('The --channel option (OpenPNE 3.5.0 +)')?></dt><dd><?php echo __('The channel server which you want to release') ?></dd>
 </dl>
 </div>
@@ -116,17 +117,18 @@
 <p><?php echo __('Before your releasing, you need to create / update and push a package definition file (package.xml) to your repository.') ?></p>
 <p><?php echo __('You can generate a definition file by the following command:') ?></p>
 <div class="example">
-<code>$ ./symfony opPlugin:define <?php echo $package->name ?> 1.0.0 "First stable release."</code>
+<code>$ ./symfony opPlugin:define <?php echo $package->name ?> 1.0.0 stable "First stable release."</code>
 <?php if (opPluginChannelServerToolkit::getConfig('channel_name') !== opPluginManager::OPENPNE_PLUGIN_CHANNEL): ?>
 <br />
 <br />
 [<?php echo __('OpenPNE 3.5.0 +') ?>]<br />
-<code>$ ./symfony opPlugin:define <?php echo $package->name ?> 1.0.0 "First stable release." --channel=<?php echo opPluginChannelServerToolkit::getConfig('channel_name') ?></code>
+<code>$ ./symfony opPlugin:define <?php echo $package->name ?> 1.0.0 stable "First stable release." --channel=<?php echo opPluginChannelServerToolkit::getConfig('channel_name') ?></code>
 <?php endif; ?>
 <dl>
 <dt><?php echo __('The first argument')?></dt><dd><?php echo __('The name of plugin which you want to release') ?></dd>
 <dt><?php echo __('The second argument')?></dt><dd><?php echo __('The version of plugin which you want to release') ?></dd>
-<dt><?php echo __('The third argument')?></dt><dd><?php echo __('The release note') ?></dd>
+<dt><?php echo __('The third argument')?></dt><dd><?php echo __('The stability (stable, beta, alpha, devel)') ?></dd>
+<dt><?php echo __('The fourth argument')?></dt><dd><?php echo __('The release note') ?></dd>
 <dt><?php echo __('The --channel option (OpenPNE 3.5.0 +)')?></dt><dd><?php echo __('The channel server which you want to release') ?></dd>
 </dl>
 </div>

@@ -231,6 +231,10 @@
         <target>第 3 引数</target>
       </trans-unit>
       <trans-unit id="">
+        <source>The fourth argument</source>
+        <target>第 4 引数</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>The --channel option (OpenPNE 3.5.0 +)</source>
         <target>--channel オプション (OpenPNE 3.5.0 以降)</target>
       </trans-unit>
@@ -257,6 +261,10 @@
       <trans-unit id="">
         <source>The version of plugin which you want to release</source>
         <target>リリースしたいプラグインのバージョン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The stability (stable, beta, alpha, devel)</source>
+        <target>安定性 (stable, beta, alpha, devel)</target>
       </trans-unit>
       <trans-unit id="">
         <source>The release note</source>
