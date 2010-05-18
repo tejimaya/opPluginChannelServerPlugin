@@ -198,6 +198,19 @@ class opPluginPackageReleaseForm extends BaseForm
     $result = VersionControl_SVN::factory('export', array(
       'svn_path' => 'svn', // FIXME: It should be configurable
     ))->run(array($url, $dir));
+    if (!$result)
+    {
+      $message = '';
+      while ($err = PEAR_ErrorStack::staticPop('VersionControl_SVN'))
+      {
+        $message .= $err['message'].PHP_EOL;
+      }
+
+      if ($message)
+      {
+        throw new RuntimeException(sprintf("Some errors in executing svn command:\n\n%s", $message));
+      }
+    }
 
     return $dir;
   }
