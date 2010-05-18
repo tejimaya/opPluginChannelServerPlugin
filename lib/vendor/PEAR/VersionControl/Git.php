@@ -80,6 +80,18 @@ class VersionControl_Git
     }
 
     /**
+     * Get Git version (e.g. 1.7.0)
+     *
+     * @return string
+     */
+    public function getGitVersion()
+    {
+        $command = $this->getCommand('--version');
+
+        return substr(trim($command->execute()), strlen('git version '));
+    }
+
+    /**
      * Get an instance of the VersionControl_Git_Util_RevListFetcher that is
      * related to this repository
      *
@@ -130,6 +142,24 @@ class VersionControl_Git
 
         if (null !== $directory) {
             $command->addArgument($directory);
+
+            // cloning to empty directory is supported in 1.6.2-rc0 +
+            // see: http://git.kernel.org/?p=git/git.git;a=commit;h=55892d239819
+            if (is_dir($directory) && version_compare('1.6.1.4', $this->getGitVersion(), '>=')) {
+                $isEmptyDir = true;
+                $entries = scandir($directory);
+                foreach ($entries as $entry) {
+                    if ('.' !== $entry && '..' !== $entry) {
+                        $isEmptyDir = false;
+
+                        break;
+                    }
+                }
+
+                if ($isEmptyDir) {
+                    @rmdir($directory);
+                }
+            }
         }
         $command->execute();
 
@@ -147,10 +177,21 @@ class VersionControl_Git
      */
     public function initRepository($isBare = false)
     {
-        $this->getCommand('init')
-            ->setOption('bare', $isBare)
-            ->setOption('q')
-            ->execute();
+        if (!$isBare || version_compare('1.5.6.6', $this->getGitVersion(), '<='))
+        {
+            $this->getCommand('init')
+                ->setOption('bare', $isBare)
+                ->setOption('q')
+                ->execute();
+        }
+        else
+        {
+            // see: http://git.kernel.org/?p=git/git.git;a=commit;h=74d3b23
+            $this->getCommand('--bare')
+                ->addArgument('init')
+                ->addArgument('-q')  // it is just a quick hack
+                ->execute();
+        }
     }
 
     /**
@@ -180,6 +221,36 @@ class VersionControl_Git
             rtrim($this->getCommand('branch')->execute()));
         foreach ($commandResult as $k => $v) {
             $result[$k] = substr($v, 2);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get an array of remote branch names
+     *
+     * @param string $name The name of remote repository
+     *
+     * @return array
+     */
+    public function getRemoteBranches($name = 'origin')
+    {
+        $result = array();
+
+        $commandResult = $this->getCommand('branch')
+            ->setOption('r')
+            ->execute();
+        $commandResult = explode(PHP_EOL, rtrim($commandResult));
+
+        foreach ($commandResult as $v) {
+            $v = trim($v);
+
+            $prefix = $name.'/';
+            if (0 !== strpos($v, $prefix)) {
+                continue;
+            }
+
+            $result[] = substr($v, strlen($prefix));
         }
 
         return $result;
