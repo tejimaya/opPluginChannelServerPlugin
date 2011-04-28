@@ -69,6 +69,7 @@ PluginRelease:
     op_version_le_string: { type: string(64) }
     op_version_ge: { type: float }
     op_version_le: { type: float }
+    is_hidden: { type: boolean, default: false, notnull: true }
   indexes:
     package_id_version_UNIQUE:
       fields: [package_id, version]

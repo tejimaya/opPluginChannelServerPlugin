@@ -434,6 +434,26 @@
         <source>The release is removed successfully.</source>
         <target>リリースを削除しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Is hidden</source>
+        <target>非公開</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please check this if you want to hide this release now (e.g. for security reason)</source>
+        <target>たとえばセキュリティ上の理由などにより、今はまだこのリリースを公開したくない場合にチェックしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Publication</source>
+        <target>公開状態</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>hidden</source>
+        <target>非公開</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>published</source>
+        <target>公開</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

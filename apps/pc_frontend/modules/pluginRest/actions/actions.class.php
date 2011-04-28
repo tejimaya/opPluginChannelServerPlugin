@@ -197,6 +197,7 @@ class pluginRestActions extends sfActions
     $this->package = $this->getRoute()->getObject();
     $this->release = Doctrine::getTable('PluginRelease')->findOneByPackageIdAndVersion($this->package->id, $version);
     $this->forward404Unless($this->release);
+    $this->forward404Unless($this->release->isAllowed($this->getUser()->getMember(), 'view'));
 
     $this->info = $this->pear->infoFromString($this->release->package_definition);
     if (PEAR::isError($this->info))
@@ -226,6 +227,7 @@ class pluginRestActions extends sfActions
     $this->package = $this->getRoute()->getObject();
     $this->release = Doctrine::getTable('PluginRelease')->findOneByPackageIdAndVersion($this->package->id, $version);
     $this->forward404Unless($this->release);
+    $this->forward404Unless($this->release->isAllowed($this->getUser()->getMember(), 'view'));
 
     $packagefile = new PEAR_PackageFile($this->pear->config);
     $pf = $packagefile->fromXmlString($this->release->package_definition, PEAR_VALIDATE_NORMAL);
@@ -244,6 +246,7 @@ class pluginRestActions extends sfActions
     $this->package = $this->getRoute()->getObject();
     $this->release = Doctrine::getTable('PluginRelease')->findOneByPackageIdAndVersion($this->package->id, $version);
     $this->forward404Unless($this->release);
+    $this->forward404Unless($this->release->isAllowed($this->getUser()->getMember(), 'view'));
 
     $bin = $this->release->File->FileBin->bin;
 
@@ -264,6 +267,7 @@ class pluginRestActions extends sfActions
     $this->package = $this->getRoute()->getObject();
     $this->release = Doctrine::getTable('PluginRelease')->findOneByPackageIdAndVersion($this->package->id, $version);
     $this->forward404Unless($this->release);
+    $this->forward404Unless($this->release->isAllowed($this->getUser()->getMember(), 'view'));
 
     $tgzFilename = $this->release->File->getName();
     $tarFile = Doctrine::getTable('File')->retrieveByFilename(str_replace('tgz', 'tar', $tgzFilename));

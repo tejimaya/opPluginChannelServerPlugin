@@ -53,6 +53,7 @@
 <table>
 <?php $form->renderGlobalErrors(); ?>
 <?php echo $form['tgz_file']->renderRow() ?>
+<?php echo $form['is_hidden']->renderRow() ?>
 </table>
 <div class="operation">
 <ul class="moreInfo button">
@@ -95,6 +96,7 @@
 <table>
 <?php $form->renderGlobalErrors(); ?>
 <?php echo $form['svn_url']->renderRow() ?>
+<?php echo $form['is_hidden']->renderRow() ?>
 </table>
 <div class="operation">
 <ul class="moreInfo button">
@@ -138,6 +140,7 @@
 <?php $form->renderGlobalErrors(); ?>
 <?php echo $form['git_url']->renderRow() ?>
 <?php echo $form['git_commit']->renderRow() ?>
+<?php echo $form['is_hidden']->renderRow() ?>
 </table>
 <div class="operation">
 <ul class="moreInfo button">
