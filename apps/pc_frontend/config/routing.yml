@@ -305,8 +305,8 @@ package_home_id:
 
 release_detail:
   url:  /release/:id
-  class: opDynamicAclRoute
-  options: { model: PluginRelease, type: object, privilege: view }
+  class: sfDoctrineRoute
+  options: { model: PluginRelease, type: object }
   param: { module: package, action: release }
   requirements:
     name: op.+[pP]lugin

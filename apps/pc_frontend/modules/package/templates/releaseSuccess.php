@@ -31,35 +31,27 @@ if (opPluginChannelServerToolkit::getConfig('channel_name') !== opPluginManager:
   $channelOption = ' --channel='.opPluginChannelServerToolkit::getConfig('channel_name');
 }
 
-$releaseInfoList = array(
-  __('Plugin') => $release->Package->name,
-  __('Version') => $release->version,
-  __('Stability') => __($release->stability),
-  __('Release Note') => (PEAR::isError($info->getRawValue())) ? '' : nl2br($info['notes']),
-  __('Target OpenPNE Version') => get_slot('_op_depinfo'),
-  __('Dependency') => (PEAR::isError($info->getRawValue())) ? '' : render_package_dependency_list($info['release_deps']->getRawValue()),
-  __('Installation') =>
-    __('Install the plugin:').'<br />
-    <code>$ ./symfony opPlugin:install '.$release->Package->name.' -r '.$release->version.$channelOption.'</code><br />
-    <br />'.
-    __('Migrate your model and database:').'<br />
-    <code>$ ./symfony openpne:migrate --target='.$release->Package->name.'</code><br />
-    ',
-  __('Download') => link_to(
-    get_plugin_download_url($release->Package->name, $release->version, 'tgz'),
-    get_plugin_download_url($release->Package->name, $release->version, 'tgz')
-  ),
-);
-
-if ($release->isAllowed($sf_user->getRawValue()->getMember(), 'publish'))
-{
-  $releaseInfoList[__('Publication')] = ($release->is_hidden) ? __('hidden') : __('published');
-}
-
 op_include_parts('listBox', 'releaseInfoList', array(
   'title' =>  __('Detail of this release'),
-  'list' => $releaseInfoList,
-));
+  'list' => array(
+    __('Plugin') => $release->Package->name,
+    __('Version') => $release->version,
+    __('Stability') => __($release->stability),
+    __('Release Note') => (PEAR::isError($info->getRawValue())) ? '' : nl2br($info['notes']),
+    __('Target OpenPNE Version') => get_slot('_op_depinfo'),
+    __('Dependency') => (PEAR::isError($info->getRawValue())) ? '' : render_package_dependency_list($info['release_deps']->getRawValue()),
+    __('Installation') => 
+      __('Install the plugin:').'<br />
+      <code>$ ./symfony opPlugin:install '.$release->Package->name.' -r '.$release->version.$channelOption.'</code><br />
+      <br />'.
+      __('Migrate your model and database:').'<br />
+      <code>$ ./symfony openpne:migrate --target='.$release->Package->name.'</code><br />
+      ',
+    __('Download') => link_to(
+      get_plugin_download_url($release->Package->name, $release->version, 'tgz'),
+      get_plugin_download_url($release->Package->name, $release->version, 'tgz')
+    ),
+)));
 
 if ($release->isAllowed($sf_user->getRawValue()->getMember(), 'delete'))
 {

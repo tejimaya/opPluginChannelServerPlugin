@@ -96,20 +96,10 @@ class PluginPluginReleaseTable extends opAccessControlDoctrineTable
 
   public function appendRules(Zend_Acl $acl, $resource = null)
   {
-    $rules = $acl
-      ->allow('anonymous', $resource, 'view')
+    return $acl
       ->allow('lead', $resource, 'add')
       ->allow('lead', $resource, 'delete')
       ->allow('lead', $resource, 'add_deps')
-      ->allow('lead', $resource, 'publish')
     ;
-
-    if ($resource instanceof PluginRelease && $resource->is_hidden)
-    {
-      $rules->deny('anonymous', $resource, 'view')
-        ->allow('lead', $resource, 'view');
-    }
-
-    return $rules;
   }
 }

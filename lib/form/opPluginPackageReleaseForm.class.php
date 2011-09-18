@@ -41,9 +41,6 @@ class opPluginPackageReleaseForm extends BaseForm
 
       ->setWidget('git_commit', new sfWidgetFormInputText())
       ->setValidator('git_commit', new sfValidatorString(array('required' => false)))
-
-      ->setWidget('is_hidden', new sfWidgetFormInputCheckbox())
-      ->setValidator('is_hidden', new sfValidatorBoolean(array('required' => false)))
     ;
 
     $this->widgetSchema
@@ -52,7 +49,6 @@ class opPluginPackageReleaseForm extends BaseForm
       ->setHelp('svn_url', 'Please specify tag url')
       ->setHelp('git_url', 'The url must be Git protocol format. e.g. git://github.com/openpne/opSamplePlugin.git')
       ->setHelp('git_commit', 'This can be many formatted string: "master" (branch name), "9af9b" (commit object name), "v1.0.0" (tag name)')
-      ->setHelp('is_hidden', 'Please check this if you want to hide this release now (e.g. for security reason)')
     ;
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
@@ -109,7 +105,6 @@ class opPluginPackageReleaseForm extends BaseForm
     $svn = $this->getValue('svn_url');
     $gitUrl = $this->getValue('git_url');
     $gitCommit = $this->getValue('git_commit');
-    $isHidden = $this->getValue('is_hidden');
     $memberId = sfContext::getInstance()->getUser()->getMemberId();
 
     $pear = opPluginChannelServerToolkit::registerPearChannel($this->getChannel());
@@ -148,23 +143,22 @@ class opPluginPackageReleaseForm extends BaseForm
       $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $file, $memberId, $xml);
       $opdeps = opPluginChannelServerToolkit::getOpenPNEDependencyFromArray($info['release_deps']);
       $release->setOpenPNEDeps($opdeps['ge'], $opdeps['le']);
-      $release->setIsHidden($isHidden);
       $this->package->PluginRelease[] = $release;
       $this->package->save();
     }
     elseif ($svn)
     {
       $dir = $this->importFromSvn($svn);
-      $this->importSCMFile($pear, $memberId, $dir, $isHidden);
+      $this->importSCMFile($pear, $memberId, $dir);
     }
     elseif ($gitUrl && $gitCommit)
     {
       $dir = $this->importFromGit($gitUrl, $gitCommit);
-      $this->importSCMFile($pear, $memberId, $dir, $isHidden);
+      $this->importSCMFile($pear, $memberId, $dir);
     }
   }
 
-  protected function importSCMFile($pear, $memberId, $dir, $isHidden)
+  protected function importSCMFile($pear, $memberId, $dir)
   {
     $filesystem = new sfFilesystem();
 
@@ -185,7 +179,6 @@ class opPluginPackageReleaseForm extends BaseForm
     $release = Doctrine::getTable('PluginRelease')->createByPackageInfo($info, $tgzFile, $memberId, file_get_contents($dir.'/package.xml'));
     $opdeps = opPluginChannelServerToolkit::getOpenPNEDependencyFromArray($info['release_deps']);
     $release->setOpenPNEDeps($opdeps['ge'], $opdeps['le']);
-    $release->setIsHidden($isHidden);
     $this->package->PluginRelease[] = $release;
     $this->package->save();
 
