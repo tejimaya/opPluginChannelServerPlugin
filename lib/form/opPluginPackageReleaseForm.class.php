@@ -47,7 +47,7 @@ class opPluginPackageReleaseForm extends BaseForm
       ->setNameFormat('plugin_release[%s]')
 
       ->setHelp('svn_url', 'Please specify tag url')
-      ->setHelp('git_url', 'The url must be Git protocol format. e.g. git://github.com/openpne/opSamplePlugin.git')
+      ->setHelp('git_url', 'The url must be HTTPS protocol format. e.g. https://github.com/openpne/opSamplePlugin.git')
       ->setHelp('git_commit', 'This can be many formatted string: "master" (branch name), "9af9b" (commit object name), "v1.0.0" (tag name)')
     ;
 
